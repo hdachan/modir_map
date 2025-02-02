@@ -17,6 +17,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_dotenv: ^5.2.1
   supabase_flutter: ^2.0.0
+  html: ^0.15.5
 
 dev_dependencies:
   flutter_test:

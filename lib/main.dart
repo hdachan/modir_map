@@ -5,6 +5,8 @@ import 'package:untitled/naver_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'SettingState.dart';
+import 'search.dart';
+import 'supabase_setting.dart';
 import 'wndud123.dart';
 
 void main() async {
@@ -48,14 +50,17 @@ class MyApp extends StatelessWidget {
           home: Scaffold(
             body: PageView(
               controller: _pageController,
+              physics: NeverScrollableScrollPhysics(), // 스와이프 비활성화
               onPageChanged: (index) {
                 settingState.updateIndex(index); // 페이지 변경 시 인덱스 업데이트
               },
               children: [
-                KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
-                TodoListScreen(),
-                Center(child: Text("탭 3")), // 탭 3
-                Center(child: Text("탭 4")), // 탭 4
+                NaverMapBackground(),
+                //KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
+                //TodoListScreen(),
+                Center(child: Text("탭 2")), // 탭 5
+                NaverLocalSearchPage(),
+                MyMapWidget(),
                 Center(child: Text("탭 5")), // 탭 5
               ],
             ),

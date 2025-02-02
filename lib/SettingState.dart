@@ -29,26 +29,67 @@ class NaverMapProvider with ChangeNotifier {
 
 
 class DataProvider with ChangeNotifier {
-
+  final supabase = Supabase.instance.client;
   List<dynamic> dataList = [];
+  bool isLoading = false; // 로딩 상태 추가
+  String? errorMessage; // 에러 메시지 추가
+  late RealtimeChannel _realtimeChannel;
 
+  // 생성자에서 실시간 구독 설정
+  DataProvider() {
+    setupRealtimeSubscription();
+  }
+
+  // 데이터 불러오기
   Future<void> fetchData() async {
+    isLoading = true; // 로딩 시작
+    errorMessage = null; // 에러 메시지 초기화
+    notifyListeners(); // 상태 변경 알림
+
     try {
       final response = await supabase
           .from('modir')
           .select()
           .catchError((error) {
         print('Error fetching data: $error');
+        errorMessage = error.toString(); // 에러 메시지 저장
         return null;
       });
 
       if (response != null) {
         dataList = response;
-        notifyListeners(); // 상태 변경 알림
       }
     } catch (e) {
       print('Error: $e');
+      errorMessage = e.toString(); // 에러 메시지 저장
+    } finally {
+      isLoading = false; // 로딩 종료
+      notifyListeners(); // 상태 변경 알림
     }
+  }
+
+  // 실시간 구독 설정 (Supabase 최신 방식)
+  void setupRealtimeSubscription() {
+    _realtimeChannel = supabase.channel('modir_channel').onPostgresChanges(
+      event: PostgresChangeEvent.all, // 모든 변경 감지
+      schema: 'public',
+      table: 'modir',
+      callback: (payload) {
+        fetchData(); // 변경 발생 시 데이터 갱신
+      },
+    ).subscribe();
+  }
+
+  // 리소스 정리
+  void disposeProvider() {
+    _realtimeChannel.unsubscribe();
+  }
+
+  // Provider가 dispose될 때 호출
+  @override
+  void dispose() {
+    disposeProvider();
+    super.dispose();
   }
 }
 
