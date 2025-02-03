@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/naver_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'SettingState.dart';
+import 'home_screen.dart';
 import 'search.dart';
 import 'supabase_setting.dart';
-import 'wndud123.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화
@@ -22,7 +23,7 @@ void main() async {
 
   // Supabase 초기화
   await Supabase.initialize(
-    url: '1',
+    url: 'https://ceckhzfboykmsshamikv.supabase.co',
     anonKey: '1',
   );
 
@@ -55,11 +56,10 @@ class MyApp extends StatelessWidget {
                 settingState.updateIndex(index); // 페이지 변경 시 인덱스 업데이트
               },
               children: [
-                NaverMapBackground(),
-                //KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
+                KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
                 //TodoListScreen(),
-                Center(child: Text("탭 2")), // 탭 5
                 NaverLocalSearchPage(),
+                Setting(),
                 MyMapWidget(),
                 Center(child: Text("탭 5")), // 탭 5
               ],
@@ -71,12 +71,15 @@ class MyApp extends StatelessWidget {
                 _pageController.jumpToPage(index); // 페이지 전환
               },
               type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black, // 배경색을 검정색으로 설정
+              selectedItemColor: Color(0xFFBFACF9), // 선택된 아이템 색상
+              unselectedItemColor: Colors.grey, // 선택되지 않은 아이템 색상
               items: [
-                BottomNavigationBarItem(icon: Icon(Icons.map), label: '지도'),
-                BottomNavigationBarItem(icon: Icon(Icons.build), label: '코디'),
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-                BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: '라이브'),
-                BottomNavigationBarItem(icon: Icon(Icons.person), label: '마이'),
+                BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: '지도'),
+                BottomNavigationBarItem(icon: Icon(Icons.build_outlined), label: '코디'),
+                BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
+                BottomNavigationBarItem(icon: Icon(Icons.live_tv_outlined), label: '라이브'),
+                BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이'),
               ],
             ),
           ),

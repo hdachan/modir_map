@@ -94,3 +94,46 @@ class DataProvider with ChangeNotifier {
 }
 
 
+
+class DataProvider2 with ChangeNotifier {
+  final supabase = Supabase.instance.client;
+  List<dynamic> storeMarkerList = [];
+  bool isLoading = false; // 로딩 상태 추가
+  String? errorMessage; // 에러 메시지 추가
+
+  // 매장 및 마커 데이터 불러오기
+  Future<List<Map<String, dynamic>>?> fetchStoreAndMarkerData() async {
+    isLoading = true; // 로딩 시작
+    errorMessage = null; // 에러 메시지 초기화
+    notifyListeners(); // 상태 변경 알림
+
+    try {
+      final response = await supabase
+          .from('markers')
+          .select('''
+            mapx,
+            mapy,
+            stores (name, type, address, road_address)
+          ''')
+          .catchError((error) {
+        print('Error fetching data: $error');
+        errorMessage = error.toString(); // 에러 메시지 저장
+        return null;
+      });
+
+      if (response != null) {
+        storeMarkerList = response;
+        return List<Map<String, dynamic>>.from(response);
+      }
+    } catch (e) {
+      print('Error: $e');
+      errorMessage = e.toString(); // 에러 메시지 저장
+    } finally {
+      isLoading = false; // 로딩 종료
+      notifyListeners(); // 상태 변경 알림
+    }
+    return null;
+  }
+}
+
+
