@@ -15,3 +15,11 @@
 4. **Supabase 연결연습**
    - 링크: [Supabase 연결연습](https://game-chanda.tistory.com/177)
    - 난이도: ★☆☆☆☆
+
+5. **네이버 지역 API를 이용한 검색 기능 구현**
+   - 링크: [네이버 지역 api 및 검색기능](https://game-chanda.tistory.com/178)
+   - 난이도: ★★★☆☆
+
+6. **Supabase 정보를 불러와 지도에 마커를 추가하는 기능 구현**
+   - 링크: [서버에서 마커 불러오기](https://game-chanda.tistory.com/179)
+   - 난이도: ★★☆☆☆
