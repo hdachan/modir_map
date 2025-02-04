@@ -3,21 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'filter.dart';
+
 class NaverMapBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      context,
-      designSize: Size(360, 740), // 디자인 기준 사이즈를 360으로 설정
-      minTextAdapt: true,
-      splitScreenMode: true,
-    );
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Color(0xFF1A1A1A), // 상단바 투명
-        statusBarIconBrightness: Brightness.light, // 아이콘을 밝은 색으로 설정
-      ),
-    );
     return Scaffold(
       body: SafeArea(
         child:  Container(
@@ -77,27 +67,38 @@ class NaverMapBackground extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 8.w), // 사이즈 박스 8픽셀
-                    Container(
-                      width: 48.w,
-                      height: 48.h,
-                      padding: EdgeInsets.all(12.w),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.w), // 모서리 둥글기 설정
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Filter()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(0), backgroundColor: Colors.transparent, // 패딩을 0으로 설정
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), // 기본 배경색을 투명으로 설정
+                        shadowColor: Colors.transparent, // 그림자 색상 제거
+                      ),
+                      child: Container(
+                        width: 48.w,
+                        height: 48.h,
+                        padding: EdgeInsets.all(12.w),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment(0.71, -0.71),
+                            end: Alignment(-0.71, 0.71),
+                            colors: [Color(0xFF4D17EE), Color(0xFF8D6AF5)],
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        gradient: LinearGradient(
-                          begin: Alignment(0.71, -0.71),
-                          end: Alignment(-0.71, 0.71),
-                          colors: [Color(0xFF4D17EE), Color(0xFF8D6AF5)],
+                        child: Icon(
+                          Icons.tab_unselected,
+                          color: Colors.white, // 아이콘 색상
+                          size: 24.sp, // 아이콘 크기
                         ),
                       ),
-                      child: Icon(
-                        Icons.tab_unselected,
-                        color: Colors.white, // 아이콘 색상
-                        size: 24.sp, // 아이콘 크기
-                      ),
-
                     ),
+
 
                   ],
                 ),
@@ -220,53 +221,92 @@ class NaverMapBackground extends StatelessWidget {
     );
   }
   void here(BuildContext context, String title, String content) {
-    OverlayState? overlayState = Overlay.of(context);
-
-    // OverlayEntry 선언
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        bottom: 56.h, // 하단에 고정
-        left: 0,
-        right: 0,
-        child: Material(
-          elevation: 8.0,
-          child: Container(
-            width: 360.w,
-            height: 236.h, // 높이 설정
-            color: Colors.white,
-            child: Column(
-              children: [
-                // 제목 영역
-                Container(
-                  width: 360.w,
-                  height: 36.h,
-                  color: Colors.white,
-                  ),
-                // 닫기 버튼 영역
-                Container(
-                  width: 360.w,
-                  height: 52.h,
-                  color: Colors.white,
-                  child: TextButton(
-                    onPressed: () {
-                      overlayEntry.remove(); // 오버레이 제거
-                    },
-                    child: Text(
-                      '닫기',
-                      style: TextStyle(color: Colors.black),
-                    ),
+    showBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: 360.w,
+          height: 222.h, // 높이 설정
+          child: Column(
+            children: [
+              // 제목 영역 (둥근 모서리 추가)
+              Container(
+                width: 360.w,
+                height: 36.h,
+                decoration: BoxDecoration(
+                  color: Color(0xFF1A1A1A),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.w), // 상단 왼쪽 둥근 모서리
+                    topRight: Radius.circular(25.w), // 상단 오른쪽 둥근 모서리
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+                child: Center(
+                  child: Container(
+                    width: 48.w,
+                    height: 4.h,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
 
-    // 오버레이 추가
-    overlayState.insert(overlayEntry);
+              // 내용 영역
+              Container(
+                width: 360.w,
+                height: 186.h,
+                color: Color(0xFF1A1A1A),
+                padding: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 24),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 328.w,
+                      height: 102.h,
+                      color: Colors.cyan,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 100.w,
+                            height: 100.h,
+                            color: Colors.cyanAccent,
+                          ),
+                          SizedBox(width: 12),
+                          Container(
+                            width: 216.w,
+                            height: 102.h,
+                            color: Colors.cyanAccent,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Container(
+                      width: 328.w,
+                      height: 46.h,
+                      color: Colors.cyan,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 265.w,
+                            height: 48.h,
+                            color: Colors.cyanAccent,
+                          ),
+                          SizedBox(width: 8),
+                          Container(
+                            width: 55.w,
+                            height: 33.h,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
+
 }

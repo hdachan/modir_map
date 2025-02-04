@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/naver_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -41,10 +42,17 @@ void main() async {
 
 
 class MyApp extends StatelessWidget {
+
   final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(
+      context,
+      designSize: Size(360, 740), // 디자인 기준 사이즈를 360으로 설정
+      minTextAdapt: true,
+      splitScreenMode: true,
+    );
     return Consumer<SettingState>(
       builder: (context, settingState, child) {
         return MaterialApp(
@@ -57,8 +65,7 @@ class MyApp extends StatelessWidget {
               },
               children: [
                 KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
-                //TodoListScreen(),
-                NaverLocalSearchPage(),
+                Center(child: Text("탭 2")), // 탭 5
                 Setting(),
                 MyMapWidget(),
                 Center(child: Text("탭 5")), // 탭 5
@@ -71,7 +78,7 @@ class MyApp extends StatelessWidget {
                 _pageController.jumpToPage(index); // 페이지 전환
               },
               type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.black, // 배경색을 검정색으로 설정
+              backgroundColor: Color(0xFF1A1A1A), // 배경색을 검정색으로 설정
               selectedItemColor: Color(0xFFBFACF9), // 선택된 아이템 색상
               unselectedItemColor: Colors.grey, // 선택되지 않은 아이템 색상
               items: [

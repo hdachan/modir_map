@@ -136,11 +136,133 @@ class _SettingState extends State<Setting> {
                   ],
                 ),
               ),
+
+              //광고바
               Container(
                 width: 360.w,
                 height: 396.h,
                 color: Color(0xFF1A1A1A),
+                padding: EdgeInsets.only(top: 24.h), // 상단에 24의 패딩 설정
+                child: Column(
+                  children: [
+                    Container(
+                      width: 360.w,
+                      height: 100.h,
+                      padding: EdgeInsets.only(left: 16,right: 16), // 상단에 24의 패딩 설정
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 328.w,
+                            height: 68.h,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 248.w,
+                                  height: 68.h,
+                                  child: Text(
+                                    '패션인들이 선택한\n서울 매장 루트 리스트',
+                                    style: TextStyle(
+                                      color: Color(0xFFF6F6F6),
+                                      fontSize: 24,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.40,
+                                      letterSpacing: -0.60,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topCenter, // 상단 중앙 정렬
+                                  child: Container(
+                                    width: 80.w,
+                                    height: 32.h,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: List.generate(4, (index) {
+                                        return Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 2.0), // 동그라미 간격
+                                          width: 8.0, // 동그라미 너비
+                                          height: 8.0, // 동그라미 높이
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: index == 0 ? Colors.white : Colors.grey, // 현재 페이지에 따라 색상 변경
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                ),
+
+
+                              ],
+                            ),
+
+                          ),
+                          SizedBox(height: 12.h),
+                          Container(
+                            width: 328.w,
+                            height: 20.h,
+                            child: Text(
+                              '#홍대 #포멀 #미니멀',
+                              style: TextStyle(
+                                color: Color(0xFFBFACF9),
+                                fontSize: 14,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.40,
+                                letterSpacing: -0.35,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 360.w,
+                      height: 272.h,
+                      padding: EdgeInsets.only(left:16,right:16,bottom:24,top: 24.h), // 상단에 24의 패딩 설정
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 328.w,
+                            height: 64.h,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1, color: Color(0xFF4D17EE)),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Container(
+                            width: 328.w,
+                            height: 64.h,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1, color: Color(0xFF4D17EE)),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Container(
+                            width: 328.w,
+                            height: 64.h,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1, color: Color(0xFF4D17EE)),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+
               Container(
                 width: 360.w,
                 height: 208.h,
