@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled/naver_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'SettingState.dart';
 import 'home_screen.dart';
-import 'search.dart';
-import 'supabase_setting.dart';
+import 'map_provider.dart';
+import 'naver_map.dart';
+import 'screen_setting.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화
@@ -34,6 +33,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => NaverMapProvider()), // 네이버 지도 상태
         ChangeNotifierProvider(create: (context) => SettingState()), // 바텀바 상태
         ChangeNotifierProvider(create: (context) => DataProvider()), // 설정 상태
+        ChangeNotifierProvider(create: (_) => MapProvider()), // Provider 등록
       ],
       child: MyApp(),
     ),
@@ -47,12 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      context,
-      designSize: Size(360, 740), // 디자인 기준 사이즈를 360으로 설정
-      minTextAdapt: true,
-      splitScreenMode: true,
-    );
+    initScreenUtil(context); //디자인 사이즈기준
     return Consumer<SettingState>(
       builder: (context, settingState, child) {
         return MaterialApp(
@@ -64,10 +59,11 @@ class MyApp extends StatelessWidget {
                 settingState.updateIndex(index); // 페이지 변경 시 인덱스 업데이트
               },
               children: [
-                KeepAlivePage(child: NaverMapBackground()), // 지도 탭 (상태 유지)
+                NaverMapBackground(),
+                //KeepAlivePage(child:NaverMapBackground()), // 지도 탭 (상태 유지)
                 Center(child: Text("탭 2")), // 탭 5
                 Setting(),
-                MyMapWidget(),
+                Center(child: Text("탭 4")), // 탭 5
                 Center(child: Text("탭 5")), // 탭 5
               ],
             ),
@@ -96,25 +92,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// KeepAlive를 위한 래퍼 위젯
-class KeepAlivePage extends StatefulWidget {
-  final Widget child;
-
-  const KeepAlivePage({required this.child});
-
-  @override
-  State<KeepAlivePage> createState() => _KeepAlivePageState();
-}
-
-class _KeepAlivePageState extends State<KeepAlivePage>
-    with AutomaticKeepAliveClientMixin {
-
-  @override
-  bool get wantKeepAlive => true; // 메모리에 유지
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context); // AutomaticKeepAliveClientMixin 필수
-    return widget.child;
-  }
-}

@@ -4,19 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:html/parser.dart' as html_parser;
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Setting_test(), // Setting 위젯을 홈으로 설정
-  ));
-}
+import 'map_provider.dart';
 
-class Setting_test extends StatefulWidget {
+class search_screen extends StatefulWidget {
   @override
-  _SettingStatetest createState() => _SettingStatetest();
+  _searchState_screen createState() => _searchState_screen();
 }
 
-class _SettingStatetest extends State<Setting_test> {
+class _searchState_screen extends State<search_screen> {
   bool _isLoading = false; // 로딩 상태를 나타내는 변수
   String _responseBody = "검색 결과가 여기에 표시됩니다."; // API 응답을 저장할 변수
   final TextEditingController _searchController = TextEditingController(); // 검색어 입력을 위한 컨트롤러
@@ -66,7 +63,7 @@ class _SettingStatetest extends State<Setting_test> {
             final parsedLongitude = _parseCoordinate(longitude, isLatitude: false); // 경도 변환
 
             // 결과 문자열 생성
-            return '$cleanTitle';
+            return '$cleanTitle|$parsedLatitude|$parsedLongitude';
             //return '$cleanTitle\n도로명: $roadAddress\n지번: $address\n위도: $parsedLatitude, 경도: $parsedLongitude\n';
           }).join('\n');
         });
@@ -107,6 +104,12 @@ class _SettingStatetest extends State<Setting_test> {
     });
   }
 
+  void moveToSearchLocation(BuildContext context, double lat, double lng) {
+    final mapProvider = Provider.of<MapProvider>(context, listen: false);
+    mapProvider.moveToLocation(lat, lng); // ✅ 지도 이동
+    Navigator.pop(context); // 검색창 닫기
+  }
+
   @override
   void initState() {
     super.initState();
@@ -121,10 +124,13 @@ class _SettingStatetest extends State<Setting_test> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final mapProvider = context.read<MapProvider>(); // 더 안전한 방식
+
     return Scaffold(
-      backgroundColor: Color(0xFF1A1A1A), // 전체 배경색 설정
+      backgroundColor: Color(0xFF1A1A1A),
       body: SafeArea(
         child: Column(
           children: [
@@ -192,42 +198,48 @@ class _SettingStatetest extends State<Setting_test> {
                 children: [
                   SingleChildScrollView(
                     child: Column(
-                      children: _responseBody.split('\n') // 한 개의 줄바꿈으로 그룹화
-                          .map((result) {
+                      children: _responseBody.split('\n').map((result) {
+                        List<String> parts = result.split('|');
+                        if (parts.length < 3) return Container(); // 데이터 부족 시 무시
+
+                        String title = parts[0].trim();
+                        double latitude = double.tryParse(parts[1]) ?? 0.0;
+                        double longitude = double.tryParse(parts[2]) ?? 0.0;
+
                         return ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(360.w, 48.h),
-                            backgroundColor: Color(0xFF1A1A1A), // 버튼 배경색
-                            padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12), // 버튼 안의 패딩
+                            backgroundColor: Color(0xFF1A1A1A),
+                            padding: EdgeInsets.all(12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero, // 모서리를 직각으로 설정
+                              borderRadius: BorderRadius.zero,
                             ),
                           ),
                           onPressed: () {
-                            // 버튼 클릭 시 동작할 코드 작성
-                            print(result.trim()); // 예시: 결과를 콘솔에 출력
+                            print("이동할 위치: $latitude, $longitude"); // 디버깅용 로그
+
+                            final mapProvider = Provider.of<MapProvider>(context, listen: false);
+                            mapProvider.moveToLocation(latitude, longitude); // 지도 이동
+                            Navigator.pop(context); // 검색창 닫기 (선택 사항)
                           },
+
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 아이콘과 텍스트를 양쪽으로 배치
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.search, color: Colors.white), // 왼쪽 돋보기 아이콘
-                                  SizedBox(width: 8), // 아이콘과 텍스트 사이의 간격
+                                  Icon(Icons.search, color: Colors.white),
+                                  SizedBox(width: 8),
                                   Text(
-                                    result.trim(), // 각 검색 결과 텍스트
+                                    title,
                                     style: TextStyle(
                                       color: Color(0xFFF8F6FE),
                                       fontSize: 14,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.70,
-                                      letterSpacing: -0.35,
                                     ),
                                   ),
                                 ],
                               ),
-                              Icon(Icons.arrow_forward, color: Colors.white), // 오른쪽 화살표 아이콘
+                              Icon(Icons.arrow_forward, color: Colors.white),
                             ],
                           ),
                         );
@@ -235,14 +247,13 @@ class _SettingStatetest extends State<Setting_test> {
                     ),
                   ),
 
-                  // 로딩 인디케이터
                   if (_isLoading)
                     Positioned.fill(
                       child: Container(
-                        color: Colors.black.withOpacity(0.5), // 반투명 배경
+                        color: Colors.black.withOpacity(0.5),
                         child: Center(
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // 인디케이터 색상
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                           ),
                         ),
                       ),
@@ -250,13 +261,6 @@ class _SettingStatetest extends State<Setting_test> {
                 ],
               ),
             ),
-
-
-
-
-
-
-
           ],
         ),
       ),
