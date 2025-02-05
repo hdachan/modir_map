@@ -32,3 +32,6 @@
    - 링크: [UI제작 및 검색화면 완료](https://game-chanda.tistory.com/181)
    - 난이도: ★☆☆☆☆
 
+9. **모듈세분화 / 검색시 지도 이동 완료**
+   - 링크: [검색이동 및 모듈세분화](https://game-chanda.tistory.com/182)
+   - 난이도: ★★★☆☆
