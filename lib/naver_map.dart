@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'map_provider.dart';  // ✅ MapProvider 가져오기
 
@@ -16,6 +17,47 @@ class NaverMapBackground extends StatefulWidget {
 
 class _NaverMapBackgroundState extends State<NaverMapBackground> {
   NaverMapController? _mapController; // 컨트롤러 저장
+
+  Future<void> _moveToCurrentLocation() async {
+    if (_mapController == null) {
+      print("MapController가 아직 설정되지 않음!");
+      return;
+    }
+
+    // 위치 권한 확인 및 요청
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print("위치 서비스가 비활성화되어 있음.");
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        print("위치 권한이 영구적으로 거부되었습니다.");
+        return;
+      }
+    }
+
+    // 현재 위치 가져오기
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // 지도 카메라를 현재 위치로 이동
+      final cameraUpdate = NCameraUpdate.scrollAndZoomTo(
+        target: NLatLng(position.latitude, position.longitude),
+        zoom: 15, // 적절한 줌 레벨
+      );
+      await _mapController!.updateCamera(cameraUpdate);
+      print("현재 위치로 이동 완료: ${position.latitude}, ${position.longitude}");
+    } catch (e) {
+      print("위치 정보를 가져오는 중 오류 발생: $e");
+    }
+  }
+
 
   @override
   void initState() {
@@ -250,6 +292,12 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                       ],
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _updateMarkers(dataProvider); // 현재 지도 화면 기준으로 마커 업데이트
+                    },
+                    child: Text("새로고침"),
+                  ),
 
                   // 네이버 지도 부분
                   Consumer<MapProvider>(
@@ -269,7 +317,30 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                 _mapController = controller; // 컨트롤러 저장
                                 _updateMarkers(dataProvider); // 마커 업데이트
                               },
+                              options: NaverMapViewOptions(
+                                initialCameraPosition: NCameraPosition(
+                                  target: NLatLng(36.1234229, 128.1146402), // 초기 위치
+                                  zoom: 15, // 초기 줌 레벨
+                                  bearing: 0, // 초기 방향
+                                  tilt: 0, // 초기 기울기
+                                ),
+                              ),
+
                             ),
+                            Positioned(
+                              bottom: 20,
+                              right: 20,
+                              child: GestureDetector(
+                                onTap: _moveToCurrentLocation,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 25,
+                                  child: Icon(Icons.my_location, color: Colors.black),
+                                ),
+                              ),
+                            ),
+
+
 
 
                           ],
@@ -378,8 +449,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
 
 
   // 마커 리스트를 동적으로 생성하는 함수
-  Set<NAddableOverlay> _buildMarkers(DataProvider dataProvider) {
-    return dataProvider.dataList.map<NAddableOverlay>((item) {
+  Set<NAddableOverlay> _buildMarkersFromList(List<dynamic> dataList) {
+    return dataList.map<NAddableOverlay>((item) {
       final double latitude = double.tryParse(item['mapy'].toString()) ?? 0;
       final double longitude = double.tryParse(item['mapx'].toString()) ?? 0;
       final String title = item['title'].toString();
@@ -388,9 +459,10 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
         id: title,
         position: NLatLng(latitude, longitude),
         caption: NOverlayCaption(text: title),
+        icon: NOverlayImage.fromAssetImage( 'assets/image/marker_off.png'), // 커스텀 마커 이미지
+        size: const Size(40, 40),
       );
 
-      // 마커 클릭 리스너 추가
       marker.setOnTapListener((overlay) {
         here(context);
       });
@@ -400,13 +472,39 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
   }
 
 
+
   // 데이터 변경 시 마커 업데이트
-  void _updateMarkers(DataProvider dataProvider) {
+  Future<void> _updateMarkers(DataProvider dataProvider) async {
     if (_mapController == null) return;
 
-    final newMarkers = _buildMarkers(dataProvider);
-    _mapController!.clearOverlays(); // 기존 마커 삭제
-    _mapController!.addOverlayAll(newMarkers); // 새로운 마커 추가
+    try {
+      // 현재 보이는 지도 영역(뷰포트) 가져오기
+      final bounds = await _mapController!.getContentBounds();
+      if (bounds == null) return;
+
+      // 뷰포트 내에 있는 데이터만 필터링
+      final filteredData = dataProvider.dataList.where((data) {
+        final double lat = double.tryParse(data['mapy'].toString()) ?? 0; // 위도
+        final double lng = double.tryParse(data['mapx'].toString()) ?? 0; // 경도
+
+        return lat >= bounds.southWest.latitude &&
+            lat <= bounds.northEast.latitude &&
+            lng >= bounds.southWest.longitude &&
+            lng <= bounds.northEast.longitude;
+      }).toList();
+
+      // 새로운 마커 생성
+      final newMarkers = _buildMarkersFromList(filteredData);
+
+      // 기존 마커 삭제 후 새로운 마커 추가
+      _mapController!.clearOverlays();
+      _mapController!.addOverlayAll(newMarkers);
+    } catch (e) {
+      print("마커 업데이트 중 오류 발생: $e");
+    }
   }
+
+
 }
+
 

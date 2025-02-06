@@ -18,6 +18,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   supabase_flutter: ^2.0.0
   html: ^0.15.5
+  permission_handler: ^11.3.1
+  geolocator: ^13.0.2
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +34,8 @@ flutter:
   assets:
     - assets/image/logo_primary.png
     - assets/
+    - assets/image/marker_off.png
+    - assets/image/maker_on.png
 
 
   fonts:
