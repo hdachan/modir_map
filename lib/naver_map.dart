@@ -3,12 +3,13 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'map_provider.dart';  // ✅ MapProvider 가져오기
+import 'map_provider.dart'; // ✅ MapProvider 가져오기
 
 import 'SettingState.dart';
 import 'animation.dart';
 import 'filter.dart';
 import 'search_screen.dart';
+import 'store.dart';
 
 class NaverMapBackground extends StatefulWidget {
   @override
@@ -57,7 +58,6 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       print("위치 정보를 가져오는 중 오류 발생: $e");
     }
   }
-
 
   @override
   void initState() {
@@ -118,7 +118,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(createFadeRoute(search_screen()));
+                            Navigator.of(context)
+                                .push(createFadeRoute(search_screen()));
                           },
                           child: Container(
                             width: 272.w,
@@ -127,7 +128,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                             decoration: ShapeDecoration(
                               color: Color(0x19320E99),
                               shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 1.w, color: Color(0xFF4D17EE)),
+                                side: BorderSide(
+                                    width: 1.w, color: Color(0xFF4D17EE)),
                                 borderRadius: BorderRadius.circular(16.w),
                               ),
                             ),
@@ -169,7 +171,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                         SizedBox(width: 8.w), // 사이즈 박스 8픽셀
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(createSlideUpRoute(Filter())); // 아래에서 위로 올라오는 애니메이션 사용
+                            Navigator.of(context).push(createSlideUpRoute(
+                                Filter())); // 아래에서 위로 올라오는 애니메이션 사용
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(0),
@@ -302,14 +305,17 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   // 네이버 지도 부분
                   Consumer<MapProvider>(
                     builder: (context, mapProvider, child) {
-                      return  Expanded(
+                      return Expanded(
                         child: Stack(
                           children: [
                             // 네이버 지도
                             NaverMap(
                               onMapReady: (controller) {
-                                final mapProvider = Provider.of<MapProvider>(context, listen: false);
-                                mapProvider.setMapController(controller); // ✅ 컨트롤러 설정
+                                final mapProvider = Provider.of<MapProvider>(
+                                    context,
+                                    listen: false);
+                                mapProvider
+                                    .setMapController(controller); // ✅ 컨트롤러 설정
                                 _updateMarkers(dataProvider);
                                 print("NaverMap 컨트롤러 설정 완료!"); // 디버깅용
 
@@ -319,13 +325,15 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                               },
                               options: NaverMapViewOptions(
                                 initialCameraPosition: NCameraPosition(
-                                  target: NLatLng(36.1234229, 128.1146402), // 초기 위치
-                                  zoom: 15, // 초기 줌 레벨
-                                  bearing: 0, // 초기 방향
+                                  target: NLatLng(36.1234229, 128.1146402),
+                                  // 초기 위치
+                                  zoom: 15,
+                                  // 초기 줌 레벨
+                                  bearing: 0,
+                                  // 초기 방향
                                   tilt: 0, // 초기 기울기
                                 ),
                               ),
-
                             ),
                             Positioned(
                               bottom: 20,
@@ -335,20 +343,16 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   radius: 25,
-                                  child: Icon(Icons.my_location, color: Colors.black),
+                                  child: Icon(Icons.my_location,
+                                      color: Colors.black),
                                 ),
                               ),
                             ),
-
-
-
-
                           ],
                         ),
                       );
                     },
                   ),
-
                 ],
               ),
             ),
@@ -358,7 +362,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
     );
   }
 
-  void here(BuildContext context) {
+  void here(BuildContext context, String address, String roadAddress, String type, String title) {
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -389,57 +393,267 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
               ),
 
               // 내용 영역
-              Container(
-                width: 360.w,
-                height: 186.h,
-                color: Color(0xFF1A1A1A),
-                padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 24),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 328.w,
-                      height: 102.h,
-                      color: Colors.cyan,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 100.w,
-                            height: 100.h,
-                            color: Colors.cyanAccent,
-                          ),
-                          SizedBox(width: 12),
-                          Container(
-                            width: 216.w,
-                            height: 102.h,
-                            color: Colors.cyanAccent,
-                          ),
-                        ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StoreInfoScreen(
+                        title: title,
+                        address: address,
+                        roadAddress: roadAddress,
+                        type: type,
                       ),
                     ),
-                    SizedBox(height: 12),
-                    Container(
-                      width: 328.w,
-                      height: 46.h,
-                      color: Colors.cyan,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 265.w,
-                            height: 48.h,
-                            color: Colors.cyanAccent,
-                          ),
-                          SizedBox(width: 8),
-                          Container(
-                            width: 55.w,
-                            height: 33.h,
-                            color: Colors.blue,
-                          ),
-                        ],
+                  );
+                },
+
+                child: Container(
+                  width: 360.w,
+                  height: 186.h,
+                  color: Color(0xFF1A1A1A),
+                  padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 24.h),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 328.w,
+                        height: 102.h,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 100.w,
+                              height: 100.h,
+                              color: Colors.red,
+                            ),
+                            SizedBox(width: 12.w),
+                            Container(
+                              width: 216.w,
+                              height: 102.h,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 216.w,
+                                    height: 46.h,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
+                                      crossAxisAlignment: CrossAxisAlignment.start, // 위쪽 정렬
+                                      children: [
+                                        Container(
+                                          width: 164.w,
+                                          height: 46.h,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                width: 164.w,
+                                                height: 20.h,
+                                                child: Text(
+                                                  '$type',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFE7E7E7),
+                                                    fontSize: 14,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w500,
+                                                    height: 1.40.h,
+                                                    letterSpacing: -0.35,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 164.w,
+                                                height: 26.h,
+                                                child: Text(
+                                                  '$title',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 1.30,
+                                                    letterSpacing: -0.50,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 52.w,
+                                          height: 20.h,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: 20.w,
+                                                height: 20.h,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: ShapeDecoration(
+                                                  color: Color(0xFF1CD14F),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 12.w),
+                                              Container(
+                                                width: 20.w,
+                                                height: 20.h,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: ShapeDecoration(
+                                                  shape: RoundedRectangleBorder(
+                                                    side: BorderSide(width: 1, color: Color(0xFFFD3D51)),
+                                                    borderRadius: BorderRadius.circular(100),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 216.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '영업 중 · 20:00에 영업 종료',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.40,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 216.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '렉토 · 벨리에 · UGG',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.40,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 12),
+                      Container(
+                        width: 328.w,
+                        height: 48.h,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 265.w,
+                              height: 48.h,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 265.w,
+                                    height: 20.h,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: '추천  ·  ',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.40,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '스트릿',
+                                            style: TextStyle(
+                                              color: Color(0xFF05FFF7),
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w700,
+                                              height: 1.40,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '을 선호하는 분들',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.40,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 265.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '주소  ·  $address ',
+                                      style: TextStyle(
+                                        color: Color(0xFFD1D1D1),
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Container(
+                              width: 55.w,
+                              height: 33.h,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 8.h),
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF3D3D3D),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '길찾기',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.40.h,
+                                    letterSpacing: -0.30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         );
@@ -447,31 +661,32 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
     );
   }
 
-
   // 마커 리스트를 동적으로 생성하는 함수
   Set<NAddableOverlay> _buildMarkersFromList(List<dynamic> dataList) {
     return dataList.map<NAddableOverlay>((item) {
       final double latitude = double.tryParse(item['mapy'].toString()) ?? 0;
       final double longitude = double.tryParse(item['mapx'].toString()) ?? 0;
       final String title = item['title'].toString();
+      final String address = item['address']?.toString() ?? '주소 없음'; // 주소
+      final String roadAddress = item['roadAddress']?.toString() ?? '로도명 주소 없음'; // 도로명주소
+      final String type = item['type']?.toString() ?? '종류 없음'; // 매장 타입
 
       final marker = NMarker(
         id: title,
         position: NLatLng(latitude, longitude),
-        caption: NOverlayCaption(text: title),
-        icon: NOverlayImage.fromAssetImage( 'assets/image/marker_off.png'), // 커스텀 마커 이미지
+        caption: NOverlayCaption(text: address),
+        icon: NOverlayImage.fromAssetImage('assets/image/marker_off.png'),
+        // 커스텀 마커 이미지
         size: const Size(40, 40),
       );
 
       marker.setOnTapListener((overlay) {
-        here(context);
+        here(context, address, roadAddress ,type, title);
       });
 
       return marker;
     }).toSet();
   }
-
-
 
   // 데이터 변경 시 마커 업데이트
   Future<void> _updateMarkers(DataProvider dataProvider) async {
@@ -503,8 +718,4 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       print("마커 업데이트 중 오류 발생: $e");
     }
   }
-
-
 }
-
-
