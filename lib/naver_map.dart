@@ -3,7 +3,6 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'map_provider.dart'; // ✅ MapProvider 가져오기
 
 import 'SettingState.dart';
 import 'animation.dart';
@@ -206,6 +205,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                     ),
                   ),
 
+                  // 카테고리
                   Container(
                     width: 360.w,
                     height: 56.h,
@@ -295,6 +295,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                       ],
                     ),
                   ),
+
+                  // 새로고침 버튼
                   ElevatedButton(
                     onPressed: () {
                       _updateMarkers(dataProvider); // 현재 지도 화면 기준으로 마커 업데이트
@@ -317,7 +319,6 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                 mapProvider
                                     .setMapController(controller); // ✅ 컨트롤러 설정
                                 _updateMarkers(dataProvider);
-                                print("NaverMap 컨트롤러 설정 완료!"); // 디버깅용
 
                                 // ✅ 마커 추가
                                 _mapController = controller; // 컨트롤러 저장

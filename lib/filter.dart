@@ -28,57 +28,23 @@ class _FilterState extends State<Filter>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1A1A1A), // 백그라운드 색상 설정
-      body: SafeArea( // SafeArea 추가
+      backgroundColor: Color(0xFF1A1A1A),
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                Container(
-                  width: 360.w,
-                  height: 60.h,
-                  color: Color(0xFF1A1A1A),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context); // 현재 화면을 닫고 이전 화면으로 돌아감
-                        },
-                        child: Container(
-                          width: 56.w,
-                          height: 56.h,
-                          padding: EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.chevron_left,
-                            size: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 304.w,
-                        height: 60.h,
-                        padding: EdgeInsets.only(bottom: 16,top: 16,right: 16),
-                        child: Text(
-                          '필터',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 1.40.h,
-                            letterSpacing: -0.50,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                //상단바
+                CustomAppBar(title: '필터', context: context),
+
+                //필터 넣은 목록
                 Container(
                   width: 360.w,
                   height: 56.h,
                   color: Color(0xFF1A1A1A),
                 ),
+
+                //탭바 디자인
                 Container(
                   width: 360.w,
                   height: 54.h,
@@ -121,14 +87,15 @@ class _FilterState extends State<Filter>
                     labelPadding: EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ),
-                // TabBarView를 추가하여 탭에 따른 내용을 표시
+
+                //탭바 정보
                 Container(
                   height: 570.h, // 적절한 높이 설정
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      DataScreen1(),
-                      DataScreen2(),
+                      style_screen(),
+                      brand_screen(),
                     ],
                   ),
                 ),
@@ -141,7 +108,9 @@ class _FilterState extends State<Filter>
   }
 }
 
-class DataScreen1 extends StatelessWidget {
+
+//스타일화면
+class style_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -187,7 +156,8 @@ class DataScreen1 extends StatelessWidget {
   }
 }
 
-class DataScreen2 extends StatelessWidget {
+//브랜드화면
+class brand_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -207,9 +177,10 @@ class DataScreen2 extends StatelessWidget {
 
 
 
+// 버튼
 Widget casualButton(String text) {
   return Container(
-    width: 68.w, // .w와 .h는 확장 기능을 사용한 것으로 가정 (예: flutter_screenutil)
+    width: 68.w,
     height: 36.h,
     decoration: ShapeDecoration(
       shape: RoundedRectangleBorder(
@@ -219,7 +190,7 @@ Widget casualButton(String text) {
     ),
     child: Center(
       child: Text(
-        text, // 매개변수로 전달된 텍스트 사용
+        text,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -233,3 +204,6 @@ Widget casualButton(String text) {
     ),
   );
 }
+
+
+

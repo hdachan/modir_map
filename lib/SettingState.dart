@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 
@@ -7,6 +7,7 @@ final supabase = Supabase.instance.client; // Supabase 클라이언트 인스턴
 List<dynamic> dataList = [];
 
 
+//하단바 상태관리
 class SettingState extends ChangeNotifier {
 
   // 현재 선택된 하단바 인덱스
@@ -20,7 +21,7 @@ class SettingState extends ChangeNotifier {
   }
 }
 
-// NaverMapProvider 클래스 정의
+//네이버 지도 상태관리
 class NaverMapProvider with ChangeNotifier {
   // 상태 관리에 필요한 변수와 메서드 정의
 }
@@ -28,6 +29,7 @@ class NaverMapProvider with ChangeNotifier {
 
 
 
+// modir supabase 실시간 불러오기
 class DataProvider with ChangeNotifier {
   final supabase = Supabase.instance.client;
   List<dynamic> dataList = [];
@@ -94,7 +96,7 @@ class DataProvider with ChangeNotifier {
 }
 
 
-
+// marker supabase 실시간 불러오기
 class DataProvider2 with ChangeNotifier {
   final supabase = Supabase.instance.client;
   List<dynamic> storeMarkerList = [];
@@ -135,5 +137,34 @@ class DataProvider2 with ChangeNotifier {
     return null;
   }
 }
+
+// 지도 이동 프로바이더
+class MapProvider with ChangeNotifier {
+  NaverMapController? _mapController;
+
+  NaverMapController? get mapController => _mapController;
+
+  void setMapController(NaverMapController controller) {
+    _mapController = controller;
+    notifyListeners();
+  }
+
+  void moveToLocation(double latitude, double longitude) async {
+    if (_mapController != null) {
+      final cameraUpdate = NCameraUpdate.scrollAndZoomTo(
+        target: NLatLng(latitude, longitude),
+        zoom: 15, // 적절한 줌 레벨 설정
+      );
+      await _mapController!.updateCamera(cameraUpdate);
+      print("카메라 이동 완료: $latitude, $longitude"); // 확인용 로그
+      notifyListeners(); // ✅ UI 업데이트 추가
+    } else {
+      print("MapController가 아직 설정되지 않음!");
+    }
+  }
+
+}
+
+
 
 

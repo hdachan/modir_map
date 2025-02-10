@@ -41,11 +41,10 @@ class _SignUpPageState extends State<SignUpPage> {
         // 회원가입 성공 시 추가 정보 저장
         final user = response.user;
         if (user != null) {
+          // profiles 테이블에 이메일과 비밀번호 저장
           await supabase.from('profiles').upsert({
-            'id': user.id, // Supabase Auth에서 제공하는 사용자 ID
             'email': _emailController.text,
-            'name': _nameController.text, // 이름 저장
-            'age': int.tryParse(_ageController.text) ?? 0, // 나이 저장 (정수로 변환)
+            'password': _passwordController.text, // 비밀번호는 일반적으로 저장하지 않지만, 필요하다면 이렇게 저장
           });
 
           Navigator.pushReplacementNamed(context, '/home');
@@ -61,6 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

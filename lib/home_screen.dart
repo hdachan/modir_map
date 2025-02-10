@@ -4,11 +4,6 @@ import 'package:untitled/search_screen.dart';
 
 import 'screen_setting.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Setting(), // Setting 위젯을 홈으로 설정
-  ));
-}
 
 class Setting extends StatefulWidget {
   @override
@@ -25,7 +20,6 @@ class _SettingState extends State<Setting> {
     _pageController.addListener(() {
       if (_pageController.page != null) {
         setState(() {
-          // floor()를 사용하여 현재 페이지를 업데이트
           _currentPage = _pageController.page!.floor();
         });
       }
@@ -254,6 +248,7 @@ class _SettingState extends State<Setting> {
                 }),
               ),
 
+              //아이콘 모음
               Container(
                 width: 360.w,
                 height: 208.h,
@@ -306,6 +301,8 @@ class _SettingState extends State<Setting> {
                   ],
                 ),
               ),
+
+              //좋아할 매장
               Container(
                 width: 360.w,
                 height: 423.h,

@@ -12,7 +12,7 @@ void initScreenUtil(BuildContext context) {
 }
 
 
-// KeepAlive를 위한 래퍼 위젯
+// 하단바 관리 툴_KeepAlive를 위한 래퍼 위젯 (사용시 메모리에 계속 유지)
 class KeepAlivePage extends StatefulWidget {
   final Widget child;
 
@@ -154,6 +154,53 @@ Widget buildAppBar() {
           onPressed: () {
             print("Notification button pressed");
           },
+        ),
+      ],
+    ),
+  );
+}
+
+
+//전체_뒤로가기 상단바
+Widget CustomAppBar({required String title, required BuildContext context}) {
+  return Container(
+    width: 360.w,
+    height: 56.h,
+    color: Color(0xFF1A1A1A),
+    padding: EdgeInsets.only(left: 8.w, right: 16.w),
+    child: Row(
+      children: [
+        // 뒤로가기 버튼
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context); // context를 이제 사용할 수 있음
+          },
+          child: Container(
+            width: 56.w,
+            height: 56.h,
+            padding: EdgeInsets.all(16),
+            child: Icon(
+              Icons.chevron_left,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Container(
+          width: 280.w,
+          height: 56.h,
+          padding: EdgeInsets.only(bottom: 14.h, top: 14.h),
+          child: Text(
+            title, // 전달받은 텍스트 사용
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w700,
+              height: 1.40,
+              letterSpacing: -0.50,
+            ),
+          ),
         ),
       ],
     ),

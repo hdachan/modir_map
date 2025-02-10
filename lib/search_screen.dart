@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:html/parser.dart' as html_parser;
 import 'package:provider/provider.dart';
 
-import 'map_provider.dart';
+import 'SettingState.dart';
 
 class search_screen extends StatefulWidget {
   @override
@@ -127,8 +127,6 @@ class _searchState_screen extends State<search_screen> {
 
   @override
   Widget build(BuildContext context) {
-    final mapProvider = context.read<MapProvider>(); // 더 안전한 방식
-
     return Scaffold(
       backgroundColor: Color(0xFF1A1A1A),
       body: SafeArea(
@@ -183,7 +181,7 @@ class _searchState_screen extends State<search_screen> {
                           fontSize: 14.sp,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w500,
-                          height: 1.70,
+                          height: 1.70.h,
                           letterSpacing: -0.35,
                         ),
                       ),
@@ -239,7 +237,7 @@ class _searchState_screen extends State<search_screen> {
                                   ),
                                 ],
                               ),
-                              Icon(Icons.arrow_forward, color: Colors.white),
+                              Icon(Icons.north_west, color: Colors.white),
                             ],
                           ),
                         );

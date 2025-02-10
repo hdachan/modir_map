@@ -36,6 +36,7 @@ flutter:
     - assets/
     - assets/image/marker_off.png
     - assets/image/maker_on.png
+    - assets/image/logo_primary2.png
 
 
   fonts:
