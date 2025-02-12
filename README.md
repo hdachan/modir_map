@@ -43,3 +43,11 @@
 11. **매장 상세보기 ui 제작 중 / 마커 클릭시 정보 불러오기 완료 **
    - 링크: [매장상세보기 UI/ 마커 정보시트 수정](https://game-chanda.tistory.com/184)
    - 난이도: ★☆☆☆☆
+
+12. **첫 로그인화면 / 동의화면 제작 **
+- 링크: [바텀바고정/Sign_up (회원가입 메서드)](https://game-chanda.tistory.com/185)
+- 난이도: ★☆☆☆☆
+
+13. **provider 수정 / 세션유지 **
+- 링크: [로그인 프로바이더 추가/ui제작)](https://game-chanda.tistory.com/186)
+- 난이도: ★★★☆☆
