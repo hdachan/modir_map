@@ -166,5 +166,48 @@ class MapProvider with ChangeNotifier {
 }
 
 
+// 로그인 로그아웃 상태관리
+class AuthProvider with ChangeNotifier {
+  Stream<AuthState>? _authStateStream;
+  Session? _session;
+
+  AuthProvider() {
+    _session = Supabase.instance.client.auth.currentSession;
+    _authStateStream = Supabase.instance.client.auth.onAuthStateChange;
+
+    _authStateStream?.listen((data) {
+      _session = data.session;
+      notifyListeners(); // 로그인/로그아웃 상태 변경 감지
+    });
+  }
+
+  Session? get session => _session;
+
+  bool get isLoggedIn => _session != null;
+
+  Future<void> signOut() async {
+    await Supabase.instance.client.auth.signOut();
+    notifyListeners();
+  }
+}
+
+
+
+class AuthObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    _checkAuthState();
+    super.didPush(route, previousRoute);
+  }
+
+  void _checkAuthState() async {
+    final session = Supabase.instance.client.auth.currentSession;
+    if (session == null) {
+      navigator?.pushReplacementNamed('/login');
+    }
+  }
+}
+
+
 
 

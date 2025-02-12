@@ -37,6 +37,13 @@ flutter:
     - assets/image/marker_off.png
     - assets/image/maker_on.png
     - assets/image/logo_primary2.png
+    - assets/image/goole_icon.png
+    - assets/image/kakaoh_icon.png
+    - assets/image/modir_logo_icon.png
+    - assets/image/check_icon.png
+    - assets/image/checkOn_icon.png
+    - assets/image/Oncheck_icon.png
+    - assets/image/Onbluecheck_icon.png
 
 
   fonts:

@@ -24,7 +24,6 @@ class KeepAlivePage extends StatefulWidget {
 
 class _KeepAlivePageState extends State<KeepAlivePage>
     with AutomaticKeepAliveClientMixin {
-
   @override
   bool get wantKeepAlive => true; // 메모리에 유지
 
@@ -34,7 +33,6 @@ class _KeepAlivePageState extends State<KeepAlivePage>
     return widget.child;
   }
 }
-
 
 //홈화면_검색기능
 Widget customSearchButton(BuildContext context, VoidCallback onTap) {
@@ -75,7 +73,8 @@ Widget customSearchButton(BuildContext context, VoidCallback onTap) {
                 Container(
                   width: 122.w,
                   height: 24.h,
-                  child: Center( // 텍스트를 중앙에 배치
+                  child: Center(
+                    // 텍스트를 중앙에 배치
                     child: Text(
                       '브랜드, 매장, 위치 검색',
                       style: TextStyle(
@@ -98,7 +97,6 @@ Widget customSearchButton(BuildContext context, VoidCallback onTap) {
   );
 }
 
-
 //홈화면_아이콘
 Widget menuButton({
   required IconData icon,
@@ -107,9 +105,12 @@ Widget menuButton({
   return GestureDetector(
     onTap: onPressed, // 클릭 시 수행할 동작
     child: Container(
-      width: 56.w, // 원하는 너비
-      height: 56.h, // 원하는 높이
-      padding: EdgeInsets.all(16.0), // 패딩
+      width: 56.w,
+      // 원하는 너비
+      height: 56.h,
+      // 원하는 높이
+      padding: EdgeInsets.all(16.0),
+      // 패딩
       decoration: BoxDecoration(
         color: Colors.transparent, // 배경색을 투명으로 설정
         borderRadius: BorderRadius.circular(8), // 모서리를 둥글게
@@ -160,7 +161,6 @@ Widget buildAppBar() {
   );
 }
 
-
 //전체_뒤로가기 상단바
 Widget CustomAppBar({required String title, required BuildContext context}) {
   return Container(
@@ -201,6 +201,66 @@ Widget CustomAppBar({required String title, required BuildContext context}) {
               letterSpacing: -0.50,
             ),
           ),
+        ),
+      ],
+    ),
+  );
+}
+
+//로그인화면_뒤로가기_상단바
+Widget CustomloginAppBar({required String title, required BuildContext context}) {
+  return Container(
+    width: 360.w,
+    height: 56.h,
+    color: Color(0xFF1A1A1A),
+    child: Row(
+      children: [
+        // 뒤로가기 버튼
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context); // context를 이제 사용할 수 있음
+          },
+          child: Container(
+            width: 56.w,
+            height: 56.h,
+            padding: EdgeInsets.all(16),
+            child: Icon(
+              Icons.chevron_left,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Container(
+          width: 248.w,
+          height: 56.h,
+          padding: EdgeInsets.only(bottom: 14.h, top: 14.h),
+          child: Text(
+            title, // 전달받은 텍스트 사용
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w700,
+              height: 1.40,
+              letterSpacing: -0.50,
+            ),
+          ),
+        ),
+        Container(
+          width: 56.w,
+          height: 56.h,
+          padding: EdgeInsets.only(left: 14,right: 14,top: 20,bottom: 20),
+          child: Container(
+            width: 28.w,
+            height: 16.h,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/image/logo_primary2.png'),
+              ),
+            ),
+          ),
+
         ),
       ],
     ),
