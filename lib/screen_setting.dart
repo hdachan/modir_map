@@ -22,8 +22,7 @@ class KeepAlivePage extends StatefulWidget {
   State<KeepAlivePage> createState() => _KeepAlivePageState();
 }
 
-class _KeepAlivePageState extends State<KeepAlivePage>
-    with AutomaticKeepAliveClientMixin {
+class _KeepAlivePageState extends State<KeepAlivePage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true; // 메모리에 유지
 
@@ -98,10 +97,7 @@ Widget customSearchButton(BuildContext context, VoidCallback onTap) {
 }
 
 //홈화면_아이콘
-Widget menuButton({
-  required IconData icon,
-  required VoidCallback onPressed,
-}) {
+Widget menuButton({required IconData icon, required VoidCallback onPressed,}) {
   return GestureDetector(
     onTap: onPressed, // 클릭 시 수행할 동작
     child: Container(
@@ -263,6 +259,117 @@ Widget CustomloginAppBar({required String title, required BuildContext context})
 
         ),
       ],
+    ),
+  );
+}
+
+//회원가입_설명_text
+Widget Signuptext(String title, String subtitle) {
+  return Container(
+    width: 360.w, // 360.w
+    height: 148.h, // 148.h
+    padding: EdgeInsets.only(left: 16, right: 16, top: 48, bottom: 48),
+    child: Column(
+      children: [
+        Container(
+          width: 328.w, // 328.w
+          height: 28.h, // 28.h
+          child: Text(
+            title, // 전달받은 title 사용
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp, // 20.sp
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w700,
+              height: 1.40.h, // 1.40.h
+              letterSpacing: -0.50,
+            ),
+          ),
+        ),
+        SizedBox(height: 8.h), // 8.h
+        Container(
+          width: 328.w,
+          height: 16.h, // 16.h
+          child: Text(
+            subtitle,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.sp,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w500,
+              height: 1.3.h, // 1.30.h
+              letterSpacing: -0.30,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+//회원가입_하단바_버튼
+class LoginButton extends StatelessWidget {final String buttonText;final VoidCallback onTap;
+  const LoginButton({Key? key, required this.buttonText, required this.onTap,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        width: double.infinity,
+        height: 100.h,
+        padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
+        child: InkWell(
+          onTap: onTap, // 전달받은 onTap 사용
+          child: Container(
+            width: 328.w, // 328.w
+            height: 52.h, // 52.h
+            decoration: ShapeDecoration(
+              color: Color(0xFF05FFF7),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+            child: Text(
+              buttonText, // 전달받은 로그인 텍스트 사용
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF1A1A1A),
+                fontSize: 20.sp, // 20.sp
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w500,
+                height: 1.40.h, // 1.40.h
+                letterSpacing: -0.50,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+//회원가입_서브텍스트
+Widget Subtext(String nickname) {
+  return Container(
+    width: 360.w, // 360.w
+    height: 20.h, // 20.h
+    padding: EdgeInsets.only(left: 16, right: 16),
+    child: Container(
+      width: 328.w, // 328.w
+      height: 20.h, // 20.h
+      child: Text(
+        nickname, // 전달받은 닉네임 텍스트 사용
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14.sp, // 14.sp
+          fontFamily: 'Pretendard',
+          fontWeight: FontWeight.w500,
+          height: 1.40.h, // 1.40.h
+          letterSpacing: -0.35,
+        ),
+      ),
     ),
   );
 }

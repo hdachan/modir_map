@@ -273,43 +273,12 @@ class _login_screen extends State<login_screen>
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          width: double.infinity,
-          height: 100.h,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
-          child: InkWell(
-            onTap: () {
-              _signIn();
-            },
-            child: Container(
-              width: 328.w,
-              height: 52.h,
-              decoration: ShapeDecoration(
-                color: Color(0xFF05FFF7),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              padding:
-                  EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
-              child: Text(
-                '로그인',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF1A1A1A),
-                  fontSize: 20.sp,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w500,
-                  height: 1.40.h,
-                  letterSpacing: -0.50,
-                ),
-              ),
-            ),
-          ),
-        ),
+      bottomNavigationBar: LoginButton(
+        buttonText: '로그인', // 로그인 텍스트 전달
+        onTap: () {
+          // 로그인 버튼 클릭 시 실행할 코드
+          _signIn();
+        },
       ),
     );
   }

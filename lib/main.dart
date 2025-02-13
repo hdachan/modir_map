@@ -11,7 +11,6 @@ import 'home_screen.dart';
 import 'logout.dart';
 import 'naver_map.dart';
 import 'screen_setting.dart';
-import 'test.dart';
 
 
 class Home_screen extends StatelessWidget {
@@ -36,7 +35,7 @@ class Home_screen extends StatelessWidget {
                 //KeepAlivePage(child:NaverMapBackground()),
                 Logout_screen(),
                 Setting(),
-                LoginPage(),
+                Center(child: Text("탭 4")), // 탭 5
                 MY_page(),
               ],
             ),

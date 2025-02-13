@@ -111,7 +111,7 @@ class DataProvider2 with ChangeNotifier {
 
     try {
       final response = await supabase
-          .from('markers')
+          .from('userinfo')
           .select('''
             mapx,
             mapy,
@@ -192,7 +192,7 @@ class AuthProvider with ChangeNotifier {
 }
 
 
-
+// 로그인 로그아웃 상태관리
 class AuthObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {

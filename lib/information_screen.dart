@@ -1,24 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'screen_setting.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:untitled/screen_setting.dart';
 
-class information_screen extends StatefulWidget {
+class InformationScreen extends StatefulWidget {
+  final String email;
+  final String password;
+
+  InformationScreen({required this.email, required this.password});
+
   @override
-  _information_screen createState() => _information_screen();
+  _InformationScreenState createState() => _InformationScreenState();
 }
 
-class _information_screen extends State<information_screen> {
+class _InformationScreenState extends State<InformationScreen> {
   bool _isTextFieldEmpty = true;
   bool _isTextFieldEmpty1 = true;
   final TextEditingController _nicknameController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
 
-  int _selectedIndex = 0; // 선택된 버튼의 인덱스
+  int _selectedGenderIndex = -1; // 0: 남자, 1: 여자
+  int _selectedCategoryIndex = -1; // 카테고리 선택
 
-  void _onButtonPressed(int index) {
+  void _onGenderButtonPressed(int index) {
     setState(() {
-      _selectedIndex = index; // 버튼 클릭 시 인덱스 업데이트
+      _selectedGenderIndex = index;
     });
+  }
+
+  void _onCategoryButtonPressed(int index) {
+    setState(() {
+      _selectedCategoryIndex = index;
+    });
+  }
+
+  Future<void> _signUp() async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      // 회원가입 요청
+      final response = await supabase.auth.signUp(
+        email: widget.email,
+        password: widget.password,
+      );
+
+      if (response.user != null) {
+        final userId = response.user!.id;
+        final username = _nicknameController.text.trim();
+        final birthdate = _birthdateController.text.trim();
+        final gender = _selectedGenderIndex == 0 ? true : false; // 남자(true), 여자(false)
+        final category = _selectedCategoryIndex == 0 ? '빈티지' : '아메카지';
+
+        // userinfo 테이블에 데이터 저장
+        await supabase.from('userinfo').upsert({
+          'id': userId,
+          'email': widget.email,
+          'username': username,
+          'birthdate': birthdate.isNotEmpty ? birthdate : null,
+          'gender': gender,
+          'category': category,
+        });
+
+        // 홈 화면 이동
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('회원가입 실패. 다시 시도해주세요.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
   }
 
   @override
@@ -45,7 +99,7 @@ class _information_screen extends State<information_screen> {
 
   @override
   Widget build(BuildContext context) {
-    initScreenUtil(context); // 디자인 사이즈 기준
+    initScreenUtil(context);
     return Scaffold(
       backgroundColor: Color(0xFF1A1A1A),
       body: SafeArea(
@@ -54,372 +108,128 @@ class _information_screen extends State<information_screen> {
             child: Column(
               children: [
                 CustomAppBar(title: '정보 입력', context: context),
+                Signuptext('정보입력', '활동하실 닉네임과 정보들을 입력해 주세요'),
 
-                //정보입력 텍스트
-                Container(
-                  width: 360.w,
-                  height: 148.h,
-                  padding:
-                      EdgeInsets.only(left: 16, right: 16, top: 48, bottom: 48),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 328.w,
-                        height: 28.h,
-                        child: Text(
-                          '정보입력',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 1.40.h,
-                            letterSpacing: -0.50,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8.h),
-                      Container(
-                        width: 328.w,
-                        height: 16.h,
-                        child: Text(
-                          '활동하실 닉네임과 정보들을 입력해 주세요',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            height: 1.30.h,
-                            letterSpacing: -0.30,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                //닉네임
-                Container(
-                  width: 360.w,
-                  height: 20.h,
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Container(
-                    width: 328.w,
-                    height: 20.h,
-                    child: Text(
-                      '닉네임',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w500,
-                        height: 1.40.h,
-                        letterSpacing: -0.35,
-                      ),
-                    ),
-                  ),
-                ),
+                // 닉네임 입력 필드
+                Subtext('닉네임'),
                 SizedBox(height: 8.h),
-
-                //닉네임 필드
-                Container(
-                  width: 360.w,
-                  height: 64.h,
-                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                  child: Container(
-                    width: 328.w,
-                    height: 56.h,
-                    padding: EdgeInsets.all(16),
-                    decoration: ShapeDecoration(
-                      color: Color(0xFF242424),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _nicknameController,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w500,
-                              height: 1.40.h,
-                              letterSpacing: -0.35,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '모디랑',
-                              hintStyle: TextStyle(
-                                color: Color(0xFF888888),
-                                fontSize: 14.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.40.h,
-                                letterSpacing: -0.35,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (!_isTextFieldEmpty)
-                          IconButton(
-                            icon: Icon(Icons.cancel, color: Color(0xFF888888)),
-                            onPressed: () {
-                              _nicknameController.clear();
-                              setState(() {
-                                _isTextFieldEmpty = true;
-                              });
-                            },
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-                // 오류 문자
-                Container(
-                  width: 360.w,
-                  height: 20.h,
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Container(
-                    width: 328.w,
-                    height: 20.h,
-                    child: Text(
-                      '닉네임은 한영문자 포함 특수문자 _만 사용가능합니다',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w500,
-                        height: 1.40.h,
-                        letterSpacing: -0.35,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 48.h),
-
-                //생년월일
-                Container(
-                  width: 360.w,
-                  height: 20.h,
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Container(
-                    width: 328.w,
-                    height: 20.h,
-                    child: Text(
-                      '생년월일',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w500,
-                        height: 1.40.h,
-                        letterSpacing: -0.35,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                //텍스트 필드
-                Container(
-                  width: 360.w,
-                  height: 64.h,
-                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                  child: Container(
-                    width: 328.w,
-                    height: 56.h,
-                    padding: EdgeInsets.all(16),
-                    decoration: ShapeDecoration(
-                      color: Color(0xFF242424),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _birthdateController,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w500,
-                              height: 1.40.h,
-                              letterSpacing: -0.35,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '모디랑',
-                              hintStyle: TextStyle(
-                                color: Color(0xFF888888),
-                                fontSize: 14.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.40.h,
-                                letterSpacing: -0.35,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (!_isTextFieldEmpty1)
-                          IconButton(
-                            icon: Icon(Icons.cancel, color: Color(0xFF888888)),
-                            onPressed: () {
-                              _birthdateController.clear();
-                              setState(() {
-                                _isTextFieldEmpty1 = true;
-                              });
-                            },
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
+                _buildTextField(_nicknameController, '닉네임을 입력하세요'),
 
                 SizedBox(height: 48.h),
 
-                Container(
-                  width: 360.w,
-                  height: 20.h,
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Container(
-                    width: 328.w,
-                    height: 20.h,
-                    child: Text(
-                      '성별',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w500,
-                        height: 1.40.h,
-                        letterSpacing: -0.35,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                //성별_버튼
-                Container(
-                  width: 328.w,
-                  height: 48.h,
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () => _onButtonPressed(0),
-                        child: Container(
-                          width: 156.w,
-                          height: 48.h,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1.w,
-                                color: _selectedIndex == 0
-                                    ? Color(0xFF05FFF7)
-                                    : Color(0xFF888888),
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '남자',
-                              style: TextStyle(
-                                color: _selectedIndex == 0
-                                    ? Color(0xFF05FFF7)
-                                    : Color(0xFF888888),
-                                fontSize: 16.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.h,
-                                letterSpacing: -0.40,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16.w),
-                      InkWell(
-                        onTap: () => _onButtonPressed(1),
-                        child: Container(
-                          width: 156.w,
-                          height: 48.h,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1.w,
-                                color: _selectedIndex == 1
-                                    ? Color(0xFF05FFF7)
-                                    : Color(0xFF888888),
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '여자',
-                              style: TextStyle(
-                                color: _selectedIndex == 1
-                                    ? Color(0xFF05FFF7)
-                                    : Color(0xFF888888),
-                                fontSize: 16.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.h,
-                                letterSpacing: -0.40,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                // 생년월일 입력 필드
+                Subtext('생년월일'),
+                SizedBox(height: 8.h),
+                _buildTextField(_birthdateController, 'YYYY-MM-DD'),
+
+                SizedBox(height: 48.h),
+
+                // 성별 선택 버튼
+                Subtext('성별'),
+                SizedBox(height: 8.h),
+                _buildSelectionButtons(['남자', '여자'], _selectedGenderIndex, _onGenderButtonPressed),
+
+                SizedBox(height: 48.h),
+
+                // 카테고리 선택 버튼
+                Subtext('카테고리'),
+                SizedBox(height: 8.h),
+                _buildSelectionButtons(['빈티지', '아메카지'], _selectedCategoryIndex, _onCategoryButtonPressed),
+
+                SizedBox(height: 48.h),
+
+                // 회원가입 버튼
+                ElevatedButton(
+                  onPressed: _signUp,
+                  child: Text('정보 입력 완료'),
                 ),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding:
-        EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          width: double.infinity,
-          height: 100.h,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
-          child: InkWell(
-            onTap: () {
-              print("버튼누름");
-            },
-            child: Container(
-              width: 328.w,
-              height: 52.h,
-              decoration: ShapeDecoration(
-                color: Color(0xFF05FFF7),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              padding:
-              EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
-              child: Text(
-                '로그인',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF1A1A1A),
-                  fontSize: 20.sp,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w500,
-                  height: 1.40.h,
-                  letterSpacing: -0.50,
+    );
+  }
+
+  // 입력 필드 위젯
+  Widget _buildTextField(TextEditingController controller, String hintText) {
+    return Container(
+      width: 360.w,
+      height: 64.h,
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
+      child: Container(
+        width: 328.w,
+        height: 56.h,
+        padding: EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Color(0xFF242424),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: controller,
+                style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: hintText,
+                  hintStyle: TextStyle(color: Color(0xFF888888), fontSize: 14.sp),
                 ),
               ),
             ),
-          ),
+            if (controller.text.isNotEmpty)
+              IconButton(
+                icon: Icon(Icons.cancel, color: Color(0xFF888888)),
+                onPressed: () {
+                  controller.clear();
+                  setState(() {});
+                },
+              ),
+          ],
         ),
+      ),
+    );
+  }
+
+  // 버튼 선택 위젯 (성별, 카테고리 공용)
+  Widget _buildSelectionButtons(List<String> labels, int selectedIndex, Function(int) onPressed) {
+    return Container(
+      width: 328.w,
+      height: 48.h,
+      child: Row(
+        children: List.generate(labels.length, (index) {
+          return Padding(
+            padding: EdgeInsets.only(right: index == 0 ? 16.w : 0),
+            child: InkWell(
+              onTap: () => onPressed(index),
+              child: Container(
+                width: 156.w,
+                height: 48.h,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 1.w,
+                      color: selectedIndex == index ? Color(0xFF05FFF7) : Color(0xFF888888),
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    labels[index],
+                    style: TextStyle(
+                      color: selectedIndex == index ? Color(0xFF05FFF7) : Color(0xFF888888),
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

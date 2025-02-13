@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:untitled/search_screen.dart';
 
+import 'donut_chart_painter.dart';
 import 'screen_setting.dart';
-
 
 class Setting extends StatefulWidget {
   @override
@@ -11,30 +12,149 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  PageController _pageController = PageController();
-  int _currentPage = 0;
+  int selectedIndex = 0; // 현재 선택된 컨테이너 인덱스
 
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      if (_pageController.page != null) {
-        setState(() {
-          _currentPage = _pageController.page!.floor();
-        });
-      }
-    });
-  }
+  Widget getSelectedContainer() {
+    switch (selectedIndex) {
+      case 0:
+        return Container(
+          width: 236.w,
+          height: 360.h,
+          padding: EdgeInsets.only(top: 16, bottom: 16),
+          decoration: ShapeDecoration(
+            color: Color(0xFF242424),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x26000000),
+                blurRadius: 8,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8), // 모서리 둥글게
+            child: SvgPicture.asset(
+              "assets/image/advertisement_1.svg", // SVG 이미지 경로
+              fit: BoxFit.fill, // 이미지 크기 조정
+            ),
+          ),
+        );
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+      case 1:
+        return Container(
+          width: 236.w,
+          height: 360.h,
+          padding: EdgeInsets.only(top: 16, bottom: 16),
+          decoration: ShapeDecoration(
+            color: Color(0xFF242424),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x26000000),
+                blurRadius: 8,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 236.w,
+                height: 328.h,
+                padding:
+                    EdgeInsets.only(top: 24, bottom: 24, right: 16, left: 16),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 204.w,
+                      height: 56.h,
+                      child: Text(
+                        '58% 패션인들의 선택\n왜 스트릿일까 ?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 1.40.h,
+                          letterSpacing: -0.50,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24.h),
+                    Container(
+                      width: 204.w,
+                      height: 204.h,
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: DonutChart(
+                        size: 204, // 원하는 도넛 크기 지정
+                        strokeWidth: 20,
+                        total: 100,
+                        value: 58,
+                        child: Text(
+                          '58%',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF05FFF7),
+                            fontSize: 24.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.40.h,
+                            letterSpacing: -0.60,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+
+      case 2:
+        return Container(
+          width: 236.w,
+          height: 360.h,
+          padding: EdgeInsets.only(top: 16, bottom: 16),
+          decoration: ShapeDecoration(
+            color: Color(0xFF242424),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x26000000),
+                blurRadius: 8,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8), // 모서리 둥글게
+            child: SvgPicture.asset(
+              "assets/image/advertisement_3.svg", // SVG 이미지 경로
+              fit: BoxFit.fill, // 이미지 크기 조정
+            ),
+          ),
+        );
+
+      default:
+        return Container(); // 기본값
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF1A1A1A),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -53,199 +173,81 @@ class _SettingState extends State<Setting> {
               //광고바
               Container(
                 width: 360.w,
-                height: 396.h,
-                color: Color(0xFF1A1A1A),
-                padding: EdgeInsets.only(top: 24),
-                // 상단에 24의 패딩 설정
+                height: 460.h,
+                padding: EdgeInsets.only(top: 24, bottom: 24),
                 child: Column(
                   children: [
-                    // 페이지 뷰
-                    Expanded(
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index; // 페이지가 변경될 때마다 현재 페이지 업데이트
-                          });
-                        },
+                    Container(
+                      width: 360.w,
+                      height: 360.h,
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: Row(
                         children: [
-                          Container(
-                            color: Colors.red,
+                          getSelectedContainer(),
+                          SizedBox(width: 8.w),
+                          SingleChildScrollView(
+
                             child: Column(
-                              children: [
-                                Container(
-                                  width: 360.w,
-                                  height: 100.h,
-                                  padding: EdgeInsets.only(left: 16, right: 16),
-                                  // 상단에 24의 패딩 설정
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 328.w,
-                                        height: 68.h,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: 248.w,
-                                              height: 68.h,
-                                              child: Text(
-                                                '패션인들이 선택한\n서울 매장 루트 리스트',
-                                                style: TextStyle(
-                                                  color: Color(0xFFF6F6F6),
-                                                  fontSize: 24,
-                                                  fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w700,
-                                                  height: 1.40,
-                                                  letterSpacing: -0.60,
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.topCenter,
-                                              // 상단 중앙 정렬
-                                              child: Container(
-                                                width: 80.w,
-                                                height: 32.h,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children:
-                                                      List.generate(4, (index) {
-                                                    return Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 2.0),
-                                                      // 동그라미 간격
-                                                      width: 8.0,
-                                                      // 동그라미 너비
-                                                      height: 8.0,
-                                                      // 동그라미 높이
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: index == 0
-                                                            ? Colors.white
-                                                            : Colors
-                                                                .grey, // 현재 페이지에 따라 색상 변경
-                                                      ),
-                                                    );
-                                                  }),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                              children: List.generate(4, (index) {
+                                // index별로 다른 이미지 경로 설정
+                                List<String> imagePaths = [
+                                  "assets/image/advertisement_1.svg",
+                                  "assets/image/advertisement_2.svg",
+                                  "assets/image/advertisement_3.svg",
+                                  "assets/image/advertisement_4.svg"
+                                ];
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 84.w,
+                                    height: 106.h,
+                                    decoration: ShapeDecoration(
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          width: 1.w,
+                                          color: selectedIndex == index
+                                              ? Color(0xFF05FFF7) // 선택된 경우 다른 색상
+                                              : Color(0xFF1A1A1A),
                                         ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                      SizedBox(height: 12.h),
-                                      Container(
-                                        width: 328.w,
-                                        height: 20.h,
-                                        child: Text(
-                                          '#홍대 #포멀 #미니멀',
-                                          style: TextStyle(
-                                            color: Color(0xFFBFACF9),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.40,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        ),
+                                      shadows: [
+                                        BoxShadow(
+                                          color: Color(0x26000000),
+                                          blurRadius: 8,
+                                          offset: Offset(0, 4),
+                                          spreadRadius: 0,
+                                        )
+                                      ],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.w),
+                                      child: SvgPicture.asset(
+                                        imagePaths[index], // index에 따라 다른 이미지 사용
+                                        fit: BoxFit.fill,
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  width: 360.w,
-                                  height: 272.h,
-                                  padding: EdgeInsets.only(
-                                      left: 16,
-                                      right: 16,
-                                      bottom: 24,
-                                      top: 24.h), // 상단에 24의 패딩 설정
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 328.w,
-                                        height: 64.h,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1,
-                                                color: Color(0xFF4D17EE)),
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      Container(
-                                        width: 328.w,
-                                        height: 64.h,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1,
-                                                color: Color(0xFF4D17EE)),
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      Container(
-                                        width: 328.w,
-                                        height: 64.h,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1,
-                                                color: Color(0xFF4D17EE)),
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                );
+                              }),
                             ),
                           ),
-                          Container(
-                            color: Colors.green,
-                            child: Center(child: Text('Page 2')),
-                          ),
-                          Container(
-                            color: Colors.blue,
-                            child: Center(child: Text('Page 3')),
-                          ),
-                          Container(
-                            color: Colors.yellow,
-                            child: Center(child: Text('Page 4')),
-                          ),
+
                         ],
                       ),
                     ),
+                    Container(
+                      width: 360.w,
+                      height: 52.h,
+                      color: Colors.grey,
+                    ),
                   ],
                 ),
-              ),
-
-              // 인디케이터
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(4, (index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 4.0), // 동그라미 간격
-                    width: 8.0, // 동그라미 너비
-                    height: 8.0, // 동그라미 높이
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: index == _currentPage
-                          ? Colors.white
-                          : Colors.grey, // 현재 페이지에 따라 색상 변경
-                    ),
-                  );
-                }),
               ),
 
               //아이콘 모음

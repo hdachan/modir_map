@@ -51,46 +51,7 @@ class _SignUp_screen extends State<SignUp_screen> with SingleTickerProviderState
             child: Column(
               children: [
                 CustomAppBar(title: '모디랑 회원가입', context: context),
-                Container(
-                  width: 360.w,
-                  height: 148.h,
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 48, bottom: 48),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 328.w,
-                        height: 28.h,
-                        child: Text(
-                          '이메일 입력',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 1.40.h,
-                            letterSpacing: -0.50,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8.h),
-                      Container(
-                        width: 328.w,
-                        height: 16.h,
-                        child: Text(
-                          '로그인에 사용할 이메일을 입력해주세요',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            height: 1.30.h,
-                            letterSpacing: -0.30,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                Signuptext('이메일 입력', '로그인에 사용할 이메일을 입력해주세요'),
                 Container(
                   width: 360.w,
                   height: 20.h,
@@ -168,27 +129,17 @@ class _SignUp_screen extends State<SignUp_screen> with SingleTickerProviderState
                   ),
                 ),
                 SizedBox(height: 24.h),
-                ElevatedButton(
-                  onPressed: () => _navigateToPasswordScreen(context),
-                  child: Text('다음'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => information_screen(), // 클래스 이름은 대문자로 시작해야 합니다.
-                      ),
-                    );
-                  },
-                  child: Text('별명'),
-                ),
-
               ],
             ),
           ),
         ),
       ),
+      bottomNavigationBar:LoginButton(
+        buttonText: '다음1', // 로그인 텍스트 전달
+        onTap:  () => _navigateToPasswordScreen(context),
+      ),
     );
   }
 }
+
+
