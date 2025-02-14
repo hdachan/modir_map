@@ -86,8 +86,297 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 //마이페이지 수정
                 Container(
                   width: 360.w,
-                  height: 364.h,
-                  color: Colors.red,
+                  height: 284.h,
+                  padding: EdgeInsets.only(top: 24, bottom: 24),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 360.w,
+                        height: 116.h,
+                        padding: EdgeInsets.all(16),
+                        child: Container(
+                          width: 328.w,
+                          height: 84.h,
+                          decoration: ShapeDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(1.00, -0.08),
+                              end: Alignment(-1, 0.08),
+                              colors: [Color(0xFF242424), Color(0x4C242424)],
+                            ),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  width: 1.w, color: Color(0xFF242424)),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x26000000),
+                                blurRadius: 20,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              )
+                            ],
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 16, right: 16, top: 12, bottom: 12),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 60.w,
+                                height: 60.h,
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFFFF0000),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Container(
+                                width: 228.w,
+                                height: 56.h,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 228.w,
+                                      height: 28.h,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 172.w,
+                                            height: 20.h,
+                                            child: Text(
+                                              'NA_왔오',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.40.h,
+                                                letterSpacing: -0.35,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Container(
+                                            width: 48.w,
+                                            height: 28.h,
+                                            padding: EdgeInsets.only(left: 12,right: 12,top: 4,bottom: 4),
+                                            decoration: ShapeDecoration(
+                                              shape: RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                    width: 1.w,
+                                                    color: Color(0xFF05FFF7)),
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '수정',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.40.h,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    Container(
+                                      width: 228.w,
+                                      height: 20.h,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: 24.h,
+                                            child: Text(
+                                              '남성',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.40.h,
+                                                letterSpacing: -0.35,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Container(
+                                            width: 4.w,
+                                            height: 20.h,
+                                            child: Text(
+                                              '·',
+                                              style: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 14,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.40,
+                                                letterSpacing: -0.35,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Container(
+                                            height: 20.h,
+                                            child: Text(
+                                              '177cm',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.40.h,
+                                                letterSpacing: -0.35,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Container(
+                                            width: 4.w,
+                                            height: 20.h,
+                                            child: Text(
+                                              '·',
+                                              style: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 14,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.40,
+                                                letterSpacing: -0.35,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Container(
+                                            height: 20.h,
+                                            child: Center(
+                                              child: Text(
+                                                '70kg',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.40.h,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 360.w,
+                        height: 120.h,
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 328.w,
+                              height: 20.h,
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '현재 ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '스트릿 기반의 비즈니스 캐주얼',
+                                      style: TextStyle(
+                                        color: Color(0xFF05FFF7),
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '을 선호해요',
+                                      style: TextStyle(
+                                        color: Color(0xFFF6F6F6),
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            Container(
+                              width: 328.w,
+                              height: 52.h,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF05FFF7),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              padding: EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 268.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '내 패션 DNA 조사',
+                                      style: TextStyle(
+                                        color: Color(0xFF1A1A1A),
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Container(
+                                    width: 20.w,
+                                    height: 20.h,
+                                    child: Center( // 아이콘을 중앙에 배치하기 위해 Center 위젯 사용
+                                      child: Icon(
+                                        Icons.arrow_forward_ios_outlined, // 화살표 아이콘
+                                        size: 20.sp, // 아이콘 크기
+                                        color: Color(0xFF1A1A1A),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
 
                 //활동 텍스트
@@ -191,28 +480,28 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 middleText('기록'),
                 customButton(
                   '최근에 본 매장',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '최근에 본 코디',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '최근에 본 라이브',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '이벤트 참여 내역',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
@@ -220,21 +509,21 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 middleText('관심'),
                 customButton(
                   '관심 매장',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '관심 코디',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '관심 라이브',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
@@ -242,7 +531,7 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 middleText('댓글'),
                 customButton(
                   '댓글단 코디',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
@@ -250,7 +539,7 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 middleText('문의'),
                 customButton(
                   '매장에 문의한 글',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
@@ -258,21 +547,21 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                 middleText('센터'),
                 customButton(
                   '공지사항',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   'FQA',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
                 ),
                 customButton(
                   '1:1 문의하기',
-                      () {
+                  () {
                     // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
                     print('버튼22이 클릭되었습니다!');
                   },
@@ -286,7 +575,6 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
     );
   }
 }
-
 
 Widget middleText(String text) {
   return Container(
@@ -348,7 +636,7 @@ Widget customButton(String title, VoidCallback onPressed) {
             padding: EdgeInsets.all(16),
             child: Icon(
               Icons.arrow_forward_ios_sharp, // 오른쪽 화살표 아이콘
-              color: Colors.white,  // 아이콘 색상
+              color: Colors.white, // 아이콘 색상
               size: 16.sp, // 아이콘 크기
             ),
           ),
@@ -376,9 +664,9 @@ Widget CompanyInfo() {
               height: 16.h,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/image/logo_primary2.png'),
-                    fit: BoxFit.cover,
-                  )),
+                image: AssetImage('assets/image/logo_primary2.png'),
+                fit: BoxFit.cover,
+              )),
             ),
             SizedBox(width: 4),
             Text(

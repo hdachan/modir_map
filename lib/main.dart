@@ -47,7 +47,7 @@ class Home_screen extends StatelessWidget {
               },
               type: BottomNavigationBarType.fixed,
               backgroundColor: Color(0xFF1A1A1A),
-              selectedItemColor: Color(0xFFBFACF9), // 선택된 아이템 색상
+              selectedItemColor: Color(0xFF05FFF7), // 선택된 아이템 색상
               unselectedItemColor: Colors.grey, // 선택되지 않은 아이템 색상
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.location_on_outlined), label: '지도'),

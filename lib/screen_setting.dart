@@ -163,7 +163,7 @@ Widget CustomAppBar({required String title, required BuildContext context}) {
     width: 360.w,
     height: 56.h,
     color: Color(0xFF1A1A1A),
-    padding: EdgeInsets.only(left: 8.w, right: 16.w),
+    padding: EdgeInsets.only(right: 16.w),
     child: Row(
       children: [
         // 뒤로가기 버튼

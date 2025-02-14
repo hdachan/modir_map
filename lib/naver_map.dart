@@ -85,7 +85,9 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
               CircularProgressIndicator(), // 로딩 바
               SizedBox(height: 20), // 로딩 바와 텍스트 사이 간격
               Text(
-                '데이터가 비어 있습니다. 상태: ${dataProvider.dataList.isEmpty ? "비어 있음" : "데이터 있음"}',
+                '데이터가 비어 있습니다. 상태: ${dataProvider.dataList.isEmpty
+                    ? "비어 있음"
+                    : "데이터 있음"}',
                 style: TextStyle(color: Colors.red, fontSize: 16),
               ),
               Text(
@@ -101,6 +103,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
         }
 
         return Scaffold(
+          backgroundColor: Color(0xFF1A1A1A),
           body: SafeArea(
             child: Container(
               width: 360.w,
@@ -109,202 +112,196 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   // 상단 부분
                   Container(
                     width: 360.w,
-                    height: 80.h,
-                    padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
-                    decoration: BoxDecoration(color: Color(0xFF1A1A1A)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(createFadeRoute(search_screen()));
-                          },
-                          child: Container(
-                            width: 272.w,
-                            height: 48.h,
-                            padding: EdgeInsets.only(left: 16.h, right: 16.h),
-                            decoration: ShapeDecoration(
-                              color: Color(0x19320E99),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1.w, color: Color(0xFF4D17EE)),
-                                borderRadius: BorderRadius.circular(16.w),
+                    height: 48.h,
+                    padding: EdgeInsets.only(top:6,bottom: 6),
+                    child:Container(
+                      width: 360.w,
+                      height: 36.h,
+                      padding: EdgeInsets.only(right:16,left: 16),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(createFadeRoute(search_screen()));
+                            },
+                            child: Container(
+                              width: 284.w,
+                              height: 36.h,
+                              padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF3D3D3D),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 24,
-                                  height: 24,
-                                  child: Icon(
-                                    Icons.search, // 검색 아이콘 추가
-                                    color: Colors.white, // 아이콘 색상
-                                    size: 24, // 아이콘 크기
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 20.w,
+                                    height: 20.h,
+                                    child: Icon(
+                                      Icons.search, // 검색 아이콘 추가
+                                      color: Color(0xFF888888), // 아이콘 색상
+                                      size: 20.sp, // 아이콘 크기
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 4.w), // 간격 추가
-                                Container(
-                                  width: 122.w,
-                                  height: 24.h,
-                                  child: Center(
-                                    // 텍스트를 중앙에 배치
+                                  SizedBox(width: 4.w),
+                                  Container(
+                                    width: 236.w,
+                                    height: 20.h,
                                     child: Text(
-                                      '브랜드, 매장, 위치 검색',
+                                      '매장, 위치 검색',
                                       style: TextStyle(
-                                        color: Color(0xFFD1D1D1),
+                                        color: Color(0xFF888888),
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w500,
-                                        height: 1.70,
+                                        height: 1.40,
                                         letterSpacing: -0.35,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(width: 8.w), // 사이즈 박스 8픽셀
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(createSlideUpRoute(
-                                Filter())); // 아래에서 위로 올라오는 애니메이션 사용
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(0),
-                            backgroundColor: Colors.transparent,
-                            // 패딩을 0으로 설정
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            // 기본 배경색을 투명으로 설정
-                            shadowColor: Colors.transparent, // 그림자 색상 제거
-                          ),
-                          child: Container(
-                            width: 48.w,
-                            height: 48.h,
-                            padding: EdgeInsets.all(12.w),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment(0.71, -0.71),
-                                end: Alignment(-0.71, 0.71),
-                                colors: [Color(0xFF4D17EE), Color(0xFF8D6AF5)],
+                                ],
                               ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.tab_unselected,
-                              color: Colors.white, // 아이콘 색상
-                              size: 24.sp, // 아이콘 크기
                             ),
                           ),
-                        ),
-                      ],
+
+                          SizedBox(width: 8.w),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(createSlideUpRoute(Filter())); // 아래에서 위로 올라오는 애니메이션 사용
+                            },
+                            child: Container(
+                              width: 36.w,
+                              height: 36.h,
+                              padding: EdgeInsets.all(6),
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.filter_list, // 필터 아이콘
+                                  size: 24, // 아이콘 크기
+                                  color: Colors.white, // 아이콘 색상 (원하는 색상으로 변경 가능)
+                                ),
+                              ),
+                            ),
+                          ),
+
+
+                        ],
+                      ),
                     ),
                   ),
 
                   // 카테고리
                   Container(
                     width: 360.w,
-                    height: 56.h,
+                    height: 44.h,
                     color: Color(0xFF1A1A1A),
                     padding: EdgeInsets.only(
-                        left: 16.w, top: 12.h, right: 16.w, bottom: 12.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-                      children: [
-                        Container(
-                          width: 80.w,
-                          height: 32.h,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF3D3D3D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                        left: 16.w, top: 6.h, right: 16.w, bottom: 6.h),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal, // 수평 스크롤 설정
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 73.w,
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF3D3D3D),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '빈티지',
-                              style: TextStyle(
-                                color: Color(0xFFF8F6FE),
-                                fontSize: 14,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.14,
-                                letterSpacing: -0.35,
+                            child: Center(
+                              child: Text(
+                                '빈티지',
+                                style: TextStyle(
+                                  color: Color(0xFFF8F6FE),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.14,
+                                  letterSpacing: -0.35,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Container(
-                          width: 80.w,
-                          height: 32.h,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF3D3D3D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                          SizedBox(width: 10.w),
+                          Container(
+                            width: 73.w,
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF3D3D3D),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '빈티지',
-                              style: TextStyle(
-                                color: Color(0xFFF8F6FE),
-                                fontSize: 14,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.14,
-                                letterSpacing: -0.35,
+                            child: Center(
+                              child: Text(
+                                '빈티지',
+                                style: TextStyle(
+                                  color: Color(0xFFF8F6FE),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.14,
+                                  letterSpacing: -0.35,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Container(
-                          width: 80.w,
-                          height: 32.h,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF3D3D3D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                          SizedBox(width: 10.w),
+                          Container(
+                            width: 73.w,
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF3D3D3D),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '빈티지',
-                              style: TextStyle(
-                                color: Color(0xFFF8F6FE),
-                                fontSize: 14,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.14,
-                                letterSpacing: -0.35,
+                            child: Center(
+                              child: Text(
+                                '빈티지',
+                                style: TextStyle(
+                                  color: Color(0xFFF8F6FE),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.14,
+                                  letterSpacing: -0.35,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 10.w),
+                          Container(
+                            width: 73.w,
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF3D3D3D),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '빈티지',
+                                style: TextStyle(
+                                  color: Color(0xFFF8F6FE),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.14,
+                                  letterSpacing: -0.35,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                        ],
+                      ),
                     ),
+
                   ),
 
-                  // 새로고침 버튼
-                  ElevatedButton(
-                    onPressed: () {
-                      _updateMarkers(dataProvider); // 현재 지도 화면 기준으로 마커 업데이트
-                    },
-                    child: Text("새로고침"),
-                  ),
-
-                  // 네이버 지도 부분
+                  //네이버 지도 부분
                   Consumer<MapProvider>(
                     builder: (context, mapProvider, child) {
                       return Expanded(
@@ -318,11 +315,11 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                     listen: false);
                                 mapProvider
                                     .setMapController(controller); // ✅ 컨트롤러 설정
-                                _updateMarkers(dataProvider);
+                                _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
 
                                 // ✅ 마커 추가
                                 _mapController = controller; // 컨트롤러 저장
-                                _updateMarkers(dataProvider); // 마커 업데이트
+                                _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
                               },
                               options: NaverMapViewOptions(
                                 initialCameraPosition: NCameraPosition(
@@ -334,18 +331,83 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                   // 초기 방향
                                   tilt: 0, // 초기 기울기
                                 ),
+                                logoAlign: NLogoAlign.rightTop,
+                                logoMargin:EdgeInsets.only(top: 16, right: 16),
                               ),
                             ),
                             Positioned(
-                              bottom: 20,
-                              right: 20,
+                              bottom: 24,
+                              left: 16,
                               child: GestureDetector(
                                 onTap: _moveToCurrentLocation,
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
-                                  radius: 25,
+                                  radius: 20,
                                   child: Icon(Icons.my_location,
                                       color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 20,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // 버튼이 눌렸을 때 실행할 로직
+                                    _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
+                                  },
+                                  child: Container(
+                                    width: 141.w,
+                                    height: 36.h,
+                                    padding: EdgeInsets.only(left: 12, right: 16, top: 8, bottom: 8),
+                                    decoration: ShapeDecoration(
+                                      color: Color(0xB2242424),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      shadows: [
+                                        BoxShadow(
+                                          color: Color(0x0A000000),
+                                          blurRadius: 4,
+                                          offset: Offset(0, 4),
+                                          spreadRadius: 0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 20.w,
+                                          height: 20.h,
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.refresh,
+                                              color: Color(0xFF05FFF7),
+                                              size: 20.sp,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 4.w),
+                                        Container(
+                                          width: 89.w,
+                                          height: 20.h,
+                                          child: Text(
+                                            '현 지도에서 검색',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.sp,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w700,
+                                              height: 1.40.h,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -363,7 +425,9 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
     );
   }
 
-  void here(BuildContext context, String address, String roadAddress, String type, String title) {
+  // 마커를 클릭했을떄 뜨는 스낵바
+  void here(BuildContext context, String address, String roadAddress,
+      String type, String title) {
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -399,12 +463,13 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => StoreInfoScreen(
-                        title: title,
-                        address: address,
-                        roadAddress: roadAddress,
-                        type: type,
-                      ),
+                      builder: (context) =>
+                          StoreInfoScreen(
+                            title: title,
+                            address: address,
+                            roadAddress: roadAddress,
+                            type: type,
+                          ),
                     ),
                   );
                 },
@@ -413,7 +478,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   width: 360.w,
                   height: 186.h,
                   color: Color(0xFF1A1A1A),
-                  padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 24.h),
+                  padding: EdgeInsets.only(
+                      left: 16.w, right: 16.w, bottom: 24.h),
                   child: Column(
                     children: [
                       Container(
@@ -436,8 +502,10 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                     width: 216.w,
                                     height: 46.h,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
-                                      crossAxisAlignment: CrossAxisAlignment.start, // 위쪽 정렬
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start, // 왼쪽 정렬
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start, // 위쪽 정렬
                                       children: [
                                         Container(
                                           width: 164.w,
@@ -489,7 +557,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                                 decoration: ShapeDecoration(
                                                   color: Color(0xFF1CD14F),
                                                   shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(100),
+                                                    borderRadius: BorderRadius
+                                                        .circular(100),
                                                   ),
                                                 ),
                                               ),
@@ -500,8 +569,11 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                                 clipBehavior: Clip.antiAlias,
                                                 decoration: ShapeDecoration(
                                                   shape: RoundedRectangleBorder(
-                                                    side: BorderSide(width: 1, color: Color(0xFFFD3D51)),
-                                                    borderRadius: BorderRadius.circular(100),
+                                                    side: BorderSide(width: 1,
+                                                        color: Color(
+                                                            0xFFFD3D51)),
+                                                    borderRadius: BorderRadius
+                                                        .circular(100),
                                                   ),
                                                 ),
                                               ),
@@ -669,7 +741,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       final double longitude = double.tryParse(item['mapx'].toString()) ?? 0;
       final String title = item['title'].toString();
       final String address = item['address']?.toString() ?? '주소 없음'; // 주소
-      final String roadAddress = item['roadAddress']?.toString() ?? '로도명 주소 없음'; // 도로명주소
+      final String roadAddress = item['roadAddress']?.toString() ??
+          '로도명 주소 없음'; // 도로명주소
       final String type = item['type']?.toString() ?? '종류 없음'; // 매장 타입
 
       final marker = NMarker(
@@ -682,15 +755,15 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       );
 
       marker.setOnTapListener((overlay) {
-        here(context, address, roadAddress ,type, title);
+        here(context, address, roadAddress, type, title);
       });
 
       return marker;
     }).toSet();
   }
 
-  // 데이터 변경 시 마커 업데이트
-  Future<void> _updateMarkers(DataProvider dataProvider) async {
+// 데이터 변경 시 마커 업데이트
+  Future<void> _updateMarkers(DataProvider dataProvider, BuildContext context) async {
     if (_mapController == null) return;
 
     try {
@@ -714,9 +787,101 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
 
       // 기존 마커 삭제 후 새로운 마커 추가
       _mapController!.clearOverlays();
-      _mapController!.addOverlayAll(newMarkers);
+
+      if (newMarkers.isEmpty) {
+        // 마커가 없을 경우 스낵바 표시
+        _showCenteredSnackbar(context, "검색된 마커가 없습니다.");
+      } else {
+        _mapController!.addOverlayAll(newMarkers);
+      }
     } catch (e) {
       print("마커 업데이트 중 오류 발생: $e");
     }
+  }
+
+  // 지도 새로고침시 마커가없을때 뜨는 스낵바
+  void _showCenteredSnackbar(BuildContext context, String message) {
+    OverlayEntry? overlayEntry;
+
+    // 투명도 상태를 관리할 변수
+    double opacity = 1.0;
+
+    // OverlayEntry 생성
+    overlayEntry = OverlayEntry(
+      builder: (context) => Center(
+        child: AnimatedOpacity(
+          opacity: opacity, // 투명도 값
+          duration: Duration(milliseconds: 500), // 애니메이션 지속 시간
+          child: Material(
+            child: Container(
+              width: 328.w,
+              height: 64.h,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: ShapeDecoration(
+                color: Color(0xB2242424),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x0A000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 24.w,
+                    height: 40.h,
+                    child: Container(
+                      width: 24.w,
+                      height: 24.h,
+                      child: Icon(
+                        Icons.search, // 검색 아이콘
+                        size: 24, // 아이콘 크기
+                        color: Color(0xFF05FFF7), // 아이콘 색상
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Container(
+                    width: 264.w,
+                    height: 40.h,
+                    child: Text(
+                      '현재 지도에는 조건에 맞는 매장이 없어요\n지도 범위를 다시 설정해주세요',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                        height: 1.40.h,
+                        letterSpacing: -0.35,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Overlay에 추가
+    Overlay.of(context)?.insert(overlayEntry);
+
+    // 일정 시간 후 투명도 변경 및 Overlay 제거
+    Future.delayed(const Duration(milliseconds: 1000), () async {
+      // 투명도를 0으로 변경하여 사라지는 애니메이션 적용
+      opacity = 0.0;
+      overlayEntry?.markNeedsBuild(); // 상태 업데이트
+
+      // 애니메이션 완료 후 Overlay 제거
+      await Future.delayed(const Duration(milliseconds: 1000)); // 애니메이션 지속 시간과 동일하게 설정
+      overlayEntry?.remove();
+    });
   }
 }

@@ -49,6 +49,7 @@ flutter:
     - assets/image/advertisement_1.svg
     - assets/image/advertisement_2.svg
     - assets/image/advertisement_3.svg
+    - assets/image/advertisement_4.svg
   fonts:
     - family: Pretendard
       fonts:
