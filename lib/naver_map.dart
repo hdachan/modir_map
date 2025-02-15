@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +19,7 @@ class NaverMapBackground extends StatefulWidget {
 
 class _NaverMapBackgroundState extends State<NaverMapBackground> {
   NaverMapController? _mapController; // 컨트롤러 저장
-
+  bool _showRefreshButton = false;
   Future<void> _moveToCurrentLocation() async {
     if (_mapController == null) {
       print("MapController가 아직 설정되지 않음!");
@@ -310,31 +312,37 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                             // 네이버 지도
                             NaverMap(
                               onMapReady: (controller) {
-                                final mapProvider = Provider.of<MapProvider>(
-                                    context,
-                                    listen: false);
-                                mapProvider
-                                    .setMapController(controller); // ✅ 컨트롤러 설정
-                                _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
-
-                                // ✅ 마커 추가
-                                _mapController = controller; // 컨트롤러 저장
-                                _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
+                                final mapProvider = Provider.of<MapProvider>(context, listen: false);
+                                mapProvider.setMapController(controller);
+                                _mapController = controller;
+                                _updateMarkers(dataProvider, context);
+                              },
+                              // 카메라 이동 이벤트 (사용자 제스처 시 버튼 표시)
+                              onCameraChange: (NCameraUpdateReason reason, bool animated) {
+                                if (reason == NCameraUpdateReason.gesture) {
+                                  if (!_showRefreshButton) {
+                                    setState(() {
+                                      _showRefreshButton = true;
+                                    });
+                                  }
+                                }
                               },
                               options: NaverMapViewOptions(
                                 initialCameraPosition: NCameraPosition(
                                   target: NLatLng(36.1234229, 128.1146402),
-                                  // 초기 위치
                                   zoom: 15,
-                                  // 초기 줌 레벨
                                   bearing: 0,
-                                  // 초기 방향
-                                  tilt: 0, // 초기 기울기
+                                  tilt: 0,
                                 ),
                                 logoAlign: NLogoAlign.rightTop,
-                                logoMargin:EdgeInsets.only(top: 16, right: 16),
+                                logoMargin: EdgeInsets.only(top: 16, right: 16),
                               ),
                             ),
+
+
+
+
+
                             Positioned(
                               bottom: 24,
                               left: 16,
@@ -348,69 +356,81 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 20,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // 버튼이 눌렸을 때 실행할 로직
-                                    _updateMarkers(dataProvider, context); // 현재 지도 화면 기준으로 마커 업데이트
-                                  },
-                                  child: Container(
-                                    width: 141.w,
-                                    height: 36.h,
-                                    padding: EdgeInsets.only(left: 12, right: 16, top: 8, bottom: 8),
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xB2242424),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(100),
+
+                            if (_showRefreshButton)
+                              Positioned(
+                                top: 20,
+                                left: 0,
+                                right: 0,
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      // 🔹 버튼을 누르면 false로 설정하여 숨김
+                                      setState(() {
+                                        _showRefreshButton = false;
+                                      });
+
+                                      if (mounted) {
+                                        setState(() {}); // UI 갱신 강제 적용
+                                      }
+                                      await Future.delayed(Duration(milliseconds: 100));
+                                      // 현재 지도 화면 기준으로 마커 업데이트
+                                      _updateMarkers(dataProvider, context);
+                                    },
+                                    child: Container(
+                                      width: 141.w,
+                                      height: 36.h,
+                                      padding: EdgeInsets.only(left: 12, right: 16, top: 8, bottom: 8),
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xB2242424),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                        ),
+                                        shadows: [
+                                          BoxShadow(
+                                            color: Color(0x0A000000),
+                                            blurRadius: 4,
+                                            offset: Offset(0, 4),
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
                                       ),
-                                      shadows: [
-                                        BoxShadow(
-                                          color: Color(0x0A000000),
-                                          blurRadius: 4,
-                                          offset: Offset(0, 4),
-                                          spreadRadius: 0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 20.w,
-                                          height: 20.h,
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.refresh,
-                                              color: Color(0xFF05FFF7),
-                                              size: 20.sp,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 20.w,
+                                            height: 20.h,
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.refresh,
+                                                color: Color(0xFF05FFF7),
+                                                size: 20.sp,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(width: 4.w),
-                                        Container(
-                                          width: 89.w,
-                                          height: 20.h,
-                                          child: Text(
-                                            '현 지도에서 검색',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14.sp,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.40.h,
-                                              letterSpacing: -0.35,
+                                          SizedBox(width: 4.w),
+                                          Container(
+                                            width: 89.w,
+                                            height: 20.h,
+                                            child: Text(
+                                              '현 지도에서 검색',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.40.h,
+                                                letterSpacing: -0.35,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
+
                           ],
                         ),
                       );
@@ -426,8 +446,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
   }
 
   // 마커를 클릭했을떄 뜨는 스낵바
-  void here(BuildContext context, String address, String roadAddress,
-      String type, String title) {
+  void here(BuildContext context, String address, String roadAddress, String type, String title) {
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -734,33 +753,49 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
     );
   }
 
-  // 마커 리스트를 동적으로 생성하는 함수
+// 위젯의 상태로 선택된 마커 title을 관리 (예: StatefulWidget)
+  String? _selectedMarkerTitle;
+
   Set<NAddableOverlay> _buildMarkersFromList(List<dynamic> dataList) {
     return dataList.map<NAddableOverlay>((item) {
       final double latitude = double.tryParse(item['mapy'].toString()) ?? 0;
       final double longitude = double.tryParse(item['mapx'].toString()) ?? 0;
       final String title = item['title'].toString();
-      final String address = item['address']?.toString() ?? '주소 없음'; // 주소
-      final String roadAddress = item['roadAddress']?.toString() ??
-          '로도명 주소 없음'; // 도로명주소
-      final String type = item['type']?.toString() ?? '종류 없음'; // 매장 타입
+      final String address = item['address']?.toString() ?? '주소 없음';
+      final String roadAddress = item['roadAddress']?.toString() ?? '도로명 주소 없음';
+      final String type = item['type']?.toString() ?? '종류 없음';
+
+      // 선택된 마커면 on 이미지, 아니면 off 이미지 사용
+      final String iconPath = (title == _selectedMarkerTitle)
+          ? 'assets/image/maker_on.png'
+          : 'assets/image/marker_off.png';
 
       final marker = NMarker(
         id: title,
         position: NLatLng(latitude, longitude),
         caption: NOverlayCaption(text: address),
-        icon: NOverlayImage.fromAssetImage('assets/image/marker_off.png'),
-        // 커스텀 마커 이미지
+        icon: NOverlayImage.fromAssetImage(iconPath),
         size: const Size(40, 40),
       );
 
       marker.setOnTapListener((overlay) {
+        // 선택된 마커 업데이트
+        setState(() {
+          _selectedMarkerTitle = title;
+        });
+        // 여기서 BuildContext를 사용해 DataProvider 가져오기
+        final dataProvider = Provider.of<DataProvider>(context, listen: false);
+        _updateMarkers(dataProvider, context);
+
+        // 기존 동작 그대로
         here(context, address, roadAddress, type, title);
       });
 
       return marker;
     }).toSet();
   }
+
+
 
 // 데이터 변경 시 마커 업데이트
   Future<void> _updateMarkers(DataProvider dataProvider, BuildContext context) async {
