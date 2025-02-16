@@ -103,7 +103,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
             ],
           );
         }
-
+        final filterProvider = Provider.of<FilterProvider>(context);
         return Scaffold(
           backgroundColor: Color(0xFF1A1A1A),
           body: SafeArea(
@@ -198,109 +198,37 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   Container(
                     width: 360.w,
                     height: 44.h,
-                    color: Color(0xFF1A1A1A),
-                    padding: EdgeInsets.only(
-                        left: 16.w, top: 6.h, right: 16.w, bottom: 6.h),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal, // 수평 스크롤 설정
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 73.w,
-                            height: 28.h,
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF3D3D3D),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '빈티지',
-                                style: TextStyle(
-                                  color: Color(0xFFF8F6FE),
-                                  fontSize: 14,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.14,
-                                  letterSpacing: -0.35,
-                                ),
+                    color: const Color(0xFF1A1A1A),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: filterProvider.selectedFilters.isEmpty
+                          ? const Text(
+                        "선택된 필터가 없습니다.",
+                        style: TextStyle(color: Colors.white),
+                      )
+                          : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: filterProvider.selectedFilters.map((filter) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Chip(
+                              label: Text(filter),
+                              backgroundColor: const Color(0xFF242424),
+                              labelStyle: const TextStyle(color: Colors.white),
+                              deleteIcon: const Icon(
+                                Icons.close,
+                                size: 16,
+                                color: Colors.white,
                               ),
+                              onDeleted: () {
+                                filterProvider.toggleFilter(filter);
+                              },
                             ),
-                          ),
-                          SizedBox(width: 10.w),
-                          Container(
-                            width: 73.w,
-                            height: 28.h,
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF3D3D3D),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '빈티지',
-                                style: TextStyle(
-                                  color: Color(0xFFF8F6FE),
-                                  fontSize: 14,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.14,
-                                  letterSpacing: -0.35,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10.w),
-                          Container(
-                            width: 73.w,
-                            height: 28.h,
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF3D3D3D),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '빈티지',
-                                style: TextStyle(
-                                  color: Color(0xFFF8F6FE),
-                                  fontSize: 14,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.14,
-                                  letterSpacing: -0.35,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10.w),
-                          Container(
-                            width: 73.w,
-                            height: 28.h,
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF3D3D3D),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '빈티지',
-                                style: TextStyle(
-                                  color: Color(0xFFF8F6FE),
-                                  fontSize: 14,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.14,
-                                  letterSpacing: -0.35,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10.w),
-                        ],
+                          );
+                        }).toList(),
                       ),
                     ),
-
                   ),
 
                   //네이버 지도 부분

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 //반응형을 위한 디자인 툴
 void initScreenUtil(BuildContext context) {
@@ -11,7 +12,6 @@ void initScreenUtil(BuildContext context) {
   );
 }
 
-
 // 하단바 관리 툴_KeepAlive를 위한 래퍼 위젯 (사용시 메모리에 계속 유지)
 class KeepAlivePage extends StatefulWidget {
   final Widget child;
@@ -22,7 +22,8 @@ class KeepAlivePage extends StatefulWidget {
   State<KeepAlivePage> createState() => _KeepAlivePageState();
 }
 
-class _KeepAlivePageState extends State<KeepAlivePage> with AutomaticKeepAliveClientMixin {
+class _KeepAlivePageState extends State<KeepAlivePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true; // 메모리에 유지
 
@@ -34,70 +35,13 @@ class _KeepAlivePageState extends State<KeepAlivePage> with AutomaticKeepAliveCl
 }
 
 //홈화면_검색기능
-Widget customSearchButton(BuildContext context, VoidCallback onTap) {
-  return Container(
-    width: 360.w,
-    height: 80.h,
-    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
-    decoration: BoxDecoration(color: Color(0xFF1A1A1A)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: onTap, // 외부에서 지정한 onTap 이벤트 사용
-          borderRadius: BorderRadius.circular(16), // 클릭 효과의 경계 반경 설정
-          child: Container(
-            width: 328.w,
-            height: 48.h,
-            padding: EdgeInsets.only(left: 16.w, right: 8.w, top: 12.h, bottom: 12.h),
-            decoration: ShapeDecoration(
-              color: Color(0x19320E99),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1.w, color: Color(0xFF4D17EE)),
-                borderRadius: BorderRadius.circular(16.w),
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 24.w,
-                  height: 24.h,
-                  child: Icon(
-                    Icons.search, // 검색 아이콘 추가
-                    color: Colors.white, // 아이콘 색상
-                    size: 24.sp, // 아이콘 크기
-                  ),
-                ),
-                SizedBox(width: 4), // 간격 추가
-                Container(
-                  width: 122.w,
-                  height: 24.h,
-                  child: Center(
-                    // 텍스트를 중앙에 배치
-                    child: Text(
-                      '브랜드, 매장, 위치 검색',
-                      style: TextStyle(
-                        color: Color(0xFFD1D1D1),
-                        fontSize: 14,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w500,
-                        height: 1.70,
-                        letterSpacing: -0.35,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+
 
 //홈화면_아이콘
-Widget menuButton({required IconData icon, required VoidCallback onPressed,}) {
+Widget menuButton({
+  required IconData icon,
+  required VoidCallback onPressed,
+}) {
   return GestureDetector(
     onTap: onPressed, // 클릭 시 수행할 동작
     child: Container(
@@ -124,33 +68,46 @@ Widget menuButton({required IconData icon, required VoidCallback onPressed,}) {
 Widget buildAppBar() {
   return Container(
     width: 360.w,
-    height: 80.h,
+    height: 56.h,
     color: Color(0xFF1A1A1A),
-    padding: EdgeInsets.symmetric(vertical: 12.h),
     child: Row(
       children: [
-        menuButton(
-          icon: Icons.menu,
-          onPressed: () {
-            print("Menu button pressed");
-          },
-        ),
-        SizedBox(width: 8.w),
         Container(
-          width: 232.w,
-          height: 20.h,
-          alignment: Alignment.center,
-          child: Image.asset(
-            'assets/image/logo_primary.png',
-            fit: BoxFit.contain,
+          width: 56.w,
+          height: 56.h,
+          padding: EdgeInsets.all(16),
+          child: Icon(
+            Icons.menu, // 메뉴 아이콘
+            color: Colors.white, // 아이콘 색상
+            size: 24.sp, // 아이콘 크기
           ),
         ),
         SizedBox(width: 8.w),
-        menuButton(
-          icon: Icons.notifications_sharp,
-          onPressed: () {
-            print("Notification button pressed");
-          },
+        Container(
+          width: 232.h,
+          height: 56.h,
+          padding: EdgeInsets.only(bottom: 18.h, top: 18.h),
+          child: Container(
+            width: 100.w,
+            height: 20.h,
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              'assets/image/logo_primary.svg', // SVG 파일 경로로 수정
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+
+        SizedBox(width: 8.w),
+        Container(
+          width: 56.w,
+          height: 56.h,
+          padding: EdgeInsets.all(16),
+          child: Icon(
+            Icons.notifications_sharp, // 메뉴 아이콘
+            color: Colors.white, // 아이콘 색상
+            size: 24.sp, // 아이콘 크기
+          ),
         ),
       ],
     ),
@@ -204,7 +161,8 @@ Widget CustomAppBar({required String title, required BuildContext context}) {
 }
 
 //로그인화면_뒤로가기_상단바
-Widget CustomloginAppBar({required String title, required BuildContext context}) {
+Widget CustomloginAppBar(
+    {required String title, required BuildContext context}) {
   return Container(
     width: 360.w,
     height: 56.h,
@@ -246,7 +204,7 @@ Widget CustomloginAppBar({required String title, required BuildContext context})
         Container(
           width: 56.w,
           height: 56.h,
-          padding: EdgeInsets.only(left: 14,right: 14,top: 20,bottom: 20),
+          padding: EdgeInsets.only(left: 14, right: 14, top: 20, bottom: 20),
           child: Container(
             width: 28.w,
             height: 16.h,
@@ -256,7 +214,6 @@ Widget CustomloginAppBar({required String title, required BuildContext context})
               ),
             ),
           ),
-
         ),
       ],
     ),
@@ -278,10 +235,12 @@ Widget Signuptext(String title, String subtitle) {
             title, // 전달받은 title 사용
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20.sp, // 20.sp
+              fontSize: 20.sp,
+              // 20.sp
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w700,
-              height: 1.40.h, // 1.40.h
+              height: 1.40.h,
+              // 1.40.h
               letterSpacing: -0.50,
             ),
           ),
@@ -297,7 +256,8 @@ Widget Signuptext(String title, String subtitle) {
               fontSize: 12.sp,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w500,
-              height: 1.3.h, // 1.30.h
+              height: 1.3.h,
+              // 1.30.h
               letterSpacing: -0.30,
             ),
           ),
@@ -308,13 +268,21 @@ Widget Signuptext(String title, String subtitle) {
 }
 
 //회원가입_하단바_버튼
-class LoginButton extends StatelessWidget {final String buttonText;final VoidCallback onTap;
-  const LoginButton({Key? key, required this.buttonText, required this.onTap,}) : super(key: key);
+class LoginButton extends StatelessWidget {
+  final String buttonText;
+  final VoidCallback onTap;
+
+  const LoginButton({
+    Key? key,
+    required this.buttonText,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
         width: double.infinity,
         height: 100.h,
@@ -322,8 +290,10 @@ class LoginButton extends StatelessWidget {final String buttonText;final VoidCal
         child: InkWell(
           onTap: onTap, // 전달받은 onTap 사용
           child: Container(
-            width: 328.w, // 328.w
-            height: 52.h, // 52.h
+            width: 328.w,
+            // 328.w
+            height: 52.h,
+            // 52.h
             decoration: ShapeDecoration(
               color: Color(0xFF05FFF7),
               shape: RoundedRectangleBorder(
@@ -336,10 +306,12 @@ class LoginButton extends StatelessWidget {final String buttonText;final VoidCal
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFF1A1A1A),
-                fontSize: 20.sp, // 20.sp
+                fontSize: 20.sp,
+                // 20.sp
                 fontFamily: 'Pretendard',
                 fontWeight: FontWeight.w500,
-                height: 1.40.h, // 1.40.h
+                height: 1.40.h,
+                // 1.40.h
                 letterSpacing: -0.50,
               ),
             ),
@@ -363,10 +335,12 @@ Widget Subtext(String nickname) {
         nickname, // 전달받은 닉네임 텍스트 사용
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14.sp, // 14.sp
+          fontSize: 14.sp,
+          // 14.sp
           fontFamily: 'Pretendard',
           fontWeight: FontWeight.w500,
-          height: 1.40.h, // 1.40.h
+          height: 1.40.h,
+          // 1.40.h
           letterSpacing: -0.35,
         ),
       ),

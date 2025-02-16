@@ -71,7 +71,7 @@
 
 13. **provider 수정 / 세션유지 **
 
-- 링크: [로그인 프로바이더 추가/ui제작)](https://game-chanda.tistory.com/186)
+- 링크: [로그인 provider 추가/ui제작)](https://game-chanda.tistory.com/186)
 - 난이도: ★★★☆☆
 - 총 소요시간 : 8시간
 
@@ -83,12 +83,24 @@
 
 15. **svg error 및 svg 이미지넣기 / 홈화면 _ 광고바 기능 제작 **
 
-- 링크: [svg 에러 /차트 제작/](https://game-chanda.tistory.com/187)
+- 링크: [svg 에러 /차트 제작](https://game-chanda.tistory.com/188)
 - 난이도: ★★★☆☆
 - 총 소요시간 : 4시간
 
 16. **마이 ui제작 / 네이버지도 ui 수정 및 팝업 제작 / 피그마코드 주의사항 **
 
-- 링크: [플러터 스택 / 스낵바 커스텀 / 피그마 주의사항](https://game-chanda.tistory.com/187)
+- 링크: [플러터 스택 / 스낵바 커스텀 / 피그마 주의사항](https://game-chanda.tistory.com/189)
 - 난이도: ★★★☆☆
 - 총 소요시간 : 5시간
+
+17. **네이버지도 - 마커클릭시 이미지변경 , refresh클릭시 아이콘 비활성화 **
+
+- 링크: [마커 클릭 시 이미지 추가/refresh 제스처 추가](https://game-chanda.tistory.com/190)
+- 난이도: ★☆☆☆☆
+- 총 소요시간 : 1시간
+
+18. **필터 기능 제작 / 마이페이지 수정하기 제작 / 필터 provider 생성 **
+
+- 링크: [필터 provider 제작/ 마이페이지 create,update](https://game-chanda.tistory.com/191)
+- 난이도: ★★★☆☆
+- 총 소요시간 : 4시간

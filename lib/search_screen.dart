@@ -135,11 +135,10 @@ class _searchState_screen extends State<search_screen> {
             // 검색 바
             Container(
               width: 360.w,
-              height: 80.h,
-              padding: EdgeInsets.only(right: 16.w, top: 12.h, bottom: 12.h),
-              decoration: BoxDecoration(color: Color(0xFF1A1A1A)),
+              height: 56.h,
+              padding: EdgeInsets.only(right: 16.w),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -148,7 +147,7 @@ class _searchState_screen extends State<search_screen> {
                     child: Container(
                       width: 56.w,
                       height: 56.h,
-                      padding: EdgeInsets.all(16.w),
+                      padding: EdgeInsets.all(16),
                       child: Icon(
                         Icons.chevron_left,
                         size: 24.sp,
@@ -156,40 +155,37 @@ class _searchState_screen extends State<search_screen> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      height: 48.h,
-                      padding: EdgeInsets.only(left: 16.w, right: 8.w, top: 12.h, bottom: 12.h),
-                      decoration: ShapeDecoration(
-                        color: Color(0x19320E99),
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1.w, color: Color(0xFF4D17EE)),
-                          borderRadius: BorderRadius.circular(16.w),
+                  Container(
+                    width: 288.w,
+                    height: 36.h,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFF3D3D3D),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    padding: EdgeInsets.only(left: 8.w, right: 16.w, top: 8.h, bottom: 8.h),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '매장, 위치 검색',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF888888),
                         ),
                       ),
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '매장, 위치 검색',
-                          hintStyle: TextStyle(
-                            color: Color(0xFF888888),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: Color(0xFFF8F6FE),
-                          fontSize: 14.sp,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500,
-                          height: 1.70.h,
-                          letterSpacing: -0.35,
-                        ),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                        height: 1.40.h,
+                        letterSpacing: -0.35,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+
             // 검색 결과 표시 영역
             Expanded(
               child: Stack(
@@ -231,8 +227,12 @@ class _searchState_screen extends State<search_screen> {
                                   Text(
                                     title,
                                     style: TextStyle(
-                                      color: Color(0xFFF8F6FE),
-                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontSize: 14.sp,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.40.h,
+                                      letterSpacing: -0.35,
                                     ),
                                   ),
                                 ],
@@ -259,6 +259,7 @@ class _searchState_screen extends State<search_screen> {
                 ],
               ),
             ),
+
           ],
         ),
       ),

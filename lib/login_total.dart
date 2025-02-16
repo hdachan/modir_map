@@ -34,15 +34,19 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => NaverMapProvider()),
-        // 네이버 지도 상태
+        /// 네이버 지도 상태
         ChangeNotifierProvider(create: (context) => SettingState()),
-        // 바텀바 상태
+        /// 바텀바 상태
         ChangeNotifierProvider(create: (context) => DataProvider()),
-        // 디비 설정 상태
+        /// 매장정보 데이터베이스 불러오기
         ChangeNotifierProvider(create: (_) => MapProvider()),
-        // 검색 상태
+        /// 검색 상태
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        // 로그인 상태 추가
+        /// 로그인 상태 추가
+        ChangeNotifierProvider(create: (_) => UserInfoProvider()),
+        ///유저 데이터베이스 불러오기
+        ChangeNotifierProvider(create: (_) => FilterProvider()),
+        ///필터 상태
 
       ],
       child: MyApp(),

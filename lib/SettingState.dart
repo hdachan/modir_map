@@ -96,47 +96,114 @@ class DataProvider with ChangeNotifier {
 }
 
 
-// marker supabase 실시간 불러오기
-class DataProvider2 with ChangeNotifier {
+// userinfo supabase 실시간 불러오기
+class UserInfoProvider with ChangeNotifier {
   final supabase = Supabase.instance.client;
-  List<dynamic> storeMarkerList = [];
-  bool isLoading = false; // 로딩 상태 추가
-  String? errorMessage; // 에러 메시지 추가
+  List<dynamic> userList = [];
+  bool isLoading = false;
+  String? errorMessage;
+  late RealtimeChannel _realtimeChannel;
 
-  // 매장 및 마커 데이터 불러오기
-  Future<List<Map<String, dynamic>>?> fetchStoreAndMarkerData() async {
-    isLoading = true; // 로딩 시작
-    errorMessage = null; // 에러 메시지 초기화
-    notifyListeners(); // 상태 변경 알림
+  UserInfoProvider() {
+    setupRealtimeSubscription();
+    // 앱 시작 시 데이터를 불러옵니다.
+    fetchUserInfo();
+  }
+
+  Future<void> fetchUserInfo() async {
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
 
     try {
+      final currentUser = supabase.auth.currentUser;
+      if (currentUser == null) {
+        errorMessage = "로그인된 사용자가 없습니다.";
+        userList = [];
+        return;
+      }
+
+      // 쿼리 실행 시 에러 발생 시 예외가 throw됩니다.
       final response = await supabase
           .from('userinfo')
-          .select('''
-            mapx,
-            mapy,
-            stores (name, type, address, road_address)
-          ''')
-          .catchError((error) {
-        print('Error fetching data: $error');
-        errorMessage = error.toString(); // 에러 메시지 저장
-        return null;
-      });
+          .select()
+          .eq('id', currentUser.id);
 
-      if (response != null) {
-        storeMarkerList = response;
-        return List<Map<String, dynamic>>.from(response);
+      // 정상적으로 데이터를 반환하면 response는 List<dynamic> 타입입니다.
+      userList = response as List<dynamic>;
+    } catch (e) {
+      errorMessage = e.toString();
+      userList = [];
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // username을 업데이트하는 메서드
+  Future<void> updateUsername(String newUsername) async {
+    final currentUser = supabase.auth.currentUser;
+    if (currentUser == null) {
+      errorMessage = "로그인된 사용자가 없습니다.";
+      notifyListeners();
+      return;
+    }
+
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      final response = await supabase
+          .from('userinfo')
+          .update({'username': newUsername})
+          .eq('id', currentUser.id);
+
+      // 업데이트된 행이 있는지 확인 (예: response가 List 형태로 반환됨)
+      if (response is List && response.isEmpty) {
+        errorMessage = "업데이트된 행이 없습니다. RLS 정책이나 레코드 존재 여부를 확인하세요.";
+      } else {
+        // 업데이트 성공 시 최신 데이터를 다시 가져옵니다.
+        await fetchUserInfo();
       }
     } catch (e) {
-      print('Error: $e');
-      errorMessage = e.toString(); // 에러 메시지 저장
+      errorMessage = e.toString();
     } finally {
-      isLoading = false; // 로딩 종료
-      notifyListeners(); // 상태 변경 알림
+      isLoading = false;
+      notifyListeners();
     }
-    return null;
+  }
+
+
+  void setupRealtimeSubscription() {
+    final currentUser = supabase.auth.currentUser;
+    if (currentUser == null) return;
+
+    _realtimeChannel = supabase.channel('userInfo_channel').onPostgresChanges(
+      event: PostgresChangeEvent.all,
+      schema: 'public',
+      table: 'userinfo',
+      filter: PostgresChangeFilter(
+        type: PostgresChangeFilterType.eq,
+        column: 'id',
+        value: currentUser.id,
+      ),
+      callback: (payload) {
+        fetchUserInfo();
+      },
+    ).subscribe();
+  }
+
+  void disposeProvider() {
+    _realtimeChannel.unsubscribe();
+  }
+
+  @override
+  void dispose() {
+    disposeProvider();
+    super.dispose();
   }
 }
+
 
 // 지도 이동 프로바이더
 class MapProvider with ChangeNotifier {
@@ -209,5 +276,26 @@ class AuthObserver extends NavigatorObserver {
 }
 
 
+// 필터 상태관리
+class FilterProvider extends ChangeNotifier {
+  final List<String> _selectedFilters = [];
 
+  List<String> get selectedFilters => _selectedFilters;
+
+  /// 필터 토글 (이미 선택되어 있으면 제거, 없으면 추가)
+  void toggleFilter(String filter) {
+    if (_selectedFilters.contains(filter)) {
+      _selectedFilters.remove(filter);
+    } else {
+      _selectedFilters.add(filter);
+    }
+    notifyListeners();
+  }
+
+  /// 특정 필터 제거
+  void removeFilter(String filter) {
+    _selectedFilters.remove(filter);
+    notifyListeners();
+  }
+}
 
