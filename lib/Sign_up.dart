@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'information_screen.dart';
 import 'screen_setting.dart';
 import 'password_screen.dart'; // 다음 화면 import
@@ -29,16 +30,66 @@ class _SignUp_screen extends State<SignUp_screen> with SingleTickerProviderState
     super.dispose();
   }
 
-  void _navigateToPasswordScreen(BuildContext context) {
-    if (_emailController.text.isNotEmpty) {
+  Future<void> _navigateToPasswordScreen(BuildContext context) async {
+    final email = _emailController.text.trim();
+
+    // 이메일 빈 칸 검사
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('이메일 주소를 입력하세요.')),
+      );
+      return;
+    }
+
+    // 이메일 형식 검사
+    if (!_isValidEmail(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('유효한 이메일 주소를 입력하세요.')),
+      );
+      return;
+    }
+
+    try {
+      // 새로운 Supabase 버전에서는 maybeSingle()이 null 또는 Map<String, dynamic>를 반환합니다.
+      final response = await Supabase.instance.client
+          .from('userinfo')
+          .select('id')
+          .eq('email', email)
+          .maybeSingle();
+
+      // 이미 등록된 이메일인 경우 response가 null이 아니게 됩니다.
+      if (response != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('이미 등록된 이메일입니다.')),
+        );
+        return;
+      }
+
+      // 해당 이메일이 등록되어 있지 않으면 PasswordScreen으로 이동
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PasswordScreen(email: _emailController.text),
+          builder: (context) => PasswordScreen(email: email),
         ),
+      );
+    } catch (error) {
+      // 오류가 발생하면 예외가 throw되므로 catch로 처리합니다.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')),
       );
     }
   }
+
+// 이메일 유효성 검사 함수
+  bool _isValidEmail(String email) {
+    final RegExp emailRegExp = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    return emailRegExp.hasMatch(email);
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +153,7 @@ class _SignUp_screen extends State<SignUp_screen> with SingleTickerProviderState
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: '여기에 입력하세요',
+                              hintText: 'email@address.com',
                               hintStyle: TextStyle(
                                 color: Color(0xFF888888),
                                 fontSize: 14.sp,
@@ -115,14 +166,20 @@ class _SignUp_screen extends State<SignUp_screen> with SingleTickerProviderState
                           ),
                         ),
                         if (!_isTextFieldEmpty)
-                          IconButton(
-                            icon: Icon(Icons.cancel, color: Color(0xFF888888)),
-                            onPressed: () {
-                              _emailController.clear();
-                              setState(() {
-                                _isTextFieldEmpty = true;
-                              });
-                            },
+                          Container(
+                            width: 24.w,
+                            height: 24.h,
+                            alignment: Alignment.center, // 중앙 정렬
+                            child: IconButton(
+                              padding: EdgeInsets.zero, // 패딩 제거
+                              icon: Icon(Icons.cancel, color: Color(0xFF888888)),
+                              onPressed: () {
+                                _emailController.clear();
+                                setState(() {
+                                  _isTextFieldEmpty = true; // 상태 업데이트
+                                });
+                              },
+                            ),
                           ),
                       ],
                     ),

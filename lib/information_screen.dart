@@ -137,16 +137,14 @@ class _InformationScreenState extends State<InformationScreen> {
                 _buildSelectionButtons(['빈티지', '아메카지'], _selectedCategoryIndex, _onCategoryButtonPressed),
 
                 SizedBox(height: 48.h),
-
-                // 회원가입 버튼
-                ElevatedButton(
-                  onPressed: _signUp,
-                  child: Text('정보 입력 완료'),
-                ),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar:LoginButton(
+        buttonText: '완료', // 로그인 텍스트 전달
+        onTap:  () => _signUp(),
       ),
     );
   }

@@ -233,10 +233,10 @@ class _SettingState extends State<Setting> {
                                     '매장, 위치 검색',
                                     style: TextStyle(
                                       color: Color(0xFF888888),
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       fontFamily: 'Pretendard',
                                       fontWeight: FontWeight.w500,
-                                      height: 1.40,
+                                      height: 1.40.h,
                                       letterSpacing: -0.35,
                                     ),
                                   ),
@@ -378,9 +378,9 @@ class _SettingState extends State<Setting> {
                 //아이콘 모음
                 Container(
                   width: 360.w,
-                  height: 208.h,
+                  height: 192.h,
                   color: Color(0xFF1A1A1A),
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Row(
                     children: [
                       Container(
@@ -391,13 +391,27 @@ class _SettingState extends State<Setting> {
                             Container(
                               width: 160.w,
                               height: 76.h,
-                              color: Colors.grey,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 76.w,
+                                    height: 76.h,
+                                    color: Color(0xFF3F3F3F),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Container(
+                                    width: 76.w,
+                                    height: 76.h,
+                                    color: Color(0xFF3F3F3F)
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 8.h),
                             Container(
                               width: 160.w,
                               height: 76.h,
-                              color: Colors.grey,
+                              color: Color(0xFF3F3F3F),
                             ),
                           ],
                         ),
@@ -417,11 +431,31 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
 
+                SizedBox(height: 24.h),
                 //좋아할 매장
                 Container(
                   width: 360.w,
-                  height: 423.h,
-                  color: Color(0xFF1A1A1A),
+                  height: 74.h,
+                  padding: EdgeInsets.only(top: 24,bottom: 12,right: 16,left: 16),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 328.w,
+                        height: 20.h,
+                        child: Text(
+                          '좋아할 만한 매장',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.1.h,
+                            letterSpacing: -0.45,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
