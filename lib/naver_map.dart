@@ -380,7 +380,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       builder: (BuildContext context) {
         return Container(
           width: 360.w,
-          height: 222.h, // 높이 설정
+          height: 224.h, // 높이 설정
           child: Column(
             children: [
               // 제목 영역 (둥근 모서리 추가)
@@ -405,275 +405,254 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
               ),
 
               // 내용 영역
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          StoreInfoScreen(
-                            title: title,
-                            address: address,
-                            roadAddress: roadAddress,
-                            type: type,
-                          ),
-                    ),
-                  );
-                },
-
-                child: Container(
-                  width: 360.w,
-                  height: 186.h,
-                  color: Color(0xFF1A1A1A),
-                  padding: EdgeInsets.only(
-                      left: 16.w, right: 16.w, bottom: 24.h),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 328.w,
-                        height: 102.h,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 100.w,
-                              height: 100.h,
-                              color: Colors.red,
-                            ),
-                            SizedBox(width: 12.w),
-                            Container(
-                              width: 216.w,
-                              height: 102.h,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 216.w,
-                                    height: 46.h,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .start, // 왼쪽 정렬
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start, // 위쪽 정렬
-                                      children: [
-                                        Container(
-                                          width: 164.w,
-                                          height: 46.h,
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: 164.w,
-                                                height: 20.h,
-                                                child: Text(
-                                                  '$type',
-                                                  style: TextStyle(
-                                                    color: Color(0xFFE7E7E7),
-                                                    fontSize: 14,
-                                                    fontFamily: 'Pretendard',
-                                                    fontWeight: FontWeight.w500,
-                                                    height: 1.40.h,
-                                                    letterSpacing: -0.35,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: 164.w,
-                                                height: 26.h,
-                                                child: Text(
-                                                  '$title',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                    fontFamily: 'Pretendard',
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 1.30,
-                                                    letterSpacing: -0.50,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 52.w,
-                                          height: 20.h,
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                width: 20.w,
-                                                height: 20.h,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: ShapeDecoration(
-                                                  color: Color(0xFF1CD14F),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius
-                                                        .circular(100),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: 12.w),
-                                              Container(
-                                                width: 20.w,
-                                                height: 20.h,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: ShapeDecoration(
-                                                  shape: RoundedRectangleBorder(
-                                                    side: BorderSide(width: 1,
-                                                        color: Color(
-                                                            0xFFFD3D51)),
-                                                    borderRadius: BorderRadius
-                                                        .circular(100),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Container(
-                                    width: 216.w,
-                                    height: 20.h,
-                                    child: Text(
-                                      '영업 중 · 20:00에 영업 종료',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.40,
-                                        letterSpacing: -0.35,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Container(
-                                    width: 216.w,
-                                    height: 20.h,
-                                    child: Text(
-                                      '렉토 · 벨리에 · UGG',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.40,
-                                        letterSpacing: -0.35,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      StoreInfoScreen(
+                        title: title,
+                        address: address,
+                        roadAddress: roadAddress,
+                        type: type,
                       ),
-                      SizedBox(height: 12),
-                      Container(
-                        width: 328.w,
-                        height: 48.h,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 265.w,
-                              height: 48.h,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 265.w,
-                                    height: 20.h,
-                                    child: Text.rich(
-                                      TextSpan(
+                ),
+              );
+            },
+            child: Container(
+              width: 360.w,
+              height: 188.h,
+              color: Color(0xFF1A1A1A),
+              padding: EdgeInsets.only(
+                  left: 16.w, right: 16.w, bottom: 24.h),
+              child: Column(
+                children: [
+                  Container(
+                    width: 328.w,
+                    height: 104.h,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 100.w,
+                          height: 100.h,
+                          color: Colors.cyan,
+                        ),
+                        SizedBox(width: 12.w),
+                        Container(
+                          width: 216.w,
+                          height: 104.h,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 216.w,
+                                height: 48.h,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
+                                  crossAxisAlignment: CrossAxisAlignment.start, // 위쪽 정렬
+                                  children: [
+                                    Container(
+                                      width: 188.w,
+                                      height: 48.h,
+                                      child: Column(
                                         children: [
-                                          TextSpan(
-                                            text: '추천  ·  ',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.40,
-                                              letterSpacing: -0.35,
+                                          Container(
+                                            width: 188.w,
+                                            height: 20.h,
+                                            child: Text(
+                                              '$type',
+                                              style: TextStyle(
+                                                color: Color(0xFFE7E7E7),
+                                                fontSize: 14.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.40.h,
+                                                letterSpacing: -0.35,
+                                              ),
                                             ),
                                           ),
-                                          TextSpan(
-                                            text: '스트릿',
-                                            style: TextStyle(
-                                              color: Color(0xFF05FFF7),
-                                              fontSize: 14,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.40,
-                                              letterSpacing: -0.35,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: '을 선호하는 분들',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.40,
-                                              letterSpacing: -0.35,
+                                          Container(
+                                            width: 188.w,
+                                            height: 28.h,
+                                            child: Text(
+                                              '$title',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.sp,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.30.h,
+                                                letterSpacing: -0.50,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Container(
-                                    width: 265.w,
-                                    height: 20.h,
-                                    child: Text(
-                                      '주소  ·  $address ',
-                                      style: TextStyle(
-                                        color: Color(0xFFD1D1D1),
-                                        fontSize: 14,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.40.h,
-                                        letterSpacing: -0.35,
+                                    Container(
+                                      width: 28.w,
+                                      height: 28.h,
+                                      padding: EdgeInsets.all(2),
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero, // 패딩을 없애서 아이콘 크기를 유지
+                                        onPressed: () {
+                                          print("qwe");
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite_outline, // 하트 아이콘
+                                          color: Colors.white, // 아이콘 색상
+                                          size: 24.sp, // 아이콘 크기
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Container(
-                              width: 55.w,
-                              height: 33.h,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w, vertical: 8.h),
-                              decoration: ShapeDecoration(
-                                color: Color(0xFF3D3D3D),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+
+                                  ],
                                 ),
                               ),
-                              child: Center(
+                              SizedBox(height: 8.h),
+                              Container(
+                                width: 216.w,
+                                height: 20.h,
                                 child: Text(
-                                  '길찾기',
+                                  '영업 중 · 20:00에 영업 종료',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.40.h,
+                                    letterSpacing: -0.35,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Container(
+                                width: 216.w,
+                                height: 20.h,
+                                child: Text(
+                                  '렉토 · 벨리에 · UGG',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.40.h,
+                                    letterSpacing: -0.35,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Container(
+                    width: 328.w,
+                    height: 48.h,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 265.w,
+                          height: 48.h,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 265.w,
+                                height: 20.h,
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '추천  ·  ',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.40,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '스트릿',
+                                        style: TextStyle(
+                                          color: Color(0xFF05FFF7),
+                                          fontSize: 14.sp,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.40.h,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '을 선호하는 분들',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.40.h,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Container(
+                                width: 265.w,
+                                height: 20.h,
+                                child: Text(
+                                  '주소  ·  $address ',
+                                  style: TextStyle(
+                                    color: Color(0xFFD1D1D1),
+                                    fontSize: 14.sp,
                                     fontFamily: 'Pretendard',
                                     fontWeight: FontWeight.w500,
                                     height: 1.40.h,
-                                    letterSpacing: -0.30,
+                                    letterSpacing: -0.35,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 8),
+                        Container(
+                          width: 55.w,
+                          height: 33.h,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.w, vertical: 8.h),
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF3D3D3D),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '길찾기',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.40.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
+                ],
+              ),
+            ),
+          ),
             ],
           ),
         );
