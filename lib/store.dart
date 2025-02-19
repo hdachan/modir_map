@@ -40,10 +40,80 @@ class _StoreInfoScreenState extends State<StoreInfoScreen>
           slivers: [
             // 스크롤 되는 첫 번째 컨테이너
             SliverToBoxAdapter(
-              child: Container(
-                width: 360.w,
-                height: 360.h,
-                color: Colors.cyan,
+              child: Stack(
+                children: [
+                  Container(
+                    width: 360.w,
+                    height: 360.h,
+                    color: Colors.blue, // 배경색을 추가하여 Container를 시각적으로 확인
+                  ),
+                  Positioned(
+                    left: 12.w, // 왼쪽 위 아이콘의 x 위치
+                    top: 12.h, // 왼쪽 위 아이콘의 y 위치
+                    child: Container(
+                      width: 32.w,
+                      height: 32.h,
+                      padding: EdgeInsets.all(4),
+                      decoration: ShapeDecoration(
+                        color: Color(0xB21A1A1A),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_outlined, // 수평 점세게 메뉴 아이콘
+                        size: 20.sp, // 아이콘 크기
+                        color: Colors.white, // 아이콘 색상
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 12.w, // 오른쪽 위 아이콘의 x 위치
+                    top: 12.h, // 오른쪽 위 아이콘의 y 위치
+                    child: Container(
+                      width: 32.w,
+                      height: 32.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xB21A1A1A),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                      padding: EdgeInsets.all(4),
+                      child: Container(
+                        width: 24.w,
+                        height: 24.h,
+
+                        child: Center(
+                          // 아이콘을 중앙에 배치하기 위해 Center 위젯을 사용
+                          child: Icon(
+                            Icons.more_vert_outlined, // 수평 점세게 메뉴 아이콘
+                            size: 24.w, // 아이콘 크기
+                            color: Colors.white, // 아이콘 색상
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 12.w, // 왼쪽 아래 아이콘의 x 위치
+                    bottom: 12.h, // 왼쪽 아래 아이콘의 y 위치
+                    child: Container(
+                      width: 32.w,
+                      height: 32.h,
+                      color: Colors.cyan,
+                    ),
+                  ),
+                  Positioned(
+                    right: 12.w, // 오른쪽 아래 아이콘의 x 위치
+                    bottom: 12.h, // 오른쪽 아래 아이콘의 y 위치
+                    child: Container(
+                      width: 32.w,
+                      height: 32.h,
+                      color: Colors.cyan,
+                    ),
+                  ),
+                ],
               ),
             ),
             // 탭 컨테이너를 슬리버로 감싸고 pinned 속성을 true로 설정
@@ -326,7 +396,7 @@ class _DataScreen4State extends State<DataScreen4> {
           ),
         ),
 
-        //영업중
+        //주소
         Container(
           width: 360.w,
           height: 32.h,
@@ -350,7 +420,6 @@ class _DataScreen4State extends State<DataScreen4> {
                         ),
                       ),
                     ),
-
                     SizedBox(width: 4.w),
                     Container(
                       width: 164.w,
@@ -414,12 +483,11 @@ class _DataScreen4State extends State<DataScreen4> {
                         ),
                       ),
                     ),
-
                     SizedBox(width: 4.w),
                     Container(
                       width: 90.w,
                       height: 20.h,
-                      child:         Text(
+                      child: Text(
                         '02-1234-5678',
                         style: TextStyle(
                           color: Color(0xFFE7E7E7),
@@ -456,66 +524,110 @@ class _DataScreen4State extends State<DataScreen4> {
         ),
         //웹사이트
         Container(
-          width: 328.w,
-          height: 20.h,
+          width: 360.w,
+          height: 32.h,
+          padding: EdgeInsets.only(left: 16, right: 8, top: 2, bottom: 2),
           child: Row(
             children: [
               Container(
-                width: 20.w,
-                height: 20.h,
-                child: Icon(
-                  Icons.public, // 웹사이트 아이콘
-                  size: 20, // 아이콘 크기
-                  color: Color(0xFF888888), // 아이콘 색상
-                ),
-              ),
-              SizedBox(width: 4),
-              Container(
-                width: 304.w,
-                height: 20.h,
-                child: Text(
-                  'https://belier.co.kr/',
-                  style: TextStyle(
-                    color: Color(0xFFE7E7E7),
-                    fontSize: 14,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w400,
-                    height: 1.40,
-                    letterSpacing: -0.35,
-                  ),
+                width: 336.w,
+                height: 28.h,
+                padding: EdgeInsets.only(top: 4, bottom: 4),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 20.w,
+                      height: 20.h,
+                      child: Center(
+                        child: Icon(
+                          Icons.public,
+                          color: Color(0xFF888888), // 아이콘 색상
+                          size: 20.sp, // 아이콘 크기
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    Container(
+                      width: 312.w,
+                      height: 20.h,
+                      child: Text(
+                        'https://belier.co.kr/',
+                        style: TextStyle(
+                          color: Color(0xFF05FFF7),
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+
         Container(
           width: 360.w,
-          height: 108.h,
+          height: 68.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+          child: Container(
+            width: 328.w,
+            height: 44.h,
+            decoration: ShapeDecoration(
+              color: Color(0xFF242424),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 1.w, color: Color(0xFF3D3D3D)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '매장 정보 더보기',
+                style: TextStyle(
+                  color: Color(0xFFE7E7E7),
+                  fontSize: 14.sp,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w500,
+                  height: 1.40.h,
+                  letterSpacing: -0.35,
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        Container(
+          width: 360.w,
+          height: 96.h,
           color: Color(0xFF1A1A1A),
           padding:
-              EdgeInsets.only(left: 60.w, right: 60, top: 16.h, bottom: 16.h),
+              EdgeInsets.only(left: 16.w, right: 16, top: 16.h, bottom: 16.h),
           child: Row(
             children: [
               Container(
-                width: 48.w,
-                height: 76.h,
-                padding: EdgeInsets.all(8),
+                width: 76.w,
+                height: 64.h,
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
                 child: Column(
                   children: [
                     Container(
-                      width: 32.w,
-                      height: 32.h,
+                      width: 20.w,
+                      height: 20.h,
                       child: Center(
                         child: Icon(
                           Icons.favorite_border,
                           color: Colors.white, // 흰색 아이콘
-                          size: 24.sp, // 아이콘 크기 조정
+                          size: 20.sp, // 아이콘 크기 조정
                         ),
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Container(
-                      width: 32.w,
+                      width: 24.w,
                       height: 20.h,
                       child: Text(
                         '관심',
@@ -533,27 +645,28 @@ class _DataScreen4State extends State<DataScreen4> {
                   ],
                 ),
               ),
-              SizedBox(width: 48.w),
+              SizedBox(width: 8.w),
               Container(
-                width: 48.w,
-                height: 76.h,
-                padding: EdgeInsets.all(8),
+                width: 76.w,
+                height: 64.h,
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
                 child: Column(
                   children: [
                     Container(
-                      width: 32.w,
-                      height: 32.h,
+                      width: 20.w,
+                      height: 20.h,
                       child: Center(
                         child: Icon(
                           Icons.chat_bubble_outline,
                           color: Colors.white, // 흰색 아이콘
-                          size: 24.sp, // 아이콘 크기 조정
+                          size: 20.sp, // 아이콘 크기 조정
                         ),
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Container(
-                      width: 32.w,
+                      width: 24.w,
                       height: 20.h,
                       child: Text(
                         '문의',
@@ -571,27 +684,67 @@ class _DataScreen4State extends State<DataScreen4> {
                   ],
                 ),
               ),
-              SizedBox(width: 48.w),
+              SizedBox(width: 8.w),
               Container(
-                width: 48.w,
-                height: 76.h,
-                padding: EdgeInsets.all(8),
+                width: 76.w,
+                height: 64.h,
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
                 child: Column(
                   children: [
                     Container(
-                      width: 32.w,
-                      height: 32.h,
+                      width: 20.w,
+                      height: 20.h,
                       child: Center(
                         child: Icon(
-                          Icons.ios_share,
+                          Icons.near_me_outlined,
                           color: Colors.white, // 흰색 아이콘
-                          size: 24.sp, // 아이콘 크기 조정
+                          size: 20.sp, // 아이콘 크기 조정
                         ),
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Container(
-                      width: 32.w,
+                      width: 36.w,
+                      height: 20.h,
+                      child: Text(
+                        '길찾기',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w500,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: 76.w,
+                height: 64.h,
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 20.w,
+                      height: 20.h,
+                      child: Center(
+                        child: Icon(
+                          Icons.ios_share,
+                          color: Colors.white, // 흰색 아이콘
+                          size: 20.sp, // 아이콘 크기 조정
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Container(
+                      width: 24.w,
                       height: 20.h,
                       child: Text(
                         '공유',
@@ -612,166 +765,130 @@ class _DataScreen4State extends State<DataScreen4> {
             ],
           ),
         ),
+
         Container(
           width: 360.w,
-          height: 174.h,
-          color: Color(0xFF1A1A1A),
-          padding: EdgeInsets.only(top: 24.h),
-          child: Column(
+          height: 44.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+          child: Row(
             children: [
               Container(
-                width: 360.w,
-                height: 56.h,
-                padding: EdgeInsets.only(left: 16.w, right: 16.w),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 328.w,
-                      height: 28.h,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start, // 상단에 배치
-                        children: [
-                          Container(
-                            width: 300.w,
-                            height: 28.h,
-                            child: Text(
-                              '이 매장을 선호하는 분들',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w700,
-                                height: 1.40,
-                                letterSpacing: -0.50,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 4.w),
-                          Container(
-                            width: 20.w,
-                            height: 20.h,
-                            child: Center(
-                              child: Icon(
-                                Icons.warning_amber,
-                                color: Colors.white, // 흰색 아이콘
-                                size: 20.sp, // 아이콘 크기 조정
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Container(
-                      width: 328.w,
-                      height: 20.h,
-                      child: Text(
-                        '참고해서 원하는 매장을 쉽게 찾아 나만의 코디를 완성하세요',
-                        style: TextStyle(
-                          color: Color(0xFFE7E7E7),
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500,
-                          height: 1.40,
-                          letterSpacing: -0.35,
-                        ),
-                      ),
-                    ),
-                  ],
+                width: 308.w,
+                height: 20.h,
+                child: Text(
+                  '이 매장을 선호하는 분들',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 1.10.h,
+                    letterSpacing: -0.45,
+                  ),
                 ),
               ),
               Container(
-                width: 360.w,
-                height: 94.h,
-                padding: EdgeInsets.all(16),
-                child: Container(
-                  width: 328.w,
-                  height: 62.h,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF242424),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  padding: EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => _onButtontypePressed(0),
-                        child: Container(
-                          width: 152.w,
-                          height: 46.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          decoration: ShapeDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment(1.00, -0.09),
-                              end: Alignment(-1, 0.09),
-                              colors: _selectedIndextype == 0
-                                  ? [Color(0xFF8D6AF5), Color(0xFF05FFF7)]
-                                  : [
-                                      Color(0xFF242424),
-                                      Color(0xFF242424)
-                                    ], // 선택된 인덱스에 따라 색상 변경
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          child: Text(
-                            '선호 패션',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              height: 1.40,
-                              letterSpacing: -0.40,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      GestureDetector(
-                        onTap: () => _onButtontypePressed(1),
-                        child: Container(
-                          width: 152.w,
-                          height: 46.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          decoration: ShapeDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment(1.00, -0.09),
-                              end: Alignment(-1, 0.09),
-                              colors: _selectedIndextype == 1
-                                  ? [Color(0xFF8D6AF5), Color(0xFF05FFF7)]
-                                  : [
-                                      Color(0xFF242424),
-                                      Color(0xFF242424)
-                                    ], // 선택된 인덱스에 따라 색상 변경
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          child: Text(
-                            '입점 브랜드',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              height: 1.40,
-                              letterSpacing: -0.40,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                width: 20.w,
+                height: 20.h,
+                child: Center(
+                  child: Icon(
+                    Icons.error_outline, // 동그라미 느낌표 아이콘
+                    color: Colors.white, // 아이콘 색상 (필요에 따라 조정)
+                    size: 20.sp, // 아이콘 크기
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+
+        Container(
+          width: 360.w,
+          height: 84.h,
+          padding: EdgeInsets.all(16),
+          child: Container(
+            width: 328.w,
+            height: 52.h,
+            decoration: BoxDecoration(
+              color: Color(0xFF242424),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            padding: EdgeInsets.all(8),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => _onButtontypePressed(0),
+                  child: Container(
+                    width: 152.w,
+                    height: 44.h,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(1.00, -0.09),
+                        end: Alignment(-1, 0.09),
+                        colors: _selectedIndextype == 0
+                            ? [Color(0xFF8D6AF5), Color(0xFF05FFF7)]
+                            : [
+                                Color(0xFF242424),
+                                Color(0xFF242424)
+                              ], // 선택된 인덱스에 따라 색상 변경
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      '선호 패션',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        height: 1.40,
+                        letterSpacing: -0.40,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                GestureDetector(
+                  onTap: () => _onButtontypePressed(1),
+                  child: Container(
+                    width: 152.w,
+                    height: 42.h,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(1.00, -0.09),
+                        end: Alignment(-1, 0.09),
+                        colors: _selectedIndextype == 1
+                            ? [Color(0xFF8D6AF5), Color(0xFF05FFF7)]
+                            : [
+                                Color(0xFF242424),
+                                Color(0xFF242424)
+                              ], // 선택된 인덱스에 따라 색상 변경
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      '입점 브랜드',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        height: 1.40,
+                        letterSpacing: -0.40,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         SizedBox(
@@ -782,6 +899,211 @@ class _DataScreen4State extends State<DataScreen4> {
               return style1(); // 세 번째 화면
             }
           })(),
+        ),
+        Container(
+          width: 360.w,
+          height: 92.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+          child: Container(
+            width: 328.w,
+            height: 68.h,
+            decoration: ShapeDecoration(
+              gradient: LinearGradient(
+                begin: Alignment(1.00, -0.08),
+                end: Alignment(-1, 0.08),
+                colors: [Color(0xFF242424), Color(0x4C242424)],
+              ),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              shadows: [
+                BoxShadow(
+                  color: Color(0x26000000),
+                  blurRadius: 20,
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+            child: Column(
+              children: [
+                Container(
+                  width: 296.w,
+                  height: 20.h,
+                  child: Text(
+                    '이 매장을 조회하신 분들은 ?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 1.40.h,
+                      letterSpacing: -0.35,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Container(
+                  width: 296.w,
+                  height: 16.h,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 31.w,
+                        height: 16.h,
+                        child: Text(
+                          '미니멀',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF05FFF7),
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            height: 1.30.h,
+                            letterSpacing: -0.30,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 2.w),
+                      Container(
+                        width: 263.w,
+                        height: 16.h,
+                        child: Text(
+                          '성향의 분들이 매장을 자주 조회해요',
+                          style: TextStyle(
+                            color: Color(0xFFE7E7E7),
+                            fontSize: 12.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            height: 1.30.h,
+                            letterSpacing: -0.30,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 44.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 328.w,
+                height: 20.h,
+                child: Text(
+                  '공지방',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 1.10.h,
+                    letterSpacing: -0.45,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 32.h,
+          padding: EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            children: [
+              Container(
+                width: 37.w,
+                height: 24.h,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                alignment: Alignment.center,
+                // 텍스트를 중앙에 정렬
+                child: Text(
+                  '신상',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    height: 1.3.h,
+                    letterSpacing: -0.30,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: 37.w,
+                height: 24.h,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                alignment: Alignment.center,
+                // 텍스트를 중앙에 정렬
+                child: Text(
+                  '품절',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    height: 1.3.h,
+                    letterSpacing: -0.30,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+            ],
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 128.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+          child: Row(
+            children: [
+              Container(
+                width: 104.w,
+                height: 104.h,
+                decoration: BoxDecoration(
+                  color: Colors.cyan,
+                  image: DecorationImage(
+                    image: AssetImage('assets/image/test_image.png'),
+                    fit: BoxFit.cover, // 이미지를 컨테이너에 맞게 조정
+                  ),
+                ),
+              ),
+              Container(
+                width: 224.w,
+                height: 104.h,
+                decoration: ShapeDecoration(
+                  color: Color(0xFF242424),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4)),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 332.h,
         ),
       ],
     );
@@ -807,6 +1129,307 @@ class DataScreen6 extends StatelessWidget {
 }
 
 class style extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 360.w,
+          height: 40.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+          child: Row(
+            children: [
+              Container(
+                width: 16.w,
+                height: 16.h,
+                child: Center(
+                  child: Icon(
+                    Icons.perm_identity_outlined, // 시계 아이콘
+                    color: Colors.white, // 아이콘 색상
+                    size: 16.sp, // 아이콘 크기
+                  ),
+                ),
+              ),
+              SizedBox(width: 4.w),
+              Container(
+                width: 257.w,
+                height: 16.h,
+                child: Text(
+                  '192명 참여',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    height: 1.30.h,
+                    letterSpacing: -0.30,
+                  ),
+                ),
+              ),
+              SizedBox(width: 2.w),
+              Container(
+                width: 51.w,
+                height: 16.h,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.access_time, // 시계 아이콘
+                      color: Colors.white, // 아이콘 색상
+                      size: 16.sp, // 아이콘 크기
+                    ),
+                    SizedBox(width: 4.w),
+                    Container(
+                      width: 31.w,
+                      height: 16.h,
+                      child: Text(
+                        '실시간',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          height: 1.2.h,
+                          letterSpacing: -0.30,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 178.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end, // 자식들을 위쪽으로 정렬
+            children: [
+              Container(
+                width: 104.w,
+                height: 162.h,
+                padding: EdgeInsets.only(bottom: 4),
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Colors.white),
+                    borderRadius: BorderRadius.circular(8.w),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 104.w,
+                      height: 34.h,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '미니멀',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF1A1A1A),
+                            fontSize: 14.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.30.h,
+                            letterSpacing: -0.35,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    Container(
+                      width: 42.w,
+                      height: 80.h,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: 104.w,
+                      height: 20.h,
+                      child: Text(
+                        '46%',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w500,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: 104.w,
+                height: 134.h,
+                padding: EdgeInsets.only(bottom: 4),
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 104.w,
+                      height: 34.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF3D3D3D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '포멀',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF1A1A1A),
+                            fontSize: 14.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.30.h,
+                            letterSpacing: -0.35,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    Container(
+                      width: 42.w,
+                      height: 52.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF3D3D3D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: 104.w,
+                      height: 20.h,
+                      child: Text(
+                        '24%',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF3D3D3D),
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w500,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Container(
+                width: 104.w,
+                height: 113.h,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 104.w,
+                      height: 34.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF3D3D3D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '댄디',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF1A1A1A),
+                            fontSize: 14.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.30.h,
+                            letterSpacing: -0.35,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    Container(
+                      width: 42.w,
+                      height: 31.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF3D3D3D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: 104.w,
+                      height: 20.h,
+                      child: Text(
+                        '17%',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF3D3D3D),
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w500,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class style1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -925,26 +1548,6 @@ class style extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class style1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '선호 패션',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontFamily: 'Pretendard',
-          fontWeight: FontWeight.w700,
-          height: 1.40,
-          letterSpacing: -0.40,
-        ),
-      ),
     );
   }
 }
