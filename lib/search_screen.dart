@@ -186,6 +186,24 @@ class _searchState_screen extends State<search_screen> {
               ),
             ),
 
+            Container(
+              width: 360.w,
+              height: 52.h,
+              padding: EdgeInsets.only(left: 16,right: 16,top: 24),
+              child: Text(
+                '매장 · 지역 인기 검색어',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.sp,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w700,
+                  height: 1.40.h,
+                  letterSpacing: -0.35,
+                ),
+              ),
+            ),
+
+
             // 검색 결과 표시 영역
             Expanded(
               child: Stack(
@@ -259,7 +277,6 @@ class _searchState_screen extends State<search_screen> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

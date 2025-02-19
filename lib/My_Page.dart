@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/test.dart';
 
 import 'SettingState.dart';
+import 'setting.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화
@@ -80,7 +81,10 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // 버튼 클릭 시 실행할 코드
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => setting()),
+                              );
                               print("설정 버튼 클릭됨");
                             },
                             child: Container(
@@ -600,16 +604,16 @@ Widget middleText(String text) {
     padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 8),
     child: Container(
       width: 328.w,
-      height: 28.h,
+      height: 20.h,
       child: Text(
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20.sp,
+          fontSize: 14.sp,
           fontFamily: 'Pretendard',
           fontWeight: FontWeight.w700,
           height: 1.40.h,
-          letterSpacing: -0.50,
+          letterSpacing: -0.35,
         ),
       ),
     ),

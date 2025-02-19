@@ -275,15 +275,13 @@ class LoginButton extends StatelessWidget {
       EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
         width: double.infinity,
-        height: 100.h,
-        padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
+        height: 68.h,
+        padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
         child: InkWell(
           onTap: onTap, // 전달받은 onTap 사용
           child: Container(
             width: 328.w,
-            // 328.w
-            height: 52.h,
-            // 52.h
+            height: 44.h,
             decoration: ShapeDecoration(
               color: Color(0xFF05FFF7),
               shape: RoundedRectangleBorder(
@@ -296,13 +294,11 @@ class LoginButton extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFF1A1A1A),
-                fontSize: 20.sp,
-                // 20.sp
+                fontSize: 14.sp,
                 fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
                 height: 1.40.h,
-                // 1.40.h
-                letterSpacing: -0.50,
+                letterSpacing: -0.35,
               ),
             ),
           ),
@@ -311,6 +307,8 @@ class LoginButton extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

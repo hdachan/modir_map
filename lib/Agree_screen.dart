@@ -282,7 +282,7 @@ class _AgreePageState extends State<AgreePage> {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   color: agreeToSelectTerms
-                                                      ? Color(0xFF3D3D3D)
+                                                      ? Colors.white
                                                       : Color(0xFF888888),
                                                   // 조건에 따라 텍스트 색상 변경
                                                   fontSize: 14,
@@ -432,7 +432,7 @@ Widget AgreementButton({
               text,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: isAgreed ? Color(0xFF3D3D3D) : Color(0xFF888888),
+                color: isAgreed ? Colors.white : Color(0xFF888888),
                 fontSize: 14,
                 fontFamily: 'Pretendard',
                 fontWeight: FontWeight.w400,

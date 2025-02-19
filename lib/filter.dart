@@ -47,45 +47,114 @@ class _FilterState extends State<Filter> with SingleTickerProviderStateMixin {
           child: Center(
             child: Column(
               children: [
-                // 상단바
-                CustomAppBar(title: '필터', context: context),
-
-                // 필터 넣은 목록 영역 (선택된 필터들을 Chip 등으로 표시)
                 Container(
                   width: 360.w,
                   height: 56.h,
-                  color: const Color(0xFF1A1A1A),
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: filterProvider.selectedFilters.isEmpty
-                        ? const Text(
-                      "선택된 필터가 없습니다.",
-                      style: TextStyle(color: Colors.white),
-                    )
-                        : ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: filterProvider.selectedFilters.map((filter) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: Chip(
-                            label: Text(filter),
-                            backgroundColor: const Color(0xFF242424),
-                            labelStyle: const TextStyle(color: Colors.white),
-                            deleteIcon: const Icon(
-                              Icons.close,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                            onDeleted: () {
-                              filterProvider.toggleFilter(filter);
-                            },
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context); // context를 이제 사용할 수 있음
+                        },
+                        child: Container(
+                          width: 56.w,
+                          height: 56.h,
+                          padding: EdgeInsets.all(16),
+                          child: Icon(
+                            Icons.chevron_left,
+                            size: 24,
+                            color: Colors.white,
                           ),
-                        );
-                      }).toList(),
-                    ),
+                        ),
+                      ),
+                      Container(
+                        width: 252.w,
+                        height: 56.h,
+                        padding: EdgeInsets.only(top: 14, bottom: 14),
+                        child: Text(
+                          '필터',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.40.h,
+                            letterSpacing: -0.50,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 36.w,
+                        height: 56.h,
+                        padding: EdgeInsets.only(top: 18, bottom: 18),
+                        child: TextButton(
+                          onPressed: () {
+                            print("초기화 버튼이 눌렸습니다. 선택된 필터 목록이 비워졌습니다.");
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero, // 패딩을 0으로 설정하여 Container의 패딩을 유지
+                            backgroundColor: Colors.transparent, // 배경색 설정 (필요에 따라 변경)
+                          ),
+                          child: Text(
+                            '초기화',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xFF05FFF7),
+                              fontSize: 14.sp,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              height: 1.40.h,
+                              letterSpacing: -0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
                   ),
                 ),
+
+                // 필터 넣은 목록 영역 (선택된 필터들을 Chip 등으로 표시)
+                filterProvider.selectedFilters.isEmpty
+                    ? SizedBox.shrink()
+                    : Container(
+                        width: 360.w,
+                        height: 44.h,
+                        color: const Color(0xFF1A1A1A),
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children:
+                                filterProvider.selectedFilters.map((filter) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12),
+                                child: Chip(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // 원하는 둥글기 값
+                                    side: BorderSide(color: Colors.transparent),
+                                  ),
+                                  label: Text(filter),
+                                  backgroundColor: Color(0xFF3D3D3D),
+                                  labelStyle:
+                                      const TextStyle(color: Colors.white),
+                                  deleteIcon: const Icon(
+                                    Icons.close,
+                                    size: 14,
+                                    color: Colors.white,
+                                  ),
+                                  onDeleted: () {
+                                    filterProvider.toggleFilter(filter);
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
 
                 // 탭바 디자인
                 Container(
@@ -96,22 +165,37 @@ class _FilterState extends State<Filter> with SingleTickerProviderStateMixin {
                     controller: _tabController,
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
-                    labelColor: const Color(0xFF05FFF7), // 선택된 탭의 색상
+                    labelColor: const Color(0xFF05FFF7),
+                    // 선택된 탭의 색상
                     unselectedLabelColor: const Color(0xFFB0B0B0),
                     indicatorColor: const Color(0xFF05FFF7),
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorPadding: const EdgeInsets.only(top: 16, bottom: 0),
                     labelPadding: const EdgeInsets.symmetric(horizontal: 8),
                     tabs: const [
-                      Tab(child: Text('스타일', style: TextStyle(fontSize: 20, fontFamily: 'Pretendard', fontWeight: FontWeight.w700, height: 1.40, letterSpacing: -0.50))),
-                      Tab(child: Text('브랜드', style: TextStyle(fontSize: 20, fontFamily: 'Pretendard', fontWeight: FontWeight.w700, height: 1.40, letterSpacing: -0.50))),
+                      Tab(
+                          child: Text('스타일',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.40,
+                                  letterSpacing: -0.50))),
+                      Tab(
+                          child: Text('브랜드',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.40,
+                                  letterSpacing: -0.50))),
                     ],
                   ),
                 ),
 
                 // 탭바 정보
                 Container(
-                  height: 570.h, // 탭바 컨텐츠 높이
+                  height: 300.h, // 탭바 컨텐츠 높이
                   child: TabBarView(
                     controller: _tabController,
                     children: [
@@ -137,7 +221,8 @@ class StyleScreen extends StatelessWidget {
   final List<String> selectedFilters;
   final Function(String) onFilterToggle;
 
-  const StyleScreen({Key? key, required this.selectedFilters, required this.onFilterToggle})
+  const StyleScreen(
+      {Key? key, required this.selectedFilters, required this.onFilterToggle})
       : super(key: key);
 
   @override
@@ -147,7 +232,6 @@ class StyleScreen extends StatelessWidget {
     return Container(
       width: 360.w,
       height: 570.h,
-
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
         children: [
@@ -155,12 +239,14 @@ class StyleScreen extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => filterProvider.toggleFilter("캐주얼"),
-                child: casualButton("캐주얼", isSelected: filterProvider.selectedFilters.contains("캐주얼")),
+                child: casualButton("캐주얼",
+                    isSelected: filterProvider.selectedFilters.contains("캐주얼")),
               ),
               SizedBox(width: 16.w),
               GestureDetector(
                 onTap: () => filterProvider.toggleFilter("빈티지"),
-                child: casualButton("빈티지", isSelected: filterProvider.selectedFilters.contains("빈티지")),
+                child: casualButton("빈티지",
+                    isSelected: filterProvider.selectedFilters.contains("빈티지")),
               ),
             ],
           ),
@@ -169,7 +255,8 @@ class StyleScreen extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => filterProvider.toggleFilter("스포티"),
-                child: casualButton("스포티", isSelected: filterProvider.selectedFilters.contains("스포티")),
+                child: casualButton("스포티",
+                    isSelected: filterProvider.selectedFilters.contains("스포티")),
               ),
             ],
           ),
@@ -178,7 +265,9 @@ class StyleScreen extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => filterProvider.toggleFilter("아메카지"),
-                child: casualButton("아메카지", isSelected: filterProvider.selectedFilters.contains("아메카지")),
+                child: casualButton("아메카지",
+                    isSelected:
+                        filterProvider.selectedFilters.contains("아메카지")),
               ),
               SizedBox(width: 16.w),
             ],
@@ -196,12 +285,38 @@ class BrandScreen extends StatelessWidget {
     return Container(
       width: 360.w,
       height: 570.h,
-      // 브랜드 관련 필터 버튼 구현 가능
-      child: const Center(
-        child: Text(
-          "브랜드 필터 화면",
-          style: TextStyle(color: Colors.white),
-        ),
+      child: Column(
+        children: [
+          SizedBox(height: 12.h),
+          Container(
+            width: 360.w,
+            height: 48.h,
+            padding: EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
+            child: Container(
+              width: 328.w,
+              height: 36.h,
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
+              decoration: ShapeDecoration(
+                color: Color(0xFF3D3D3D),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+              child: Expanded(
+                child: TextField(
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '찾는 브랜드를 검색 해주세요',
+                    hintStyle: TextStyle(color: Color(0xFF888888)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -213,7 +328,9 @@ Widget casualButton(String text, {bool isSelected = false}) {
     width: 68.w,
     height: 36.h,
     decoration: ShapeDecoration(
-      color: isSelected ? const Color(0xFF05FFF7).withOpacity(0.2) : Colors.transparent,
+      color: isSelected
+          ? const Color(0xFF05FFF7).withOpacity(0.2)
+          : Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(
           width: 1,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,8 @@ class NaverMapBackground extends StatefulWidget {
 class _NaverMapBackgroundState extends State<NaverMapBackground> {
   NaverMapController? _mapController; // 컨트롤러 저장
   bool _showRefreshButton = false;
+
+
   Future<void> _moveToCurrentLocation() async {
     if (_mapController == null) {
       print("MapController가 아직 설정되지 않음!");
@@ -75,6 +78,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataProvider>(
@@ -87,9 +91,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
               CircularProgressIndicator(), // 로딩 바
               SizedBox(height: 20), // 로딩 바와 텍스트 사이 간격
               Text(
-                '데이터가 비어 있습니다. 상태: ${dataProvider.dataList.isEmpty
-                    ? "비어 있음"
-                    : "데이터 있음"}',
+                '데이터가 비어 있습니다. 상태: ${dataProvider.dataList.isEmpty ? "비어 있음" : "데이터 있음"}',
                 style: TextStyle(color: Colors.red, fontSize: 16),
               ),
               Text(
@@ -115,24 +117,27 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                   Container(
                     width: 360.w,
                     height: 48.h,
-                    padding: EdgeInsets.only(top:6,bottom: 6),
-                    child:Container(
+                    padding: EdgeInsets.only(top: 6, bottom: 6),
+                    child: Container(
                       width: 360.w,
                       height: 36.h,
-                      padding: EdgeInsets.only(right:16,left: 16),
+                      padding: EdgeInsets.only(right: 16, left: 16),
                       child: Row(
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(createFadeRoute(search_screen()));
+                              Navigator.of(context)
+                                  .push(createFadeRoute(search_screen()));
                             },
                             child: Container(
                               width: 284.w,
                               height: 36.h,
-                              padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
+                              padding: EdgeInsets.only(
+                                  left: 8, right: 16, top: 8, bottom: 8),
                               decoration: ShapeDecoration(
                                 color: Color(0xFF3D3D3D),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
                               ),
                               child: Row(
                                 children: [
@@ -165,30 +170,30 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                               ),
                             ),
                           ),
-
                           SizedBox(width: 8.w),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(createSlideUpRoute(Filter())); // 아래에서 위로 올라오는 애니메이션 사용
+                              Navigator.of(context).push(createSlideUpRoute(
+                                  Filter())); // 아래에서 위로 올라오는 애니메이션 사용
                             },
                             child: Container(
                               width: 36.w,
                               height: 36.h,
                               padding: EdgeInsets.all(6),
                               decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
                               ),
                               child: Center(
                                 child: Icon(
                                   Icons.filter_list, // 필터 아이콘
                                   size: 24, // 아이콘 크기
-                                  color: Colors.white, // 아이콘 색상 (원하는 색상으로 변경 가능)
+                                  color:
+                                      Colors.white, // 아이콘 색상 (원하는 색상으로 변경 가능)
                                 ),
                               ),
                             ),
                           ),
-
-
                         ],
                       ),
                     ),
@@ -199,35 +204,41 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                     width: 360.w,
                     height: 44.h,
                     color: const Color(0xFF1A1A1A),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: filterProvider.selectedFilters.isEmpty
                           ? const Text(
-                        "선택된 필터가 없습니다.",
-                        style: TextStyle(color: Colors.white),
-                      )
+                              "선택된 필터가 없습니다.",
+                              style: TextStyle(color: Colors.white),
+                            )
                           : ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: filterProvider.selectedFilters.map((filter) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 12),
-                            child: Chip(
-                              label: Text(filter),
-                              backgroundColor: const Color(0xFF242424),
-                              labelStyle: const TextStyle(color: Colors.white),
-                              deleteIcon: const Icon(
-                                Icons.close,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                              onDeleted: () {
-                                filterProvider.toggleFilter(filter);
-                              },
+                              scrollDirection: Axis.horizontal,
+                              children:
+                                  filterProvider.selectedFilters.map((filter) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: Chip(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8), // 원하는 둥글기 값
+                                      side: BorderSide(color: Colors.transparent),
+                                    ),
+                                    label: Text(filter),
+                                    backgroundColor: Color(0xFF3D3D3D),
+                                    labelStyle:
+                                        const TextStyle(color: Colors.white),
+                                    deleteIcon: const Icon(
+                                      Icons.close,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    onDeleted: () {
+                                      filterProvider.toggleFilter(filter);
+                                    },
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                          );
-                        }).toList(),
-                      ),
                     ),
                   ),
 
@@ -240,13 +251,16 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                             // 네이버 지도
                             NaverMap(
                               onMapReady: (controller) {
-                                final mapProvider = Provider.of<MapProvider>(context, listen: false);
+                                final mapProvider = Provider.of<MapProvider>(
+                                    context,
+                                    listen: false);
                                 mapProvider.setMapController(controller);
                                 _mapController = controller;
                                 _updateMarkers(dataProvider, context);
                               },
                               // 카메라 이동 이벤트 (사용자 제스처 시 버튼 표시)
-                              onCameraChange: (NCameraUpdateReason reason, bool animated) {
+                              onCameraChange:
+                                  (NCameraUpdateReason reason, bool animated) {
                                 if (reason == NCameraUpdateReason.gesture) {
                                   if (!_showRefreshButton) {
                                     setState(() {
@@ -266,10 +280,6 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                 logoMargin: EdgeInsets.only(top: 16, right: 16),
                               ),
                             ),
-
-
-
-
 
                             Positioned(
                               bottom: 24,
@@ -301,18 +311,24 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                       if (mounted) {
                                         setState(() {}); // UI 갱신 강제 적용
                                       }
-                                      await Future.delayed(Duration(milliseconds: 100));
+                                      await Future.delayed(
+                                          Duration(milliseconds: 100));
                                       // 현재 지도 화면 기준으로 마커 업데이트
                                       _updateMarkers(dataProvider, context);
                                     },
                                     child: Container(
                                       width: 141.w,
                                       height: 36.h,
-                                      padding: EdgeInsets.only(left: 12, right: 16, top: 8, bottom: 8),
+                                      padding: EdgeInsets.only(
+                                          left: 12,
+                                          right: 16,
+                                          top: 8,
+                                          bottom: 8),
                                       decoration: ShapeDecoration(
                                         color: Color(0xB2242424),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
                                         ),
                                         shadows: [
                                           BoxShadow(
@@ -358,7 +374,6 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                   ),
                                 ),
                               ),
-
                           ],
                         ),
                       );
@@ -374,7 +389,9 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
   }
 
   // 마커를 클릭했을떄 뜨는 스낵바
-  void here(BuildContext context, String address, String roadAddress, String type, String title) {
+  void here(BuildContext context, String address, String roadAddress,
+      String type, String title, double latitude, double longitude) {
+
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -405,254 +422,279 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
               ),
 
               // 내용 영역
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      StoreInfoScreen(
-                        title: title,
-                        address: address,
-                        roadAddress: roadAddress,
-                        type: type,
-                      ),
-                ),
-              );
-            },
-            child: Container(
-              width: 360.w,
-              height: 188.h,
-              color: Color(0xFF1A1A1A),
-              padding: EdgeInsets.only(
-                  left: 16.w, right: 16.w, bottom: 24.h),
-              child: Column(
-                children: [
-                  Container(
-                    width: 328.w,
-                    height: 104.h,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 100.w,
-                          height: 100.h,
-                          color: Colors.cyan,
-                        ),
-                        SizedBox(width: 12.w),
-                        Container(
-                          width: 216.w,
-                          height: 104.h,
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 216.w,
-                                height: 48.h,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
-                                  crossAxisAlignment: CrossAxisAlignment.start, // 위쪽 정렬
-                                  children: [
-                                    Container(
-                                      width: 188.w,
-                                      height: 48.h,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 188.w,
-                                            height: 20.h,
-                                            child: Text(
-                                              '$type',
-                                              style: TextStyle(
-                                                color: Color(0xFFE7E7E7),
-                                                fontSize: 14.sp,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.40.h,
-                                                letterSpacing: -0.35,
+              Container(
+                width: 360.w,
+                height: 188.h,
+                color: Color(0xFF1A1A1A),
+                padding:
+                    EdgeInsets.only(left: 16.w, right: 16.w, bottom: 24.h),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StoreInfoScreen(
+                                title: title,
+                                address: address,
+                                roadAddress: roadAddress,
+                                type: type,
+                              ),
+                            ),
+                          );
+                        },
+                      child: Container(
+                        width: 328.w,
+                        height: 104.h,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 100.w,
+                              height: 100.h,
+                              color: Colors.cyan,
+                            ),
+                            SizedBox(width: 12.w),
+                            Container(
+                              width: 216.w,
+                              height: 104.h,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 216.w,
+                                    height: 48.h,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start, // 왼쪽 정렬
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start, // 위쪽 정렬
+                                      children: [
+                                        Container(
+                                          width: 188.w,
+                                          height: 48.h,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                width: 188.w,
+                                                height: 20.h,
+                                                child: Text(
+                                                  '$type',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFE7E7E7),
+                                                    fontSize: 14.sp,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w500,
+                                                    height: 1.40.h,
+                                                    letterSpacing: -0.35,
+                                                  ),
+                                                ),
                                               ),
+                                              Container(
+                                                width: 188.w,
+                                                height: 28.h,
+                                                child: Text(
+                                                  '$title',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.sp,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 1.30.h,
+                                                    letterSpacing: -0.50,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 28.w,
+                                          height: 28.h,
+                                          padding: EdgeInsets.all(2),
+                                          child: IconButton(
+                                            padding: EdgeInsets.zero,
+                                            // 패딩을 없애서 아이콘 크기를 유지
+                                            onPressed: () {
+                                              print("qwe");
+                                            },
+                                            icon: Icon(
+                                              Icons.favorite_outline, // 하트 아이콘
+                                              color: Colors.white, // 아이콘 색상
+                                              size: 24.sp, // 아이콘 크기
                                             ),
                                           ),
-                                          Container(
-                                            width: 188.w,
-                                            height: 28.h,
-                                            child: Text(
-                                              '$title',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20.sp,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.30.h,
-                                                letterSpacing: -0.50,
-                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 216.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '영업 중 · 20:00에 영업 종료',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 216.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '렉토 · 벨리에 · UGG',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 12),
+                    Container(
+                      width: 328.w,
+                      height: 48.h,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StoreInfoScreen(
+                                    title: title,
+                                    address: address,
+                                    roadAddress: roadAddress,
+                                    type: type,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 265.w,
+                              height: 48.h,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 265.w,
+                                    height: 20.h,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: '추천  ·  ',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.sp,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.40,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '스트릿',
+                                            style: TextStyle(
+                                              color: Color(0xFF05FFF7),
+                                              fontSize: 14.sp,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w700,
+                                              height: 1.40.h,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '을 선호하는 분들',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.sp,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.40.h,
+                                              letterSpacing: -0.35,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      width: 28.w,
-                                      height: 28.h,
-                                      padding: EdgeInsets.all(2),
-                                      child: IconButton(
-                                        padding: EdgeInsets.zero, // 패딩을 없애서 아이콘 크기를 유지
-                                        onPressed: () {
-                                          print("qwe");
-                                        },
-                                        icon: Icon(
-                                          Icons.favorite_outline, // 하트 아이콘
-                                          color: Colors.white, // 아이콘 색상
-                                          size: 24.sp, // 아이콘 크기
-                                        ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Container(
+                                    width: 265.w,
+                                    height: 20.h,
+                                    child: Text(
+                                      '주소  ·  $address ',
+                                      style: TextStyle(
+                                        color: Color(0xFFD1D1D1),
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.40.h,
+                                        letterSpacing: -0.35,
                                       ),
                                     ),
-
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 8.h),
-                              Container(
-                                width: 216.w,
-                                height: 20.h,
-                                child: Text(
-                                  '영업 중 · 20:00에 영업 종료',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.40.h,
-                                    letterSpacing: -0.35,
                                   ),
-                                ),
+                                ],
                               ),
-                              SizedBox(height: 8.h),
-                              Container(
-                                width: 216.w,
-                                height: 20.h,
-                                child: Text(
-                                  '렉토 · 벨리에 · UGG',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.40.h,
-                                    letterSpacing: -0.35,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Container(
-                    width: 328.w,
-                    height: 48.h,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 265.w,
-                          height: 48.h,
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 265.w,
-                                height: 20.h,
-                                child: Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: '추천  ·  ',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.40,
-                                          letterSpacing: -0.35,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '스트릿',
-                                        style: TextStyle(
-                                          color: Color(0xFF05FFF7),
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.40.h,
-                                          letterSpacing: -0.35,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '을 선호하는 분들',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.40.h,
-                                          letterSpacing: -0.35,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+
+                          SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {
+                              print("길찾기 버튼이 눌렸습니다.$latitude @@@ $longitude");
+                              // 버튼 클릭 시 실행할 코드
+
+                            },
+                            child: Container(
+                              width: 55.w,
+                              height: 33.h,
+                              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF3D3D3D),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                               ),
-                              SizedBox(height: 8.h),
-                              Container(
-                                width: 265.w,
-                                height: 20.h,
+                              child: Center(
                                 child: Text(
-                                  '주소  ·  $address ',
+                                  '길찾기',
                                   style: TextStyle(
-                                    color: Color(0xFFD1D1D1),
-                                    fontSize: 14.sp,
+                                    color: Colors.white,
+                                    fontSize: 12.sp,
                                     fontFamily: 'Pretendard',
                                     fontWeight: FontWeight.w500,
                                     height: 1.40.h,
-                                    letterSpacing: -0.35,
+                                    letterSpacing: -0.30,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Container(
-                          width: 55.w,
-                          height: 33.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.w, vertical: 8.h),
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF3D3D3D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              '길찾기',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.sp,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.40.h,
-                                letterSpacing: -0.30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
             ],
           ),
         );
@@ -695,14 +737,12 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
         _updateMarkers(dataProvider, context);
 
         // 기존 동작 그대로
-        here(context, address, roadAddress, type, title);
+        here(context, address, roadAddress, type, title ,latitude,longitude );
       });
 
       return marker;
     }).toSet();
   }
-
-
 
 // 데이터 변경 시 마커 업데이트
   Future<void> _updateMarkers(DataProvider dataProvider, BuildContext context) async {
@@ -822,7 +862,8 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
       overlayEntry?.markNeedsBuild(); // 상태 업데이트
 
       // 애니메이션 완료 후 Overlay 제거
-      await Future.delayed(const Duration(milliseconds: 1000)); // 애니메이션 지속 시간과 동일하게 설정
+      await Future.delayed(
+          const Duration(milliseconds: 1000)); // 애니메이션 지속 시간과 동일하게 설정
       overlayEntry?.remove();
     });
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:untitled/screen_setting.dart';
@@ -38,6 +39,35 @@ class _InformationScreenState extends State<InformationScreen> {
     try {
       final supabase = Supabase.instance.client;
 
+      // 입력값 검사
+      if (_nicknameController.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('닉네임을 입력해주세요.')),
+        );
+        return;
+      }
+
+      if (_birthdateController.text.trim().isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('생년월일을 입력해주세요.')),
+        );
+        return;
+      }
+
+      if (_selectedGenderIndex == -1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('성별을 선택해주세요.')),
+        );
+        return;
+      }
+
+      if (_selectedCategoryIndex == -1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('카테고리를 선택해주세요.')),
+        );
+        return;
+      }
+
       // 회원가입 요청
       final response = await supabase.auth.signUp(
         email: widget.email,
@@ -56,7 +86,7 @@ class _InformationScreenState extends State<InformationScreen> {
           'id': userId,
           'email': widget.email,
           'username': username,
-          'birthdate': birthdate.isNotEmpty ? birthdate : null,
+          'birthdate': birthdate,
           'gender': gender,
           'category': category,
         });
@@ -74,6 +104,7 @@ class _InformationScreenState extends State<InformationScreen> {
       );
     }
   }
+
 
   @override
   void initState() {
@@ -120,7 +151,7 @@ class _InformationScreenState extends State<InformationScreen> {
                 // 생년월일 입력 필드
                 Subtext('생년월일'),
                 SizedBox(height: 8.h),
-                _buildTextField(_birthdateController, 'YYYY-MM-DD'),
+                _buildTextField1(_birthdateController, 'YYYY-MM-DD'),
 
                 SizedBox(height: 48.h),
 
@@ -192,6 +223,58 @@ class _InformationScreenState extends State<InformationScreen> {
     );
   }
 
+
+  // 숫자입력 필드
+  Widget _buildTextField1(TextEditingController controller, String hintText) {
+    return Container(
+      width: 360.w,
+      height: 64.h,
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
+      child: Container(
+        width: 328.w,
+        height: 56.h,
+        padding: EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Color(0xFF242424),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: controller,
+                style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                keyboardType: TextInputType.number, // 숫자 키보드 설정
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly, // 숫자만 입력 가능
+                  LengthLimitingTextInputFormatter(8), // 최대 8자리 (YYYYMMDD)
+                  BirthdateInputFormatter(), // 자동으로 YYYY-MM-DD 형식 적용
+                ],
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: hintText,
+                  hintStyle: TextStyle(color: Color(0xFF888888), fontSize: 14.sp),
+                ),
+                onChanged: (value) {
+                  setState(() {}); // 입력값 변경 시 아이콘 갱신
+                },
+              ),
+            ),
+            if (controller.text.isNotEmpty)
+              IconButton(
+                icon: Icon(Icons.cancel, color: Color(0xFF888888)),
+                onPressed: () {
+                  controller.clear();
+                  setState(() {});
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
   // 버튼 선택 위젯 (성별, 카테고리 공용)
   Widget _buildSelectionButtons(List<String> labels, int selectedIndex, Function(int) onPressed) {
     return Container(
@@ -229,6 +312,30 @@ class _InformationScreenState extends State<InformationScreen> {
           );
         }),
       ),
+    );
+  }
+}
+
+// 생년월일 유효성검사
+class BirthdateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    String digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), ''); // 숫자만 남기기
+    String formattedText = '';
+
+    if (digitsOnly.length > 4) {
+      formattedText = '${digitsOnly.substring(0, 4)}-${digitsOnly.substring(4, digitsOnly.length > 6 ? 6 : digitsOnly.length)}';
+    } else {
+      formattedText = digitsOnly;
+    }
+
+    if (digitsOnly.length > 6) {
+      formattedText += '-${digitsOnly.substring(6, digitsOnly.length > 8 ? 8 : digitsOnly.length)}';
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
 }
