@@ -47,71 +47,10 @@ class _FilterState extends State<Filter> with SingleTickerProviderStateMixin {
           child: Center(
             child: Column(
               children: [
-                Container(
-                  width: 360.w,
-                  height: 56.h,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context); // context를 이제 사용할 수 있음
-                        },
-                        child: Container(
-                          width: 56.w,
-                          height: 56.h,
-                          padding: EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.chevron_left,
-                            size: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 252.w,
-                        height: 56.h,
-                        padding: EdgeInsets.only(top: 14, bottom: 14),
-                        child: Text(
-                          '필터',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 1.40.h,
-                            letterSpacing: -0.50,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 36.w,
-                        height: 56.h,
-                        padding: EdgeInsets.only(top: 18, bottom: 18),
-                        child: TextButton(
-                          onPressed: () {
-                            print("초기화 버튼이 눌렸습니다. 선택된 필터 목록이 비워졌습니다.");
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero, // 패딩을 0으로 설정하여 Container의 패딩을 유지
-                            backgroundColor: Colors.transparent, // 배경색 설정 (필요에 따라 변경)
-                          ),
-                          child: Text(
-                            '초기화',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Color(0xFF05FFF7),
-                              fontSize: 14.sp,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w500,
-                              height: 1.40.h,
-                              letterSpacing: -0.35,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  ),
+                buildHeaderBar(
+                  context,
+                  filterText: '필터', // 원하는 필터 텍스트
+                  resetText: '초기화', // 원하는 초기화 텍스트
                 ),
 
                 // 필터 넣은 목록 영역 (선택된 필터들을 Chip 등으로 표시)

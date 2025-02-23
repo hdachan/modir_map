@@ -45,25 +45,33 @@ class _StoreInfoScreenState extends State<StoreInfoScreen>
                   Container(
                     width: 360.w,
                     height: 360.h,
-                    color: Colors.blue, // 배경색을 추가하여 Container를 시각적으로 확인
+                    child: Image.asset(
+                      'assets/image/store_test01.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   Positioned(
                     left: 12.w, // 왼쪽 위 아이콘의 x 위치
                     top: 12.h, // 왼쪽 위 아이콘의 y 위치
-                    child: Container(
-                      width: 32.w,
-                      height: 32.h,
-                      padding: EdgeInsets.all(4),
-                      decoration: ShapeDecoration(
-                        color: Color(0xB21A1A1A),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop(); // 뒤로가기 기능
+                      },
+                      child: Container(
+                        width: 32.w,
+                        height: 32.h,
+                        padding: EdgeInsets.all(4),
+                        decoration: ShapeDecoration(
+                          color: Color(0xB21A1A1A),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
                         ),
-                      ),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_outlined, // 수평 점세게 메뉴 아이콘
-                        size: 20.sp, // 아이콘 크기
-                        color: Colors.white, // 아이콘 색상
+                        child: Icon(
+                          Icons.arrow_back_ios_new_outlined, // 수평 점세게 메뉴 아이콘
+                          size: 20.sp, // 아이콘 크기
+                          color: Colors.white, // 아이콘 색상
+                        ),
                       ),
                     ),
                   ),
@@ -83,7 +91,6 @@ class _StoreInfoScreenState extends State<StoreInfoScreen>
                       child: Container(
                         width: 24.w,
                         height: 24.h,
-
                         child: Center(
                           // 아이콘을 중앙에 배치하기 위해 Center 위젯을 사용
                           child: Icon(
@@ -99,18 +106,130 @@ class _StoreInfoScreenState extends State<StoreInfoScreen>
                     left: 12.w, // 왼쪽 아래 아이콘의 x 위치
                     bottom: 12.h, // 왼쪽 아래 아이콘의 y 위치
                     child: Container(
-                      width: 32.w,
-                      height: 32.h,
-                      color: Colors.cyan,
+                      width: 114.w,
+                      height: 20.h,
+                      padding:
+                          EdgeInsets.only(left: 8, right: 4, top: 2, bottom: 2),
+                      decoration: ShapeDecoration(
+                        color: Color(0xB21A1A1A),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 37.w,
+                            height: 16.h,
+                            child: Text(
+                              '10 : 00',
+                              style: TextStyle(
+                                color: Color(0xFF1CD14F),
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 1.30.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          Container(
+                            width: 4.w,
+                            height: 16.h,
+                            child: Text(
+                              '|',
+                              style: TextStyle(
+                                color: Color(0xFF888888),
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.30.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          Container(
+                            width: 37.w,
+                            height: 16.h,
+                            child: Text(
+                              '23 : 00',
+                              style: TextStyle(
+                                color: Color(0xFFFF3333),
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.30.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 16.w,
+                            height: 16.h,
+                            padding: EdgeInsets.all(2),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined, // 아이콘
+                              size: 12.sp, // 아이콘 크기
+                              color: Color(0xFF888888), // 아이콘 색상
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(
                     right: 12.w, // 오른쪽 아래 아이콘의 x 위치
                     bottom: 12.h, // 오른쪽 아래 아이콘의 y 위치
                     child: Container(
-                      width: 32.w,
-                      height: 32.h,
-                      color: Colors.cyan,
+                      width: 43.w,
+                      height: 20.h,
+                      decoration: ShapeDecoration(
+                        color: Color(0xB21A1A1A),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)),
+                      ),
+                      child: Center(
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '1',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.30.h,
+                                  letterSpacing: -0.30,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.30,
+                                  letterSpacing: -0.30,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '/ 12',
+                                style: TextStyle(
+                                  color: Color(0xFF888888),
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.30.h,
+                                  letterSpacing: -0.30,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -1092,11 +1211,117 @@ class _DataScreen4State extends State<DataScreen4> {
               Container(
                 width: 224.w,
                 height: 104.h,
+                padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
                 decoration: ShapeDecoration(
                   color: Color(0xFF242424),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4)),
                 ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 200.w,
+                      height: 20.h,
+                      child: Text(
+                        '나이스웨더 성수점',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 1.40.h,
+                          letterSpacing: -0.35,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Container(
+                      width: 200.w,
+                      height: 16.h,
+                      child: Text(
+                        '안녕하세요 나이스웨더입니다. 이벤트 및 신상 정보를 빠르게 얻어가세요',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.sp,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w500,
+                          height: 1.30.h,
+                          letterSpacing: -0.30,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Container(
+                      width: 200.w,
+                      height: 16.h,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.h,
+                            child: Icon(
+                              Icons.perm_identity_outlined, // 아이콘
+                              size: 16.sp, // 아이콘 크기
+                              color: Color(0xFF888888), // 아이콘 색상
+                            ),
+                          ),
+                          SizedBox(width: 4.h),
+                          Container(
+                            width: 180.w,
+                            height: 16.h,
+                            alignment: Alignment.centerLeft, // 중앙 왼쪽 정렬
+                            child: Text(
+                              '23',
+                              style: TextStyle(
+                                color: Color(0xFF888888),
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.10.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Container(
+                      width: 200.w,
+                      height: 24.h,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end, // 오른쪽 정렬
+                        children: [
+                          Container(
+                            height: 24.h,
+                            padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1.w, color: Colors.white),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            alignment: Alignment.center, // 중앙 정렬
+                            child: Text(
+                              '입장하기',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 1.10.h,
+                                letterSpacing: -0.30,
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+
               ),
             ],
           ),
@@ -1436,117 +1661,294 @@ class style1 extends StatelessWidget {
       children: [
         Container(
           width: 360.w,
-          height: 354.h,
-          color: Colors.cyan,
-          child: Column(
+          height: 40.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+          child: Row(
             children: [
               Container(
-                width: 360.w,
-                height: 214.h,
-                color: Color(0xFF1A1A1A),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 360.w,
-                      height: 40.h,
-                    ),
-                    Container(
-                      width: 360.w,
-                      height: 174.h,
-                      padding:
-                          EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 104.w,
-                            height: 158.h,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side:
-                                    BorderSide(width: 1.w, color: Colors.white),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Container(
-                            width: 104.w,
-                            height: 158.h,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side:
-                                    BorderSide(width: 1.w, color: Colors.white),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Container(
-                            width: 104.w,
-                            height: 158.h,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side:
-                                    BorderSide(width: 1.w, color: Colors.white),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                width: 16.w,
+                height: 16.h,
+                child: Center(
+                  child: Icon(
+                    Icons.tag_outlined, // 시계 아이콘
+                    color: Colors.white, // 아이콘 색상
+                    size: 16.sp, // 아이콘 크기
+                  ),
                 ),
               ),
+              SizedBox(width: 4.w),
               Container(
-                width: 360.w,
-                height: 116.h,
-                color: Color(0xFF1A1A1A),
-                padding: EdgeInsets.only(
-                    left: 16.w, right: 16.w, top: 24.h, bottom: 24.w),
-                child: Container(
-                  width: 328.w,
-                  height: 68.h,
+                width: 257.w,
+                height: 16.h,
+                child: Text(
+                  '8개의 브랜드 입점',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    height: 1.30.h,
+                    letterSpacing: -0.30,
+                  ),
+                ),
+              ),
+              SizedBox(width: 2.w),
+            ],
+          ),
+        ),
+        Container(
+          width: 360.w,
+          height: 178.h,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+          child: SingleChildScrollView( // 스크롤 가능하게 만듭니다.
+            scrollDirection: Axis.horizontal, // 수평 스크롤 설정
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end, // 자식들을 위쪽으로 정렬
+              children: [
+                Container(
+                  width: 100.w,
+                  height: 154.h,
                   child: Column(
                     children: [
                       Container(
-                        width: 296.h,
-                        height: 20.h,
-                        child: Text(
-                          '이 매장을 조회하신 분들은 ?',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            height: 1.40,
-                            letterSpacing: -0.35,
+                        width: 100.w,
+                        height: 100.h,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("https://ceckhzfboykmsshamikv.supabase.co/storage/v1/object/public/image//Frame%203132.png"),
+                            fit: BoxFit.fill,
                           ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                       ),
-                      SizedBox(height: 8.h),
                       Container(
-                        width: 296.h,
-                        height: 16.h,
-                        child: Text(
-                          '미니멀  성향의 분들이 매장을 자주 조회해요',
-                          style: TextStyle(
-                            color: Color(0xFFE7E7E7),
-                            fontSize: 12,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            height: 1.30,
-                            letterSpacing: -0.30,
-                          ),
+                        width: 100.w,
+                        height: 54.h,
+                        padding:EdgeInsets.only(left: 4,right: 8,top: 8,bottom: 8),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 88.w,
+                              height: 14.h,
+                              child: Text(
+                                '스투시',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.30.h,
+                                  letterSpacing: -0.28,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Container(
+                              width: 88.w,
+                              height: 16.h,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 16.w,
+                                    height: 16.h,
+                                    child: Icon(
+                                      Icons.favorite, // 아이콘
+                                      size: 16.sp, // 아이콘 크기
+                                      color: Colors.white, // 아이콘 색상
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 4.w),
+                                  Container(
+                                    width: 68.w,
+                                    height: 16.h,
+                                    child: Text(
+                                      '45,952',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.10.h,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(width: 24.w),
+                Container(
+                  width: 100.w,
+                  height: 154.h,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 100.w,
+                        height: 100.h,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("https://ceckhzfboykmsshamikv.supabase.co/storage/v1/object/public/image//Frame%203132.png"),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                      ),
+                      Container(
+                        width: 100.w,
+                        height: 54.h,
+                        padding:EdgeInsets.only(left: 4,right: 8,top: 8,bottom: 8),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 88.w,
+                              height: 14.h,
+                              child: Text(
+                                '스투시',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.30.h,
+                                  letterSpacing: -0.28,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Container(
+                              width: 88.w,
+                              height: 16.h,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 16.w,
+                                    height: 16.h,
+                                    child: Icon(
+                                      Icons.favorite, // 아이콘
+                                      size: 16.sp, // 아이콘 크기
+                                      color: Colors.white, // 아이콘 색상
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 4.w),
+                                  Container(
+                                    width: 68.w,
+                                    height: 16.h,
+                                    child: Text(
+                                      '45,952',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.10.h,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 24.w),
+                Container(
+                  width: 100.w,
+                  height: 154.h,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 100.w,
+                        height: 100.h,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("https://ceckhzfboykmsshamikv.supabase.co/storage/v1/object/public/image//Frame%203132.png"),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                      ),
+                      Container(
+                        width: 100.w,
+                        height: 54.h,
+                        padding:EdgeInsets.only(left: 4,right: 8,top: 8,bottom: 8),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 88.w,
+                              height: 14.h,
+                              child: Text(
+                                '스투시',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11.sp,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.30.h,
+                                  letterSpacing: -0.28,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Container(
+                              width: 88.w,
+                              height: 16.h,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 16.w,
+                                    height: 16.h,
+                                    child: Icon(
+                                      Icons.favorite, // 아이콘
+                                      size: 16.sp, // 아이콘 크기
+                                      color: Colors.white, // 아이콘 색상
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 4.w),
+                                  Container(
+                                    width: 68.w,
+                                    height: 16.h,
+                                    child: Text(
+                                      '45,952',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.10.h,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
+
       ],
     );
   }

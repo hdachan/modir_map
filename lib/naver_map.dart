@@ -389,8 +389,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
   }
 
   // 마커를 클릭했을떄 뜨는 스낵바
-  void here(BuildContext context, String address, String roadAddress,
-      String type, String title, double latitude, double longitude) {
+  void here(BuildContext context, String address, String roadAddress, String type, String title, double latitude, double longitude, int id) {
 
     showBottomSheet(
       context: context,
@@ -478,7 +477,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
                                                 width: 188.w,
                                                 height: 20.h,
                                                 child: Text(
-                                                  '$type',
+                                                  '$id',
                                                   style: TextStyle(
                                                     color: Color(0xFFE7E7E7),
                                                     fontSize: 14.sp,
@@ -707,6 +706,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
 
   Set<NAddableOverlay> _buildMarkersFromList(List<dynamic> dataList) {
     return dataList.map<NAddableOverlay>((item) {
+      final int id = int.tryParse(item['id'].toString()) ?? 0;
       final double latitude = double.tryParse(item['mapy'].toString()) ?? 0;
       final double longitude = double.tryParse(item['mapx'].toString()) ?? 0;
       final String title = item['title'].toString();
@@ -737,7 +737,7 @@ class _NaverMapBackgroundState extends State<NaverMapBackground> {
         _updateMarkers(dataProvider, context);
 
         // 기존 동작 그대로
-        here(context, address, roadAddress, type, title ,latitude,longitude );
+        here(context, address, roadAddress, type, title ,latitude,longitude,id );
       });
 
       return marker;

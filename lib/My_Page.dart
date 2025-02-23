@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:untitled/test.dart';
 
 import 'SettingState.dart';
+import 'Stores_like.dart';
+import 'alarm_screen.dart';
 import 'setting.dart';
 
 void main() async {
@@ -65,8 +67,10 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                               )),
                           GestureDetector(
                             onTap: () {
-                              // 버튼 클릭 시 실행할 코드
-                              print("알림 버튼 클릭됨");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => alam_screen()),
+                              );
                             },
                             child: Container(
                               width: 56.w,
@@ -528,8 +532,10 @@ class _MY_pageState extends State<MY_page> with SingleTickerProviderStateMixin {
                     customButton(
                       '관심 매장',
                           () {
-                        // 버튼 클릭 시 수행할 작업을 여기에 작성하세요.
-                        print('버튼22이 클릭되었습니다!');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => StoresLike()),
+                            );
                       },
                     ),
                     customButton(
@@ -604,16 +610,16 @@ Widget middleText(String text) {
     padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 8),
     child: Container(
       width: 328.w,
-      height: 20.h,
+      height: 28.h,
       child: Text(
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14.sp,
+          fontSize: 20.sp,
           fontFamily: 'Pretendard',
           fontWeight: FontWeight.w700,
           height: 1.40.h,
-          letterSpacing: -0.35,
+          letterSpacing: -0.50,
         ),
       ),
     ),

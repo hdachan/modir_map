@@ -299,3 +299,28 @@ class FilterProvider extends ChangeNotifier {
   }
 }
 
+//유저 인포
+
+class UserProvider extends ChangeNotifier {
+  final SupabaseClient _supabase = Supabase.instance.client;
+  Map<String, dynamic>? _userInfo;
+
+  UserProvider() {
+    _loadUserInfo();
+  }
+
+  Map<String, dynamic>? get userInfo => _userInfo;
+
+  Future<void> _loadUserInfo() async {
+    final user = _supabase.auth.currentUser;
+    if (user != null) {
+      final response = await _supabase
+          .from('userinfo')
+          .select('id, category, gender')
+          .eq('id', user.id)
+          .single();
+      _userInfo = response;
+      notifyListeners();
+    }
+  }
+}
