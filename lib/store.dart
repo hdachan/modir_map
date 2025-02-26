@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'filter.dart';
+import 'screen_setting.dart';
+import 'store_information.dart';
 
 class StoreInfoScreen extends StatefulWidget {
   final String title;
@@ -362,6 +364,10 @@ class _StoreInfoScreenState extends State<StoreInfoScreen>
             ),
           ],
         ),
+      ),
+      bottomNavigationBar:LoginButton(
+        buttonText: '예약하기', // 로그인 텍스트 전달
+        onTap:  () => print("qwe"),
       ),
     );
   }
@@ -1344,14 +1350,7 @@ class DataScreen5 extends StatelessWidget {
   }
 }
 
-class DataScreen6 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('기타 화면입니다.'),
-    );
-  }
-}
+
 
 class style extends StatelessWidget {
   @override
